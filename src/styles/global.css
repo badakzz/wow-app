@@ -1,0 +1,64 @@
+body {
+    background-color: black !important;
+    color: white !important;
+}
+
+h1 {
+    font-size: 2rem;
+    color: rgb(100, 177, 255) !important;
+}
+
+.custom-navbar {
+    background-color: rgb(59, 57, 61) !important;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid rgb(98, 98, 101);
+    padding-left: 5rem !important;
+    padding-right: 5rem !important;
+}
+
+.custom-navbar,
+.custom-navbar .navbar-brand,
+.custom-navbar .nav-link,
+.custom-navbar .navbar-text,
+.custom-navbar .dropdown-item {
+    color: white !important;
+    background-color: rgb(28, 28, 28) !important;
+}
+
+.custom-navbar .nav-link:hover {
+    color: rgb(100, 177, 255) !important;
+    transition-delay: 0.1s;
+}
+
+.flex-half {
+    width: 50%;
+}
+
+.container-top-margin {
+    margin-top: 5rem;
+}
+
+.custom-container {
+    max-width: 90%;
+    background-color: rgb(28, 28, 28) !important;
+    border: 2px solid rgb(98, 98, 101);
+    padding: 5rem !important;
+}
+
+@media (min-width: 768px) {
+    .custom-container {
+        max-width: 90%;
+    }
+}
+
+@media (min-width: 992px) {
+    .custom-container {
+        max-width: 90%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .custom-container {
+        max-width: 90%;
+    }
+}
