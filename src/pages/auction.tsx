@@ -1,7 +1,33 @@
+import axios from 'axios'
 import Head from 'next/head'
-import { Container, Image } from 'react-bootstrap'
+import { useEffect, useState } from 'react'
+import { Button, Container, Image } from 'react-bootstrap'
 
-const Home = () => {
+const Auction = () => {
+    const [realms, setRealms] = useState(null)
+
+    // useEffect(() => {
+    //     axios
+    //         .get('/api/v1/tsm/fetchToken')
+    //         .then(({ data }) => setToken(data))
+    //         .catch((error) => {
+    //             console.error('Error fetching data:', error)
+    //         })
+    // }, [])
+
+    // console.log(token)
+
+    const fetchRealms = () => {
+        axios
+            .get('/api/v1/tsm/fetchRealms')
+            .then(({ data }) => setRealms(data))
+            .catch((error) => {
+                console.error('Error fetching data:', error)
+            })
+    }
+
+    console.log('realms', realms)
+
     return (
         <>
             <Head>
@@ -15,18 +41,8 @@ const Home = () => {
             <Container className="container-top-margin custom-container p-5">
                 <div className="d-flex align-items-center justify-content-center">
                     <div className="flex-half text-align-start">
-                        <h1 className="mb-5">
-                            WoW Season of Discovery Companion
-                        </h1>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat. Duis aute irure dolor in
-                        reprehenderit in voluptate velit esse cillum dolore eu
-                        fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                        non proident, sunt in culpa qui officia deserunt mollit
-                        anim id est laborum.
+                        <h1 className="mb-5">Auction tracker</h1>
+                        If I speak
                     </div>
                     <div className="flex-half d-flex align-items-center justify-content-center">
                         <Image
@@ -36,9 +52,10 @@ const Home = () => {
                         ></Image>
                     </div>
                 </div>
+                <Button onClick={fetchRealms} />
             </Container>
         </>
     )
 }
 
-export default Home
+export default Auction
