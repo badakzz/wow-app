@@ -1,10 +1,22 @@
 import axios from 'axios'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
-import { Table, Container, Image } from 'react-bootstrap'
+import { Table, Container, Image, Button } from 'react-bootstrap'
+
+interface Realm {
+    items: {
+        auctionHouses: Array<any>
+        locale: string
+        localizedName: string
+        name: string
+        realmId: number
+        gameVersion: string
+    }[]
+}
 
 const Auction = () => {
-    const [realms, setRealms] = useState(null)
+    const [realms, setRealms] = useState<Realm | null>(null)
+    const [img, setImg] = useState<string | null>(null)
 
     const fetchRealms = () => {
         axios
@@ -13,6 +25,20 @@ const Auction = () => {
             .catch((error) => {
                 console.error('Error fetching data:', error)
             })
+    }
+
+    console.log(realms)
+
+    const fetchImage = async () => {
+        try {
+            const response = await axios.get('/api/v1/wow/fetch_items/')
+            const imageUrl = response.data
+
+            setImg(imageUrl)
+            console.log('IMG', { imageUrl, img })
+        } catch (error) {
+            console.error('Error fetching image:', error)
+        }
     }
 
     useEffect(() => {
@@ -61,6 +87,8 @@ const Auction = () => {
                         </tbody>
                     </Table>
                 )}
+                <Button onClick={fetchImage}>Fetch Image</Button>
+                {img && <Image src={img} />}
             </Container>
         </>
     )
