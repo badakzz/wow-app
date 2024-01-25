@@ -1,32 +1,23 @@
 import axios from 'axios'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
-import { Button, Container, Image } from 'react-bootstrap'
+import { Table, Container, Image } from 'react-bootstrap'
 
 const Auction = () => {
     const [realms, setRealms] = useState(null)
 
-    // useEffect(() => {
-    //     axios
-    //         .get('/api/v1/tsm/fetchToken')
-    //         .then(({ data }) => setToken(data))
-    //         .catch((error) => {
-    //             console.error('Error fetching data:', error)
-    //         })
-    // }, [])
-
-    // console.log(token)
-
     const fetchRealms = () => {
         axios
-            .get('/api/v1/tsm/fetchRealms')
+            .get('/api/v1/tsm/fetch_realms')
             .then(({ data }) => setRealms(data))
             .catch((error) => {
                 console.error('Error fetching data:', error)
             })
     }
 
-    console.log('realms', realms)
+    useEffect(() => {
+        setRealms(fetchRealms() as any)
+    }, [])
 
     return (
         <>
@@ -52,7 +43,24 @@ const Auction = () => {
                         ></Image>
                     </div>
                 </div>
-                <Button onClick={fetchRealms} />
+                {realms && (
+                    <Table striped bordered hover>
+                        <thead>
+                            <tr>
+                                <th>Server Name</th>
+                                <th>Region</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {realms.items.map((realm, index) => (
+                                <tr key={index}>
+                                    <td>{realm.name}</td>
+                                    <td>{realm.gameVersion}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </Table>
+                )}
             </Container>
         </>
     )
