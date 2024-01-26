@@ -1,7 +1,8 @@
 import axios from 'axios'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
-import { Table, Container, Image, Button } from 'react-bootstrap'
+import { Table, Container, Image, Button, Form } from 'react-bootstrap'
+import { AuctionHouseItem } from '@/components'
 
 interface Realm {
     items: {
@@ -16,33 +17,29 @@ interface Realm {
 
 const Auction = () => {
     const [realms, setRealms] = useState<Realm | null>(null)
-    const [img, setImg] = useState<string | null>(null)
+    const [itemId, setItemId] = useState<number | null>(null)
 
     const fetchRealms = () => {
         axios
-            .get('/api/v1/tsm/fetch_realms')
+            .get('/api/v1/tsm/realms')
             .then(({ data }) => setRealms(data))
             .catch((error) => {
                 console.error('Error fetching data:', error)
             })
     }
 
-    console.log(realms)
-
-    const fetchImage = async () => {
-        try {
-            const response = await axios.get('/api/v1/wow/fetch_items/')
-            const imageUrl = response.data
-
-            setImg(imageUrl)
-            console.log('IMG', { imageUrl, img })
-        } catch (error) {
-            console.error('Error fetching image:', error)
-        }
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setItemId(Number(event.target.value)) // Convert input value to a number
     }
 
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+    }
+
+    console.log(realms)
+
     useEffect(() => {
-        setRealms(fetchRealms() as any)
+        fetchRealms()
     }, [])
 
     return (
@@ -87,8 +84,20 @@ const Auction = () => {
                         </tbody>
                     </Table>
                 )}
-                <Button onClick={fetchImage}>Fetch Image</Button>
-                {img && <Image src={img} />}
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group controlId="itemId">
+                        <Form.Label>Item ID</Form.Label>
+                        <Form.Control
+                            type="number"
+                            placeholder="Enter Item ID"
+                            onChange={handleInputChange}
+                        />
+                    </Form.Group>
+                    <Button variant="primary" type="submit">
+                        Submit
+                    </Button>
+                </Form>
+                {itemId !== null && <AuctionHouseItem itemId={itemId} />}
             </Container>
         </>
     )
