@@ -8,7 +8,7 @@ let cachedToken: {
     expiry: null,
 }
 
-export async function fetchToken() {
+export async function fetchWowApiToken() {
     const response = await axios.post(
         'https://oauth.battle.net/token',
         'grant_type=client_credentials',
@@ -28,9 +28,9 @@ export async function fetchToken() {
     return access_token
 }
 
-export async function getToken() {
+export async function getWowApiToken() {
     if (!cachedToken.value || Date.now() > (cachedToken.expiry || 0)) {
-        return await fetchToken()
+        return await fetchWowApiToken()
     }
     return cachedToken.value
 }
