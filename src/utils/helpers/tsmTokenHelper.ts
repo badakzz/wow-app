@@ -8,7 +8,7 @@ let cachedToken: {
     expiry: null,
 }
 
-export async function fetchToken() {
+export async function fetchTsmApiToken() {
     const response = await axios.post(
         'https://auth.tradeskillmaster.com/oauth2/token',
         {
@@ -27,9 +27,9 @@ export async function fetchToken() {
     return access_token
 }
 
-export async function getToken() {
+export async function getTsmApiToken() {
     if (!cachedToken.value || Date.now() > (cachedToken.expiry || 0)) {
-        return await fetchToken()
+        return await fetchTsmApiToken()
     }
     return cachedToken.value
 }
