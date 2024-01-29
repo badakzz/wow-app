@@ -60,6 +60,10 @@ h1 {
     padding-left: 0.5rem;
 }
 
+.faction-picker {
+    width: 20%;
+}
+
 @media (min-width: 768px) {
     .custom-container {
         max-width: 90%;
