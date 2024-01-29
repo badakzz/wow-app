@@ -2,31 +2,11 @@ import axios from 'axios'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { Table, Container, Image, Button, Form } from 'react-bootstrap'
-import { AuctionHouseItem } from '@/components'
-
-interface Realm {
-    items: {
-        auctionHouses: Array<any>
-        locale: string
-        localizedName: string
-        name: string
-        realmId: number
-        gameVersion: string
-    }[]
-}
+import { AuctionHouseItem, RealmPicker, FactionPicker } from '@/components'
 
 const Auction = () => {
-    const [realms, setRealms] = useState<Realm | null>(null)
     const [itemId, setItemId] = useState<number | null>(null)
-
-    const fetchRealms = () => {
-        axios
-            .get('/api/v1/tsm/realms')
-            .then(({ data }) => setRealms(data))
-            .catch((error) => {
-                console.error('Error fetching data:', error)
-            })
-    }
+    const [faction, setFaction] = useState<string>('')
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setItemId(Number(event.target.value)) // Convert input value to a number
@@ -35,12 +15,6 @@ const Auction = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
     }
-
-    console.log(realms)
-
-    useEffect(() => {
-        fetchRealms()
-    }, [])
 
     return (
         <>
@@ -66,7 +40,13 @@ const Auction = () => {
                         ></Image>
                     </div>
                 </div>
-                {realms && (
+                <FactionPicker
+                    className="faction-picker justify-content-end"
+                    faction={faction}
+                    setFaction={setFaction}
+                />
+                <RealmPicker faction={faction} />
+                {/* {realms && (
                     <Table striped bordered hover>
                         <thead>
                             <tr>
@@ -83,7 +63,7 @@ const Auction = () => {
                             ))}
                         </tbody>
                     </Table>
-                )}
+                )} */}
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="itemId">
                         <Form.Label>Item ID</Form.Label>
