@@ -1,32 +1,31 @@
 import AsyncSelect from 'react-select/async'
 import axios from 'axios'
-import { useEffect, useState } from 'react'
 
-interface Realm {
-    auctionHouses: Array<any>
-    locale: string
-    localizedName: string
-    name: string
-    realmId: number
+interface FilteredResult {
+    region: string
     gameVersion: string
+    realmName: string
+    auctionHouseId: number
 }
 
 type RealmPickerProps = {
     faction: string
+    auctionHouseId: number | null
+    setAuctionHouseId: React.Dispatch<React.SetStateAction<any>>
 }
 
-const RealmPicker: React.FC<RealmPickerProps> = ({ faction }) => {
-    // const [realms, setRealms] = useState<Realm>()
-
+const RealmPicker: React.FC<RealmPickerProps> = ({
+    faction,
+    auctionHouseId,
+    setAuctionHouseId,
+}) => {
     const loadOptions = () => {
-        console.log('Loading options') // Debugging log
         return axios
-            .get('/api/v1/tsm/realms')
+            .get(`/api/v1/tsm/realms?faction=${encodeURIComponent(faction)}`)
             .then(({ data }) => {
-                console.log('API response:', data) // Debugging log
-                return data.items.map((realm: Realm) => ({
-                    label: `${realm.name} (${realm.gameVersion})`,
-                    value: realm.realmId,
+                return data.map((result: FilteredResult) => ({
+                    label: `${result.realmName} (${result.gameVersion} - ${result.region})`,
+                    value: result.auctionHouseId,
                 }))
             })
             .catch((error) => {
@@ -35,19 +34,21 @@ const RealmPicker: React.FC<RealmPickerProps> = ({ faction }) => {
             })
     }
 
-    // useEffect(() => {
-    //     fetchRealms()
-    // }, [])
+    const onChange = (selectedOption: any) => {
+        setAuctionHouseId(selectedOption ? selectedOption.value : 0)
+    }
 
-    // console.log({ realms })
+    const selectedOption = loadOptions().then((options) =>
+        options.find((option: any) => option.value === auctionHouseId)
+    )
 
     return (
         <AsyncSelect
-            // cacheOptions
             loadOptions={loadOptions}
-            // defaultOptions
-            noOptionsMessage={() => 'No options'}
+            noOptionsMessage={() => 'Unable to load auction houses'}
             loadingMessage={() => 'Loading...'}
+            value={selectedOption}
+            onChange={onChange}
         />
     )
 }
