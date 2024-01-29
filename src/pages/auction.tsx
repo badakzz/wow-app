@@ -1,12 +1,12 @@
-import axios from 'axios'
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
-import { Table, Container, Image, Button, Form } from 'react-bootstrap'
+import { useState } from 'react'
+import { Container, Image, Button, Form } from 'react-bootstrap'
 import { AuctionHouseItem, RealmPicker, FactionPicker } from '@/components'
 
 const Auction = () => {
     const [itemId, setItemId] = useState<number | null>(null)
     const [faction, setFaction] = useState<string>('')
+    const [auctionHouseId, setAuctionHouseId] = useState<number | null>(null)
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setItemId(Number(event.target.value)) // Convert input value to a number
@@ -15,6 +15,8 @@ const Auction = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
     }
+
+    console.log('auctionHouse', auctionHouseId)
 
     return (
         <>
@@ -45,25 +47,11 @@ const Auction = () => {
                     faction={faction}
                     setFaction={setFaction}
                 />
-                <RealmPicker faction={faction} />
-                {/* {realms && (
-                    <Table striped bordered hover>
-                        <thead>
-                            <tr>
-                                <th>Server Name</th>
-                                <th>Region</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {realms.items.map((realm, index) => (
-                                <tr key={index}>
-                                    <td>{realm.name}</td>
-                                    <td>{realm.gameVersion}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </Table>
-                )} */}
+                <RealmPicker
+                    faction={faction}
+                    auctionHouseId={auctionHouseId}
+                    setAuctionHouseId={setAuctionHouseId}
+                />
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="itemId">
                         <Form.Label>Item ID</Form.Label>
