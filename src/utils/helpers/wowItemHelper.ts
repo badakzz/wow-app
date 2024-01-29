@@ -1,6 +1,7 @@
 import { ItemRarity } from '../constants'
 
 const rarityColorMap: Record<ItemRarity, string> = {
+    [ItemRarity.Poor]: 'rgb(131, 131, 131)', // grey
     [ItemRarity.Common]: '#FFFFFF', // White
     [ItemRarity.Uncommon]: '#1EFF00', // Green
     [ItemRarity.Rare]: '#0070DD', // Blue
