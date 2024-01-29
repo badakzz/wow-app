@@ -2,13 +2,13 @@ import axios from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getTsmApiToken } from '../../../../../utils/helpers/'
 
-interface Realm {
+interface StructuredRealms {
     name: string
     gameVersion: string
-    realms: RealmDetails[]
+    realms: Realm[]
 }
 
-interface RealmDetails {
+interface Realm {
     name: string
     auctionHouses: AuctionHouse[]
 }
@@ -18,42 +18,41 @@ interface AuctionHouse {
     type: string
 }
 
-interface Result {
-    itemName: string
-    gameVersion: string
-    realmName: string
-    auctionHouses: {
-        faction: string
-        auctionHouseId: number
-    }[]
+interface ApiResponse {
+    items: StructuredRealms[]
 }
 
-interface ApiResponse {
-    items: Realm[]
+interface FilteredResult {
+    region: string
+    gameVersion: string
+    realmName: string
+    auctionHouseId: number
 }
 
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<Result[] | { error: string }>
+    res: NextApiResponse<FilteredResult[] | { error: string }>
 ) {
     try {
         const token = await getTsmApiToken()
+        const faction = req.query.faction as string // to sanitize
 
         const { data } = await axios.get<ApiResponse>(
             'https://realm-api.tradeskillmaster.com/realms',
             { headers: { Authorization: `Bearer ${token}` } }
         )
 
-        const results: Result[] = data.items.flatMap((item) =>
-            item.realms.map((realm) => ({
-                itemName: item.name,
-                gameVersion: item.gameVersion,
-                realmName: realm.name,
-                auctionHouses: realm.auctionHouses.map((auctionHouse) => ({
-                    faction: auctionHouse.type,
-                    auctionHouseId: auctionHouse.auctionHouseId,
-                })),
-            }))
+        const results: FilteredResult[] = data.items.flatMap((item) =>
+            item.realms.flatMap((realm) =>
+                realm.auctionHouses
+                    .filter((auctionHouse) => auctionHouse.type === faction)
+                    .map((auctionHouse) => ({
+                        region: item.name,
+                        gameVersion: item.gameVersion,
+                        realmName: realm.name,
+                        auctionHouseId: auctionHouse.auctionHouseId,
+                    }))
+            )
         )
 
         res.status(200).json(results)
