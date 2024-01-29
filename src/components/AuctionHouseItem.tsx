@@ -5,7 +5,7 @@ import { getItemColor } from '../utils/helpers'
 import { ItemRarity } from '@/utils/constants'
 import { ItemSellPrice } from '.'
 
-interface ActionHouseItemProps {
+type ActionHouseItemProps = {
     itemId: number
 }
 
