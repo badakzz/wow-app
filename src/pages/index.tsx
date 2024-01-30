@@ -2,6 +2,7 @@ import Head from 'next/head'
 import { Container, Image } from 'react-bootstrap'
 
 const Home = () => {
+    console.log('render')
     return (
         <>
             <Head>

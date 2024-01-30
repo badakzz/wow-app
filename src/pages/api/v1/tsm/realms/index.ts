@@ -36,6 +36,7 @@ export default async function handler(
     try {
         const token = await getTsmApiToken()
         const faction = req.query.faction as string // to sanitize
+        const hint = req.query.hint as string // to sanitize and retrieve hint
 
         const { data } = await axios.get<ApiResponse>(
             'https://realm-api.tradeskillmaster.com/realms',
@@ -46,6 +47,13 @@ export default async function handler(
             item.realms.flatMap((realm) =>
                 realm.auctionHouses
                     .filter((auctionHouse) => auctionHouse.type === faction)
+                    .filter(
+                        (auctionHouse) =>
+                            !hint ||
+                            realm.name
+                                .toLowerCase()
+                                .includes(hint.toLowerCase())
+                    )
                     .map((auctionHouse) => ({
                         region: item.name,
                         gameVersion: item.gameVersion,

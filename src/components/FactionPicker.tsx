@@ -11,15 +11,17 @@ const FactionPicker: React.FC<FactionPickerProps> = ({
     ...restOfProps
 }) => {
     const options = [
-        { value: 'Horde', label: 'Horde' },
         { value: 'Alliance', label: 'Alliance' },
+        { value: 'Horde', label: 'Horde' },
         // { value: 'Neutral', label: 'Neutral' }
     ]
+
+    console.log('yo')
 
     const selectedOption = options.find((option) => option.value === faction)
 
     const onChange = (newValue: any) => {
-        setFaction(newValue.value)
+        if (newValue.value !== faction) setFaction(newValue.value)
     }
 
     return (
@@ -29,6 +31,7 @@ const FactionPicker: React.FC<FactionPickerProps> = ({
             value={selectedOption}
             onChange={onChange}
             isSearchable={false}
+            defaultValue={options[0]}
         />
     )
 }
