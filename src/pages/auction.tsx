@@ -1,11 +1,11 @@
 import Head from 'next/head'
 import { useState } from 'react'
 import { Container, Image, Button, Form } from 'react-bootstrap'
-import { AuctionHouseItem, RealmPicker, FactionPicker } from '@/components'
+import { AuctionHouseItem, RealmPicker, FactionPicker } from '../components'
 
 const Auction = () => {
     const [itemId, setItemId] = useState<number | null>(null)
-    const [faction, setFaction] = useState<string>('')
+    const [faction, setFaction] = useState<string>('Alliance')
     const [auctionHouseId, setAuctionHouseId] = useState<number | null>(null)
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,7 +16,7 @@ const Auction = () => {
         event.preventDefault()
     }
 
-    console.log('auctionHouse', auctionHouseId)
+    console.log('render', { faction, auctionHouseId })
 
     return (
         <>
@@ -52,7 +52,7 @@ const Auction = () => {
                     auctionHouseId={auctionHouseId}
                     setAuctionHouseId={setAuctionHouseId}
                 />
-                <Form onSubmit={handleSubmit}>
+                {/* <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="itemId">
                         <Form.Label>Item ID</Form.Label>
                         <Form.Control
@@ -65,7 +65,7 @@ const Auction = () => {
                         Submit
                     </Button>
                 </Form>
-                {itemId !== null && <AuctionHouseItem itemId={itemId} />}
+                {itemId !== null && <AuctionHouseItem itemId={itemId} />} */}
             </Container>
         </>
     )

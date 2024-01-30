@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react'
 import AsyncSelect from 'react-select/async'
 import axios from 'axios'
 
@@ -11,7 +12,7 @@ interface FilteredResult {
 type RealmPickerProps = {
     faction: string
     auctionHouseId: number | null
-    setAuctionHouseId: React.Dispatch<React.SetStateAction<any>>
+    setAuctionHouseId: React.Dispatch<React.SetStateAction<number | null>>
 }
 
 const RealmPicker: React.FC<RealmPickerProps> = ({
@@ -19,36 +20,51 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
     auctionHouseId,
     setAuctionHouseId,
 }) => {
-    const loadOptions = () => {
-        return axios
-            .get(`/api/v1/tsm/realms?faction=${encodeURIComponent(faction)}`)
-            .then(({ data }) => {
-                return data.map((result: FilteredResult) => ({
-                    label: `${result.realmName} (${result.gameVersion} - ${result.region})`,
-                    value: result.auctionHouseId,
-                }))
-            })
-            .catch((error) => {
-                console.error('Error fetching data:', error)
-                return []
-            })
+    const [currentAuctionHouse, setCurrentAuctionHouse] = useState<any>(null)
+
+    const fetchRealmsByValue = async (inputValue: string) => {
+        try {
+            const response = await axios.get<FilteredResult[]>(
+                `/api/v1/tsm/realms?faction=${encodeURIComponent(
+                    faction
+                )}&hint=${encodeURIComponent(inputValue)}`
+            )
+            return response.data.map((result) => ({
+                label: `${result.realmName} (${result.gameVersion} - ${result.region})`,
+                value: result.auctionHouseId,
+            }))
+        } catch (error) {
+            console.error('Error fetching data:', error)
+            return []
+        }
     }
+
+    useEffect(() => {
+        if (auctionHouseId === null) {
+            setCurrentAuctionHouse(null)
+        }
+    }, [auctionHouseId])
+
+    useEffect(() => {
+        setCurrentAuctionHouse(null) // Clear the selection when the faction changes
+        setAuctionHouseId(null)
+    }, [faction])
 
     const onChange = (selectedOption: any) => {
-        setAuctionHouseId(selectedOption ? selectedOption.value : 0)
+        setAuctionHouseId(selectedOption ? selectedOption.value : null)
+        setCurrentAuctionHouse(selectedOption)
     }
-
-    const selectedOption = loadOptions().then((options) =>
-        options.find((option: any) => option.value === auctionHouseId)
-    )
 
     return (
         <AsyncSelect
-            loadOptions={loadOptions}
+            loadOptions={fetchRealmsByValue}
             noOptionsMessage={() => 'Unable to load auction houses'}
             loadingMessage={() => 'Loading...'}
-            value={selectedOption}
+            cacheOptions
+            defaultOptions
+            value={currentAuctionHouse}
             onChange={onChange}
+            isSearchable
         />
     )
 }
