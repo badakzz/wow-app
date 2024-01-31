@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Image } from 'react-bootstrap'
 import { getItemColor } from '../utils/helpers'
-import { ItemRarity } from '@/utils/constants'
+import { ITEM_RARITY } from '@/utils/constants'
 import { ItemSellPrice } from '.'
 
 type ActionHouseItemProps = {
@@ -20,7 +20,7 @@ const AuctionHouseItem: React.FC<ActionHouseItemProps> = ({ itemId }) => {
                 name: string
             }
             quality: {
-                type: ItemRarity
+                type: ITEM_RARITY
             }
             name: string
             preview_item: {
