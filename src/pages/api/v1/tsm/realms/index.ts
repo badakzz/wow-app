@@ -10,10 +10,10 @@ interface StructuredRealms {
 
 interface Realm {
     name: string
-    auctionHouses: AuctionHouse[]
+    auctionHouses: RawAuctionHouse[]
 }
 
-interface AuctionHouse {
+interface RawAuctionHouse {
     auctionHouseId: number
     type: string
 }
@@ -22,20 +22,19 @@ interface ApiResponse {
     items: StructuredRealms[]
 }
 
-interface FilteredResult {
-    region: string
-    gameVersion: string
+interface AuctionHouse {
     realmName: string
     auctionHouseId: number
 }
 
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<FilteredResult[] | { error: string }>
+    res: NextApiResponse<AuctionHouse[] | { error: string }>
 ) {
     try {
         const token = await getTsmApiToken()
         const faction = req.query.faction as string // to sanitize
+        const region = req.query.region as string // to sanitize
         const hint = req.query.hint as string // to sanitize and retrieve hint
 
         const { data } = await axios.get<ApiResponse>(
@@ -43,26 +42,28 @@ export default async function handler(
             { headers: { Authorization: `Bearer ${token}` } }
         )
 
-        const results: FilteredResult[] = data.items.flatMap((item) =>
-            item.realms.flatMap((realm) =>
-                realm.auctionHouses
-                    .filter((auctionHouse) => auctionHouse.type === faction)
-                    .filter(
-                        (auctionHouse) =>
-                            !hint ||
-                            realm.name
-                                .toLowerCase()
-                                .includes(hint.toLowerCase())
-                    )
-                    .map((auctionHouse) => ({
-                        region: item.name,
-                        gameVersion: item.gameVersion,
-                        realmName: realm.name,
-                        auctionHouseId: auctionHouse.auctionHouseId,
-                    }))
+        const results: AuctionHouse[] = data.items
+            .filter((item) => item.gameVersion === 'Season of Mastery')
+            .filter((item) => item.name === region)
+            .flatMap((item) =>
+                item.realms.flatMap((realm) =>
+                    realm.auctionHouses
+                        .filter((auctionHouse) => auctionHouse.type === faction)
+                        .filter(
+                            (auctionHouse) =>
+                                !hint ||
+                                realm.name
+                                    .toLowerCase()
+                                    .includes(hint.toLowerCase())
+                        )
+                        .map((auctionHouse) => ({
+                            realmName: realm.name,
+                            auctionHouseId: auctionHouse.auctionHouseId,
+                        }))
+                )
             )
-        )
 
+        console.log(results)
         res.status(200).json(results)
     } catch (error) {
         if (axios.isAxiosError(error) && error.response) {
