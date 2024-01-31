@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import AsyncSelect from 'react-select/async'
 import axios from 'axios'
-
-interface FilteredResult {
-    region: string
-    gameVersion: string
-    realmName: string
-    auctionHouseId: number
-}
+import { AuctionHouse } from '../utils/types'
 
 type RealmPickerProps = {
+    region: string
     faction: string
     auctionHouseId: number | null
     setAuctionHouseId: React.Dispatch<React.SetStateAction<number | null>>
@@ -17,6 +12,7 @@ type RealmPickerProps = {
 
 const RealmPicker: React.FC<RealmPickerProps> = ({
     faction,
+    region,
     auctionHouseId,
     setAuctionHouseId,
 }) => {
@@ -24,13 +20,15 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
 
     const fetchRealmsByValue = async (inputValue: string) => {
         try {
-            const response = await axios.get<FilteredResult[]>(
+            const response = await axios.get<AuctionHouse[]>(
                 `/api/v1/tsm/realms?faction=${encodeURIComponent(
                     faction
+                )}&region=${encodeURIComponent(
+                    region
                 )}&hint=${encodeURIComponent(inputValue)}`
             )
             return response.data.map((result) => ({
-                label: `${result.realmName} (${result.gameVersion} - ${result.region})`,
+                label: `${result.realmName}`,
                 value: result.auctionHouseId,
             }))
         } catch (error) {
@@ -46,9 +44,9 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
     }, [auctionHouseId])
 
     useEffect(() => {
-        setCurrentAuctionHouse(null) // Clear the selection when the faction changes
+        setCurrentAuctionHouse(null)
         setAuctionHouseId(null)
-    }, [faction])
+    }, [faction, region])
 
     const onChange = (selectedOption: any) => {
         setAuctionHouseId(selectedOption ? selectedOption.value : null)
@@ -60,11 +58,13 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
             loadOptions={fetchRealmsByValue}
             noOptionsMessage={() => 'Unable to load auction houses'}
             loadingMessage={() => 'Loading...'}
+            placeholder={'Select a realm...'}
             cacheOptions
             defaultOptions
             value={currentAuctionHouse}
             onChange={onChange}
             isSearchable
+            classNamePrefix="react-select"
         />
     )
 }

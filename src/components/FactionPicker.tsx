@@ -1,4 +1,5 @@
 import Select from 'react-select'
+import { FACTION } from '../utils/constants'
 
 type FactionPickerProps = {
     faction: string
@@ -11,12 +12,10 @@ const FactionPicker: React.FC<FactionPickerProps> = ({
     ...restOfProps
 }) => {
     const options = [
-        { value: 'Alliance', label: 'Alliance' },
-        { value: 'Horde', label: 'Horde' },
-        // { value: 'Neutral', label: 'Neutral' }
+        { value: FACTION.ALLIANCE, label: FACTION.ALLIANCE },
+        { value: FACTION.HORDE, label: FACTION.HORDE },
+        // { value: FACTION.Neutral, label: 'Neutral' }
     ]
-
-    console.log('yo')
 
     const selectedOption = options.find((option) => option.value === faction)
 
@@ -31,7 +30,7 @@ const FactionPicker: React.FC<FactionPickerProps> = ({
             value={selectedOption}
             onChange={onChange}
             isSearchable={false}
-            defaultValue={options[0]}
+            classNamePrefix="react-select"
         />
     )
 }
