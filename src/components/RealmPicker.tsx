@@ -63,6 +63,7 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
 
     return (
         <AsyncSelect
+            instanceId={'realmPicker'}
             loadOptions={fetchRealmsByValue}
             noOptionsMessage={() => 'Unable to load auction houses'}
             loadingMessage={() => 'Loading...'}
