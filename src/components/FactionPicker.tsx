@@ -26,6 +26,7 @@ const FactionPicker: React.FC<FactionPickerProps> = ({
     return (
         <Select
             {...restOfProps}
+            instanceId={'factionPicker'}
             options={options}
             value={selectedOption}
             onChange={onChange}

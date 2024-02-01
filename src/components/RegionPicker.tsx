@@ -27,6 +27,7 @@ const RegionPicker: React.FC<RegionPickerProps> = ({
     return (
         <Select
             {...restOfProps}
+            instanceId={'regionPicker'}
             options={options}
             value={selectedOption}
             onChange={onChange}
