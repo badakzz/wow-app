@@ -1,4 +1,4 @@
-import { getWowApiToken } from '@/utils/helpers/'
+import { getWowApiToken, sanitizeInput } from '@/utils/helpers/'
 import axios from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -6,7 +6,7 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    const itemId = req.query.itemId // to sanitize probably
+    const { itemId } = sanitizeInput(req.query)
 
     if (!itemId) {
         return res.status(400).json({ error: 'Item ID is required' })
