@@ -1,0 +1,152 @@
+_type: export
+__export_format: 4
+__export_date: 2024-02-01T13:37:27.124Z
+__export_source: insomnia.desktop.app:v8.6.0
+resources:
+  - _id: req_9fc8d61d27d846da9ca9ccf7a3abfc1d
+    parentId: wrk_884dd77382fc47edb784ebcac45681b9
+    modified: 1706794588471
+    created: 1706794483941
+    url: http://localhost:3000/api/v1/tsm/:auctionHouseId
+    name: Get Tsm AH By Id
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/8.6.0
+    authentication: {}
+    metaSortKey: -1706794483941
+    isPrivate: false
+    pathParameters:
+      - name: auctionHouseId
+        value: "513"
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: wrk_884dd77382fc47edb784ebcac45681b9
+    parentId: null
+    modified: 1706792205154
+    created: 1706792205154
+    name: Wow App
+    description: ""
+    scope: collection
+    _type: workspace
+  - _id: req_e4cc36546bc0417189c945209e1c8a10
+    parentId: wrk_884dd77382fc47edb784ebcac45681b9
+    modified: 1706794576723
+    created: 1706792648703
+    url: http://localhost:3000/api/v1/tsm/:auctionHouseId/:itemId
+    name: Get Tsm Item By Id And AH
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/8.6.0
+        id: pair_c3e4711ce4d14e79b631bb29adf4d306
+    authentication: {}
+    metaSortKey: -1706792648703
+    isPrivate: false
+    pathParameters:
+      - name: auctionHouseId
+        value: "513"
+      - name: itemId
+        value: "25"
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_1623c18587a94b8c92eefa7d6b08001e
+    parentId: wrk_884dd77382fc47edb784ebcac45681b9
+    modified: 1706794431447
+    created: 1706792303895
+    url: http://localhost:3000/api/v1/wow/items/:itemId
+    name: Get Wow Item By Id
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_895738bd1ecd4f988384cc5048c3330d
+        name: ""
+        value: ""
+        description: ""
+    headers:
+      - name: User-Agent
+        value: insomnia/8.6.0
+    authentication: {}
+    metaSortKey: -1706792303895
+    isPrivate: false
+    pathParameters:
+      - name: itemId
+        value: "4131"
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_68342db185f448789bc8d933d2f9d43c
+    parentId: wrk_884dd77382fc47edb784ebcac45681b9
+    modified: 1706793901951
+    created: 1706792214272
+    url: http://localhost:3000/api/v1/tsm/realms
+    name: Get Tsm Realms
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_bb20b39b6ac44597b367955ae6f383b9
+        name: region
+        value: Europe
+        description: ""
+      - id: pair_3eccf4cf67e84a778ee27f7e4c8bf5e7
+        name: faction
+        value: Horde
+        description: ""
+      - id: pair_19403fc3914e4d00a8c011c69ee47161
+        name: hint
+        value: Living
+        description: ""
+    headers:
+      - name: User-Agent
+        value: insomnia/8.6.0
+    authentication: {}
+    metaSortKey: -1706792214272
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_a2a93550cef0cf8d327bc58126a0e0353d7b2c74
+    parentId: wrk_884dd77382fc47edb784ebcac45681b9
+    modified: 1706792205157
+    created: 1706792205157
+    name: Base Environment
+    data: {}
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1706792205157
+    _type: environment
+  - _id: jar_a2a93550cef0cf8d327bc58126a0e0353d7b2c74
+    parentId: wrk_884dd77382fc47edb784ebcac45681b9
+    modified: 1706792205158
+    created: 1706792205158
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
