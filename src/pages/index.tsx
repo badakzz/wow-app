@@ -2,6 +2,7 @@ import Head from 'next/head'
 import { Container, Image } from 'react-bootstrap'
 
 const Home = () => {
+    console.log('render')
     return (
         <>
             <Head>
@@ -12,7 +13,7 @@ const Home = () => {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Container className="container-top-margin custom-container p-5">
+            <Container className="container-top-margin main-container p-5">
                 <div className="d-flex align-items-center justify-content-center">
                     <div className="flex-half text-align-start">
                         <h1 className="mb-5">

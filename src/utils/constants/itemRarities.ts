@@ -1,8 +1,8 @@
-export enum ItemRarity {
-    Poor = 'POOR',
-    Common = 'COMMON',
-    Uncommon = 'UNCOMMON',
-    Rare = 'RARE',
-    Epic = 'EPIC',
-    Legendary = 'LEGENDARY',
+export enum ITEM_RARITY {
+    POOR = 'POOR',
+    COMMON = 'COMMON',
+    UNCOMMON = 'UNCOMMON',
+    RARE = 'RARE',
+    EPIC = 'EPIC',
+    LEGENDARY = 'LEGENDARY',
 }

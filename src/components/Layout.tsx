@@ -10,7 +10,7 @@ const Layout: React.FC<Props> = ({ children }) => {
         <>
             <Navbar expand="lg" className="bg-body-tertiary custom-navbar">
                 <Container fluid>
-                    <Navbar.Brand href="#home">
+                    <Navbar.Brand href="/">
                         <Image
                             src="/logo.png"
                             width="80"
@@ -23,6 +23,9 @@ const Layout: React.FC<Props> = ({ children }) => {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <Nav.Link href="#link">Blue Post Tracker</Nav.Link>
+                            <Nav.Link href="auction">
+                                Auction House Tracker
+                            </Nav.Link>
                             <Nav.Link href="#link">Runes</Nav.Link>
                             <Nav.Link href="#link">Logs</Nav.Link>
                             <Nav.Link href="#link">BiS List</Nav.Link>

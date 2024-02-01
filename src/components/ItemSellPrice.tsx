@@ -1,6 +1,6 @@
 import { Image } from 'react-bootstrap'
 
-interface ItemSellPriceProps {
+type ItemSellPriceProps = {
     gold: string
     silver: string
     copper: string
