@@ -7,7 +7,7 @@ with open('res.json', 'r') as file:
     data = json.load(file)
 
 # Connect to the SQLite database
-conn = sqlite3.connect('database/prices.db')
+conn = sqlite3.connect('prices.db')
 cursor = conn.cursor()
 
 # Create table if it does not exist, adding a 'snapshotDate' column for tracking changes over time
