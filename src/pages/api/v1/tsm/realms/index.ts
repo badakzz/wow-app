@@ -1,6 +1,6 @@
 import axios from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { getTsmApiToken } from '../../../../../utils/helpers/'
+import { getTsmApiToken, sanitizeInput } from '../../../../../utils/helpers/'
 
 interface StructuredRealms {
     name: string
@@ -33,9 +33,7 @@ export default async function handler(
 ) {
     try {
         const token = await getTsmApiToken()
-        const faction = req.query.faction as string // to sanitize
-        const region = req.query.region as string // to sanitize
-        const hint = req.query.hint as string // to sanitize and retrieve hint
+        const { faction, region, hint } = sanitizeInput(req.query)
 
         const { data } = await axios.get<ApiResponse>(
             'https://realm-api.tradeskillmaster.com/realms',
