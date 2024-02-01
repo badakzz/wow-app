@@ -61,7 +61,6 @@ export default async function handler(
                 )
             )
 
-        console.log(results)
         res.status(200).json(results)
     } catch (error) {
         if (axios.isAxiosError(error) && error.response) {
