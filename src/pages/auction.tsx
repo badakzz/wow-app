@@ -8,6 +8,7 @@ import {
     RegionPicker,
 } from '../components'
 import { FACTION, REGION } from '../utils/constants'
+import axios from 'axios'
 
 const Auction = () => {
     const [itemId, setItemId] = useState<number | null>(null)
@@ -22,6 +23,8 @@ const Auction = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
     }
+
+    // axios.get(`/api/v1/tsm/513/4131`).then(({ data }) => data)
 
     return (
         <>
