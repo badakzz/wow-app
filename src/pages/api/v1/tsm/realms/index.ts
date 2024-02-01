@@ -41,7 +41,7 @@ export default async function handler(
         )
 
         const results: AuctionHouse[] = data.items
-            .filter((item) => item.gameVersion === 'Season of Mastery')
+            .filter((item) => item.gameVersion === 'Season of Discovery')
             .filter((item) => item.name === region)
             .flatMap((item) =>
                 item.realms.flatMap((realm) =>
