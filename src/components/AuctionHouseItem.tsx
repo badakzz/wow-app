@@ -6,7 +6,7 @@ import { ITEM_RARITY } from '@/utils/constants'
 import { ItemSellPrice } from '.'
 
 type ActionHouseItemProps = {
-    itemId: number
+    itemId: number | null
 }
 
 const AuctionHouseItem: React.FC<ActionHouseItemProps> = ({ itemId }) => {
@@ -46,6 +46,8 @@ const AuctionHouseItem: React.FC<ActionHouseItemProps> = ({ itemId }) => {
         }
     } | null>(null)
 
+    console.log('itm', item)
+
     useEffect(() => {
         if (itemId) {
             fetchItem(itemId)
@@ -56,8 +58,6 @@ const AuctionHouseItem: React.FC<ActionHouseItemProps> = ({ itemId }) => {
         try {
             const response = await axios.get(`/api/v1/wow/items/${itemId}`)
             const item = response.data
-
-            console.log('resp', response)
             setItem(item)
         } catch (error) {
             console.error('Error fetching image:', error)
@@ -66,11 +66,16 @@ const AuctionHouseItem: React.FC<ActionHouseItemProps> = ({ itemId }) => {
 
     return (
         <>
+            {item && console.log(item.itemData.quality.type)}
+            {item &&
+                console.log(getItemColorByRarity(item.itemData.quality.type))}
             {item && (
                 <div className="d-flex gap-2">
                     <div>
                         <Image
                             className="auction-house-item-img-border"
+                            height={50}
+                            width={50}
                             src={item.itemMedia.assets[0].value}
                             alt={`Item ${itemId}`}
                         />

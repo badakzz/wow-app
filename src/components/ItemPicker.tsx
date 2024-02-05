@@ -5,6 +5,8 @@ import axios from 'axios'
 import debounce from 'lodash.debounce'
 import { Item } from '../utils/types'
 import { getItemColorByRarity } from '../utils/helpers'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { AuctionHouseItem } from '.'
 
 type ItemPickerProps = {
     itemId: number | null
@@ -17,7 +19,6 @@ const ItemPicker: React.FC<ItemPickerProps> = ({ itemId, setItemId }) => {
     const debouncedFetchItems = debounce(
         async (inputValue: string, callback: (options: any[]) => void) => {
             try {
-                // Include a limit parameter in the request URL
                 const response = await axios.get<Item[]>(
                     `/api/v2/items?hint=${encodeURIComponent(
                         inputValue
@@ -55,6 +56,8 @@ const ItemPicker: React.FC<ItemPickerProps> = ({ itemId, setItemId }) => {
     }
 
     const Option: FunctionComponent<OptionProps> = (props: any) => {
+        console.log('opt', props)
+
         return (
             <components.Option {...props}>
                 <div
@@ -62,7 +65,16 @@ const ItemPicker: React.FC<ItemPickerProps> = ({ itemId, setItemId }) => {
                         color: getItemColorByRarity(props.data.rarity),
                     }}
                 >
-                    {props.label}
+                    <OverlayTrigger
+                        placement="bottom"
+                        overlay={
+                            <Tooltip className="item-tooltip">
+                                <AuctionHouseItem itemId={props.value} />
+                            </Tooltip>
+                        }
+                    >
+                        <span>{props.label}</span>
+                    </OverlayTrigger>
                 </div>
             </components.Option>
         )
