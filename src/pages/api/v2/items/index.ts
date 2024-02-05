@@ -9,23 +9,20 @@ export default async function handler(
     res: NextApiResponse
 ) {
     try {
-        const { itemId } = sanitizeInput(req.query)
+        const { hint, limit = '10' } = sanitizeInput(req.query)
 
-        const data = await prisma.item_names.findUnique({
+        const data = await prisma.items.findMany({
             where: {
-                itemId: parseInt(itemId),
+                itemName: {
+                    contains: hint,
+                },
             },
+            take: parseInt(limit, 10),
         })
 
-        if (data.length === 0) {
-            res.status(404).json({ error: 'Data not found' })
-        } else {
-            res.status(200).json(data)
-        }
+        res.status(200).json(data)
     } catch (error) {
         console.error('Request error', error)
         res.status(500).json({ error: 'Error fetching data' })
-    } finally {
-        await prisma.$disconnect()
     }
 }
