@@ -1,29 +1,33 @@
 _type: export
 __export_format: 4
-__export_date: 2024-02-01T15:05:13.515Z
+__export_date: 2024-02-05T12:35:01.073Z
 __export_source: insomnia.desktop.app:v8.6.0
 resources:
-  - _id: req_4568962edfb54394ada22cb733d389bd
+  - _id: req_71c85f0c6ca44ca5864ba3df7a309400
     parentId: wrk_884dd77382fc47edb784ebcac45681b9
-    modified: 1706799744585
-    created: 1706797967746
-    url: http://localhost:3000/api/v2/:auctionHouseId/:itemid
-    name: V2 - Get prices for item in AH
+    modified: 1707136472374
+    created: 1707124322051
+    url: http://localhost:3000/api/v2/items
+    name: V2 - Get item name and rarity
     description: ""
     method: GET
     body: {}
-    parameters: []
+    parameters:
+      - id: pair_de8addf907184a93ad438b46526d9645
+        name: hint
+        value: Staff
+        description: ""
+      - id: pair_c34c7c0613fe4828a7b0866c3bef7dd2
+        name: limit
+        value: "10"
+        description: ""
     headers:
       - name: User-Agent
         value: insomnia/8.6.0
     authentication: {}
-    metaSortKey: -1706797967746
+    metaSortKey: -1707124322051
     isPrivate: false
-    pathParameters:
-      - name: auctionHouseId
-        value: "513"
-      - name: itemid
-        value: "25"
+    pathParameters: []
     settingStoreCookies: true
     settingSendCookies: true
     settingDisableRenderRequestBody: false
@@ -39,11 +43,39 @@ resources:
     description: ""
     scope: collection
     _type: workspace
+  - _id: req_4568962edfb54394ada22cb733d389bd
+    parentId: wrk_884dd77382fc47edb784ebcac45681b9
+    modified: 1707124319405
+    created: 1706797967746
+    url: http://localhost:3000/api/v2/:itemid/:auctionHouseId/
+    name: V2 - Get item prices in AH
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/8.6.0
+    authentication: {}
+    metaSortKey: -1706797967746
+    isPrivate: false
+    pathParameters:
+      - name: itemid
+        value: "25"
+      - name: auctionHouseId
+        value: "513"
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
   - _id: req_e62ecf7dc0d34237973174def36210b0
     parentId: wrk_884dd77382fc47edb784ebcac45681b9
-    modified: 1706799880459
+    modified: 1707124429662
     created: 1706799797951
-    url: http://localhost:3000/api/v2/:auctionHouseId/:itemid/market_value_differential
+    url: http://localhost:3000/api/v2/:itemid/:auctionHouseId/market_value_differential
     name: V2 - Get market value differential for item in AH
     description: ""
     method: GET
@@ -56,10 +88,10 @@ resources:
     metaSortKey: -1706796225843.5
     isPrivate: false
     pathParameters:
-      - name: auctionHouseId
-        value: "513"
       - name: itemid
         value: "25"
+      - name: auctionHouseId
+        value: "513"
     settingStoreCookies: true
     settingSendCookies: true
     settingDisableRenderRequestBody: false

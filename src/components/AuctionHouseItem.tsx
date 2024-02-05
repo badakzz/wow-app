@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Image } from 'react-bootstrap'
-import { getItemColor } from '../utils/helpers'
+import { getItemColorByRarity } from '../utils/helpers'
 import { ITEM_RARITY } from '@/utils/constants'
 import { ItemSellPrice } from '.'
 
@@ -55,7 +55,6 @@ const AuctionHouseItem: React.FC<ActionHouseItemProps> = ({ itemId }) => {
     const fetchItem = async (itemId: number) => {
         try {
             const response = await axios.get(`/api/v1/wow/items/${itemId}`)
-            // const imageUrl = response.data.assets[0].value
             const item = response.data
 
             console.log('resp', response)
@@ -80,7 +79,7 @@ const AuctionHouseItem: React.FC<ActionHouseItemProps> = ({ itemId }) => {
                         <div>
                             <div
                                 style={{
-                                    color: getItemColor(
+                                    color: getItemColorByRarity(
                                         item.itemData.quality.type
                                     ),
                                 }}
