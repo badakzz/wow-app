@@ -28,7 +28,7 @@ def get_access_token(client_id, client_secret):
         return None
 
 def fetch_item_details(access_token, item_id):
-    url = f"https://{REGION}.api.blizzard.com/data/wow/item/{item_id}?namespace=static-{REGION}&locale={LOCALE}&access_token={access_token}"
+    url = f"https://{REGION}.api.blizzard.com/data/wow/item/{item_id}?namespace=static-classic-{REGION}&locale={LOCALE}&access_token={access_token}"
     response = requests.get(url)
     if response.status_code == 200:
         data = response.json()
@@ -41,12 +41,6 @@ def fetch_item_details(access_token, item_id):
     
 conn = sqlite3.connect('prices.db')
 cursor = conn.cursor()
-
-# Add the itemRarity column if it does not exist
-cursor.execute('PRAGMA table_info(items)')
-columns = [info[1] for info in cursor.fetchall()]
-if 'itemRarity' not in columns:
-    cursor.execute('ALTER TABLE items ADD COLUMN itemRarity TEXT')
 
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS items (
@@ -65,6 +59,7 @@ access_token = ''
 
 for item_id in item_ids:
     item_name, item_rarity = fetch_item_details(access_token, item_id)
+    print(f"Fetched: Item ID {item_id} - Name: {item_name}, Rarity: {item_rarity}")  # Debug print
     if item_name and item_rarity:
         cursor.execute('INSERT OR IGNORE INTO items (itemId, itemName, itemRarity) VALUES (?, ?, ?)', (item_id, item_name, item_rarity))
         print(f"Inserted: Item ID {item_id} - Name: {item_name}, Rarity: {item_rarity}")
