@@ -1,30 +1,20 @@
 import Head from 'next/head'
 import { useState } from 'react'
-import { Container, Image, Button, Form } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 import {
     AuctionHouseItem,
     RealmPicker,
     FactionPicker,
     RegionPicker,
+    ItemPicker,
 } from '../components'
 import { FACTION, REGION } from '../utils/constants'
-import axios from 'axios'
 
 const Auction = () => {
     const [itemId, setItemId] = useState<number | null>(null)
     const [faction, setFaction] = useState<string>(FACTION.ALLIANCE)
     const [region, setRegion] = useState<string>(REGION.EUROPE)
     const [auctionHouseId, setAuctionHouseId] = useState<number | null>(null)
-
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setItemId(Number(event.target.value))
-    }
-
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
-    }
-
-    // axios.get(`/api/v1/tsm/513/4131`).then(({ data }) => data)
 
     return (
         <>
@@ -54,7 +44,8 @@ const Auction = () => {
                     auctionHouseId={auctionHouseId}
                     setAuctionHouseId={setAuctionHouseId}
                 />
-                <Form onSubmit={handleSubmit}>
+                <ItemPicker itemId={itemId} setItemId={setItemId} />
+                {/* <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="itemId">
                         <Form.Label>Item ID</Form.Label>
                         <Form.Control
@@ -66,7 +57,7 @@ const Auction = () => {
                     <Button variant="primary" type="submit">
                         Submit
                     </Button>
-                </Form>
+                </Form> */}
                 {itemId !== null && <AuctionHouseItem itemId={itemId} />}
             </Container>
         </>

@@ -25,9 +25,10 @@ model prices_history {
     @@id([itemId, snapshotDate])
 }
 
-model item_names {
+model items {
   itemId   Int    @id
   itemName String?
+  itemRarity String?
   
-  @@map("item_names")
+  @@map("items")
 }

@@ -44,7 +44,7 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
         [faction, region]
     )
 
-    const fetchRealmsByValue = (
+    const fetchRealmsByName = (
         inputValue: string,
         callback: (options: any) => void
     ) => {
@@ -64,7 +64,7 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
     return (
         <AsyncSelect
             instanceId={'realmPicker'}
-            loadOptions={fetchRealmsByValue}
+            loadOptions={fetchRealmsByName}
             noOptionsMessage={() => 'Unable to load auction houses'}
             loadingMessage={() => 'Loading...'}
             placeholder={'Select a realm...'}
