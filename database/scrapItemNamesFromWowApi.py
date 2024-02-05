@@ -51,7 +51,7 @@ if 'itemRarity' not in columns:
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS items (
     itemId INTEGER PRIMARY KEY,
-    itemName TEXT
+    itemName TEXT,
     itemRarity TEXT
 )
 ''')
