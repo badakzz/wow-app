@@ -24,3 +24,10 @@ model prices_history {
     @@map("prices_history")
     @@id([itemId, snapshotDate])
 }
+
+model item_names {
+  itemId   Int    @id
+  itemName String?
+  
+  @@map("item_names")
+}
