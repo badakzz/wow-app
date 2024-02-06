@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "sqlite"
+    url      = env("DATABASE_URL")
+}
+
+model prices_history {
+    auctionHouseId Int?
+    itemId         Int
+    petSpeciesId   Int?
+    minBuyout      Int?
+    quantity       Int?
+    marketValue    Int?
+    historical     Int?
+    numAuctions    Int?
+    snapshotDate   String
+
+    @@map("prices_history")
+    @@id([itemId, snapshotDate])
+}
+
+model items {
+  itemId   Int    @id
+  itemName String?
+  itemRarity String?
+  
+  @@map("items")
+}

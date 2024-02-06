@@ -9,7 +9,7 @@ const rarityColorMap: Record<ITEM_RARITY, string> = {
     [ITEM_RARITY.LEGENDARY]: '#FF8000', // Orange
 }
 
-export const getItemColor = (rarityType: ITEM_RARITY): string => {
+export const getItemColorByRarity = (rarityType: ITEM_RARITY): string => {
     const rarityValues = Object.values(ITEM_RARITY)
 
     if (rarityValues.includes(rarityType)) {
