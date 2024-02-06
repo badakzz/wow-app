@@ -169,6 +169,10 @@ h1 {
     justify-content: 'center';
 }
 
+.realm-picker {
+    min-width: 30% !important;
+}
+
 @media (min-width: 768px) {
     .main-container {
         max-width: 90%;
