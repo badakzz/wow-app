@@ -9,7 +9,7 @@ type ActionHouseItemProps = {
     itemId: number | null
 }
 
-const AuctionHouseItem: React.FC<ActionHouseItemProps> = ({ itemId }) => {
+const ItemDetails: React.FC<ActionHouseItemProps> = ({ itemId }) => {
     const [item, setItem] = useState<{
         itemMedia: { assets: any[] }
         itemData: {
@@ -46,8 +46,6 @@ const AuctionHouseItem: React.FC<ActionHouseItemProps> = ({ itemId }) => {
         }
     } | null>(null)
 
-    console.log('itm', item)
-
     useEffect(() => {
         if (itemId) {
             fetchItem(itemId)
@@ -60,15 +58,12 @@ const AuctionHouseItem: React.FC<ActionHouseItemProps> = ({ itemId }) => {
             const item = response.data
             setItem(item)
         } catch (error) {
-            console.error('Error fetching image:', error)
+            console.error('Error fetching item:', error)
         }
     }
 
     return (
         <>
-            {item && console.log(item.itemData.quality.type)}
-            {item &&
-                console.log(getItemColorByRarity(item.itemData.quality.type))}
             {item && (
                 <div className="d-flex gap-2">
                     <div>
@@ -148,4 +143,4 @@ const AuctionHouseItem: React.FC<ActionHouseItemProps> = ({ itemId }) => {
     )
 }
 
-export default AuctionHouseItem
+export default ItemDetails

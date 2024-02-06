@@ -1,12 +1,12 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
-import AsyncSelect from 'react-select/async' // Correct this import
+import AsyncSelect from 'react-select/async'
 import { OptionProps, SingleValueProps, components } from 'react-select'
 import axios from 'axios'
 import debounce from 'lodash.debounce'
 import { Item } from '../utils/types'
 import { getItemColorByRarity } from '../utils/helpers'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { AuctionHouseItem } from '.'
+import { ItemDetails } from '.'
 
 type ItemPickerProps = {
     itemId: number | null
@@ -55,44 +55,38 @@ const ItemPicker: React.FC<ItemPickerProps> = ({ itemId, setItemId }) => {
         setCurrentItem(selectedOption)
     }
 
-    const Option: FunctionComponent<OptionProps> = (props: any) => {
-        console.log('opt', props)
-
-        return (
-            <components.Option {...props}>
-                <div
-                    style={{
-                        color: getItemColorByRarity(props.data.rarity),
-                    }}
+    const Option: FunctionComponent<OptionProps> = (props: any) => (
+        <components.Option {...props}>
+            <div
+                style={{
+                    color: getItemColorByRarity(props.data.rarity),
+                }}
+            >
+                <OverlayTrigger
+                    placement="bottom"
+                    overlay={
+                        <Tooltip className="item-tooltip">
+                            <ItemDetails itemId={props.value} />
+                        </Tooltip>
+                    }
                 >
-                    <OverlayTrigger
-                        placement="bottom"
-                        overlay={
-                            <Tooltip className="item-tooltip">
-                                <AuctionHouseItem itemId={props.value} />
-                            </Tooltip>
-                        }
-                    >
-                        <span>{props.label}</span>
-                    </OverlayTrigger>
-                </div>
-            </components.Option>
-        )
-    }
+                    <span>{props.label}</span>
+                </OverlayTrigger>
+            </div>
+        </components.Option>
+    )
 
-    const SingleValue: FunctionComponent<SingleValueProps> = (props: any) => {
-        return (
-            <components.SingleValue {...props}>
-                <div
-                    style={{
-                        color: getItemColorByRarity(props.data.rarity),
-                    }}
-                >
-                    {props.children}
-                </div>
-            </components.SingleValue>
-        )
-    }
+    const SingleValue: FunctionComponent<SingleValueProps> = (props: any) => (
+        <components.SingleValue {...props}>
+            <div
+                style={{
+                    color: getItemColorByRarity(props.data.rarity),
+                }}
+            >
+                {props.children}
+            </div>
+        </components.SingleValue>
+    )
 
     return (
         <AsyncSelect
@@ -100,7 +94,7 @@ const ItemPicker: React.FC<ItemPickerProps> = ({ itemId, setItemId }) => {
             loadOptions={fetchItemsByName}
             noOptionsMessage={() => 'Unable to load items'}
             loadingMessage={() => 'Loading...'}
-            placeholder="Select an item..."
+            placeholder="Search an item..."
             cacheOptions
             defaultOptions
             value={currentItem}
