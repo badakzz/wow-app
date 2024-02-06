@@ -3,3 +3,8 @@ export enum FACTION {
     HORDE = 'Horde',
     NEUTRAL = 'Neutral',
 }
+
+export const FACTION_LOGO = {
+    [FACTION.ALLIANCE]: '/alliance.png',
+    [FACTION.HORDE]: '/horde.png',
+}

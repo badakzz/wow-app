@@ -1,5 +1,7 @@
-import Select from 'react-select'
-import { REGION } from '../utils/constants'
+import Select, { OptionProps, SingleValueProps, components } from 'react-select'
+import { REGION, FLAG } from '../utils/constants'
+import { FunctionComponent } from 'react'
+import { Image } from 'react-bootstrap'
 
 type RegionPickerProps = {
     region: string
@@ -18,6 +20,41 @@ const RegionPicker: React.FC<RegionPickerProps> = ({
         { value: REGION.TAIWAN, label: REGION.TAIWAN },
     ]
 
+    const getFlagSrc = (props: any) =>
+        `${FLAG[props.data.value as keyof typeof FLAG]}`
+
+    const SingleValue: FunctionComponent<SingleValueProps> = (props: any) => {
+        return (
+            <components.SingleValue {...props}>
+                <div className="d-flex align-items-center justify-content-center text-align-center gap-2">
+                    <span>{props.data.label}</span>
+                    <div className="logo-round-container">
+                        <Image
+                            src={getFlagSrc(props)}
+                            style={{ height: '20px', width: 'auto' }}
+                            alt="region logo"
+                        />
+                    </div>
+                </div>
+            </components.SingleValue>
+        )
+    }
+
+    const Option: FunctionComponent<OptionProps> = (props: any) => (
+        <components.Option {...props}>
+            <div className="d-flex align-items-center gap-2">
+                <span>{props.data.label}</span>
+                <div className="logo-round-container">
+                    <Image
+                        src={getFlagSrc(props)}
+                        style={{ height: '20px', width: 'auto' }}
+                        alt="regionlogo"
+                    />
+                </div>
+            </div>
+        </components.Option>
+    )
+
     const selectedOption = options.find((option) => option.value === region)
 
     const onChange = (newValue: any) => {
@@ -33,6 +70,7 @@ const RegionPicker: React.FC<RegionPickerProps> = ({
             onChange={onChange}
             isSearchable={false}
             classNamePrefix="react-select"
+            components={{ SingleValue, Option }}
         />
     )
 }

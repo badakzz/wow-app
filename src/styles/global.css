@@ -160,6 +160,15 @@ h1 {
     background-color: transparent !important;
 }
 
+.logo-round-container {
+    width: '20px';
+    height: '20px';
+    overflow: 'hidden';
+    display: 'flex';
+    align-items: 'center';
+    justify-content: 'center';
+}
+
 @media (min-width: 768px) {
     .main-container {
         max-width: 90%;
