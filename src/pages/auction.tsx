@@ -20,7 +20,7 @@ const Auction = () => {
     return (
         <>
             <Head>
-                <title>Wow App</title>
+                <title>Auction House Tracker</title>
                 <meta
                     name="viewport"
                     content="width=device-width, initial-scale=1"
@@ -31,8 +31,13 @@ const Auction = () => {
                 <div className="d-flex justify-content-between align-items-center mb-5">
                     <h1>Auction tracker</h1>
                     <div className="d-flex gap-3">
-                        <RegionPicker region={region} setRegion={setRegion} />
+                        <RegionPicker
+                            className="align-items-center text-align-center"
+                            region={region}
+                            setRegion={setRegion}
+                        />
                         <FactionPicker
+                            className="align-items-center text-align-center"
                             faction={faction}
                             setFaction={setFaction}
                         />
