@@ -28,23 +28,20 @@ const FactionPicker: React.FC<FactionPickerProps> = ({
     const getFactionSrc = (props: any) =>
         `${FACTION_LOGO[props.data.value as keyof typeof FACTION_LOGO]}`
 
-    const Option: FunctionComponent<OptionProps> = (props: any) => {
-        console.log('val', props.data.value)
-        return (
-            <components.Option {...props}>
-                <div className="d-flex align-items-center gap-2">
-                    <span>{props.data.label}</span>
-                    <div className="logo-round-container">
-                        <Image
-                            src={getFactionSrc(props)}
-                            style={{ height: '20px', width: 'auto' }}
-                            alt="region logo"
-                        />
-                    </div>
+    const Option: FunctionComponent<OptionProps> = (props: any) => (
+        <components.Option {...props}>
+            <div className="d-flex align-items-center gap-2">
+                <span>{props.data.label}</span>
+                <div className="logo-round-container">
+                    <Image
+                        src={getFactionSrc(props)}
+                        style={{ height: '20px', width: 'auto' }}
+                        alt="region logo"
+                    />
                 </div>
-            </components.Option>
-        )
-    }
+            </div>
+        </components.Option>
+    )
 
     const SingleValue: FunctionComponent<SingleValueProps> = (props: any) => (
         <components.SingleValue {...props}>
