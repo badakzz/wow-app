@@ -2,11 +2,12 @@ import Head from 'next/head'
 import { useState } from 'react'
 import { Container } from 'react-bootstrap'
 import {
-    AuctionHouseItem,
+    ItemDetails,
     RealmPicker,
     FactionPicker,
     RegionPicker,
     ItemPicker,
+    ItemPriceDifferential,
 } from '../components'
 import { FACTION, REGION } from '../utils/constants'
 
@@ -37,7 +38,6 @@ const Auction = () => {
                         />
                     </div>
                 </div>
-
                 <RealmPicker
                     region={region}
                     faction={faction}
@@ -45,20 +45,15 @@ const Auction = () => {
                     setAuctionHouseId={setAuctionHouseId}
                 />
                 <ItemPicker itemId={itemId} setItemId={setItemId} />
-                {/* <Form onSubmit={handleSubmit}>
-                    <Form.Group controlId="itemId">
-                        <Form.Label>Item ID</Form.Label>
-                        <Form.Control
-                            type="number"
-                            placeholder="Enter Item ID"
-                            onChange={handleInputChange}
+                <div className="d-flex flex-row gap-3 my-5">
+                    {itemId && <ItemDetails itemId={itemId} />}
+                    {itemId && auctionHouseId && (
+                        <ItemPriceDifferential
+                            itemId={itemId}
+                            auctionHouseId={auctionHouseId}
                         />
-                    </Form.Group>
-                    <Button variant="primary" type="submit">
-                        Submit
-                    </Button>
-                </Form> */}
-                {itemId !== null && <AuctionHouseItem itemId={itemId} />}
+                    )}
+                </div>
             </Container>
         </>
     )
