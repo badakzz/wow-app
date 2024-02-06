@@ -1,4 +1,6 @@
-export { default as AuctionHouseItem } from './AuctionHouseItem'
+export { default as ItemDetails } from './ItemDetails'
+export { default as ItemPicker } from './ItemPicker'
+export { default as ItemPriceDifferential } from './ItemPriceDifferential'
 export { default as ItemSellPrice } from './ItemSellPrice'
 export { default as Layout } from './Layout'
 export { default as FactionPicker } from './FactionPicker'

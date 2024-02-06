@@ -9,14 +9,12 @@ export default async function handler(
     try {
         const token = await getTsmApiToken()
         const { auctionHouseId } = sanitizeInput(req.query)
-        console.log('ah, item', { token })
 
         const { data } = await axios.get(
             `https://pricing-api.tradeskillmaster.com/ah/${auctionHouseId}`,
             { headers: { Authorization: `Bearer ${token}` } }
         )
 
-        console.log(data)
         res.status(200).json(data)
     } catch (error) {
         if (axios.isAxiosError(error) && error.response) {

@@ -1,30 +1,21 @@
 import Head from 'next/head'
 import { useState } from 'react'
-import { Container, Image, Button, Form } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 import {
-    AuctionHouseItem,
+    ItemDetails,
     RealmPicker,
     FactionPicker,
     RegionPicker,
+    ItemPicker,
+    ItemPriceDifferential,
 } from '../components'
 import { FACTION, REGION } from '../utils/constants'
-import axios from 'axios'
 
 const Auction = () => {
     const [itemId, setItemId] = useState<number | null>(null)
     const [faction, setFaction] = useState<string>(FACTION.ALLIANCE)
     const [region, setRegion] = useState<string>(REGION.EUROPE)
     const [auctionHouseId, setAuctionHouseId] = useState<number | null>(null)
-
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setItemId(Number(event.target.value))
-    }
-
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
-    }
-
-    // axios.get(`/api/v1/tsm/513/4131`).then(({ data }) => data)
 
     return (
         <>
@@ -47,27 +38,22 @@ const Auction = () => {
                         />
                     </div>
                 </div>
-
                 <RealmPicker
                     region={region}
                     faction={faction}
                     auctionHouseId={auctionHouseId}
                     setAuctionHouseId={setAuctionHouseId}
                 />
-                <Form onSubmit={handleSubmit}>
-                    <Form.Group controlId="itemId">
-                        <Form.Label>Item ID</Form.Label>
-                        <Form.Control
-                            type="number"
-                            placeholder="Enter Item ID"
-                            onChange={handleInputChange}
+                <ItemPicker itemId={itemId} setItemId={setItemId} />
+                <div className="d-flex flex-row gap-3 my-5">
+                    {itemId && <ItemDetails itemId={itemId} />}
+                    {itemId && auctionHouseId && (
+                        <ItemPriceDifferential
+                            itemId={itemId}
+                            auctionHouseId={auctionHouseId}
                         />
-                    </Form.Group>
-                    <Button variant="primary" type="submit">
-                        Submit
-                    </Button>
-                </Form>
-                {itemId !== null && <AuctionHouseItem itemId={itemId} />}
+                    )}
+                </div>
             </Container>
         </>
     )

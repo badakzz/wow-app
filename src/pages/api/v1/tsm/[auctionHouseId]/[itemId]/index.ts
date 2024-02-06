@@ -10,8 +10,6 @@ export default async function handler(
         const token = await getTsmApiToken()
         const { auctionHouseId, itemId } = sanitizeInput(req.query)
 
-        console.log({ token, auctionHouseId, itemId })
-
         const { data } = await axios.get(
             `https://pricing-api.tradeskillmaster.com/ah/${auctionHouseId}/item/${itemId}`,
             { headers: { Authorization: `Bearer ${token}` } }
