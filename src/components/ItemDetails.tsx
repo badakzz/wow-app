@@ -1,15 +1,15 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Image } from 'react-bootstrap'
-import { getItemColor } from '../utils/helpers'
+import { getItemColorByRarity } from '../utils/helpers'
 import { ITEM_RARITY } from '@/utils/constants'
 import { ItemSellPrice } from '.'
 
 type ActionHouseItemProps = {
-    itemId: number
+    itemId: number | null
 }
 
-const AuctionHouseItem: React.FC<ActionHouseItemProps> = ({ itemId }) => {
+const ItemDetails: React.FC<ActionHouseItemProps> = ({ itemId }) => {
     const [item, setItem] = useState<{
         itemMedia: { assets: any[] }
         itemData: {
@@ -55,13 +55,10 @@ const AuctionHouseItem: React.FC<ActionHouseItemProps> = ({ itemId }) => {
     const fetchItem = async (itemId: number) => {
         try {
             const response = await axios.get(`/api/v1/wow/items/${itemId}`)
-            // const imageUrl = response.data.assets[0].value
             const item = response.data
-
-            console.log('resp', response)
             setItem(item)
         } catch (error) {
-            console.error('Error fetching image:', error)
+            console.error('Error fetching item:', error)
         }
     }
 
@@ -72,6 +69,8 @@ const AuctionHouseItem: React.FC<ActionHouseItemProps> = ({ itemId }) => {
                     <div>
                         <Image
                             className="auction-house-item-img-border"
+                            height={50}
+                            width={50}
                             src={item.itemMedia.assets[0].value}
                             alt={`Item ${itemId}`}
                         />
@@ -80,7 +79,7 @@ const AuctionHouseItem: React.FC<ActionHouseItemProps> = ({ itemId }) => {
                         <div>
                             <div
                                 style={{
-                                    color: getItemColor(
+                                    color: getItemColorByRarity(
                                         item.itemData.quality.type
                                     ),
                                 }}
@@ -144,4 +143,4 @@ const AuctionHouseItem: React.FC<ActionHouseItemProps> = ({ itemId }) => {
     )
 }
 
-export default AuctionHouseItem
+export default ItemDetails
