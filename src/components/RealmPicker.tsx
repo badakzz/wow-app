@@ -9,14 +9,19 @@ type RealmPickerProps = {
     faction: string
     auctionHouseId: number | null
     setAuctionHouseId: React.Dispatch<React.SetStateAction<number | null>>
-}
+} & any
 
 const RealmPicker: React.FC<RealmPickerProps> = ({
     faction,
     region,
     setAuctionHouseId,
+    ...restOfProps
 }) => {
-    const [currentAuctionHouse, setCurrentAuctionHouse] = useState<any>(null)
+    const defaultValue = { label: 'Living Flame', value: 513 }
+    const [currentAuctionHouse, setCurrentAuctionHouse] = useState<{
+        label: string
+        value: number
+    } | null>(defaultValue)
 
     const debouncedFetchRealms = useCallback(
         debounce(
@@ -54,10 +59,11 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
     useEffect(() => {
         setCurrentAuctionHouse(null)
         setAuctionHouseId(null)
-    }, [faction, region, setAuctionHouseId])
+    }, [faction, region])
 
     useEffect(() => {
-        setCurrentAuctionHouse({ label: 'Living Flame', value: 513 })
+        setCurrentAuctionHouse(defaultValue)
+        setAuctionHouseId(defaultValue.value)
     }, [])
 
     const onChange = (selectedOption: any) => {
@@ -67,6 +73,7 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
 
     return (
         <AsyncSelect
+            {...restOfProps}
             instanceId={'realmPicker'}
             loadOptions={fetchRealmsByName}
             noOptionsMessage={() => 'Unable to load auction houses'}
