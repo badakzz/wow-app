@@ -17,13 +17,13 @@ export default async function handler(
 
         const [itemResponse, itemMediaResponse] = await Promise.all([
             axios.get(
-                `https://eu.api.blizzard.com/data/wow/item/${itemId}?namespace=static-classic-eu&locale=fr_FR`,
+                `https://eu.api.blizzard.com/data/wow/item/${itemId}?namespace=static-classic-eu&locale=en_US`,
                 {
                     headers: { Authorization: `Bearer ${accessToken}` },
                 }
             ),
             axios.get(
-                `https://eu.api.blizzard.com/data/wow/media/item/${itemId}?namespace=static-classic-eu&locale=fr_FR`,
+                `https://eu.api.blizzard.com/data/wow/media/item/${itemId}?namespace=static-classic-eu&locale=en_US`,
                 {
                     headers: { Authorization: `Bearer ${accessToken}` },
                 }

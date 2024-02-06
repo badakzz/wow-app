@@ -65,6 +65,8 @@ h1 {
     padding-bottom: 0.3rem;
     padding-right: 0.5rem;
     padding-left: 0.5rem;
+    flex-shrink: 0;
+    text-align: start;
 }
 
 .faction-picker {
@@ -152,6 +154,10 @@ h1 {
 .react-select__menu-list {
     background-color: var(--darkgrey) !important;
     color: white !important;
+}
+
+.tooltip-inner {
+    background-color: transparent !important;
 }
 
 @media (min-width: 768px) {
