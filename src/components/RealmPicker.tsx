@@ -16,11 +16,7 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
     region,
     setAuctionHouseId,
 }) => {
-    const [currentAuctionHouse, setCurrentAuctionHouse] = useState<any>({
-        label: 'Living Flame',
-        value: 513,
-    })
-    console.log(currentAuctionHouse)
+    const [currentAuctionHouse, setCurrentAuctionHouse] = useState<any>(null)
 
     const debouncedFetchRealms = useCallback(
         debounce(
@@ -59,6 +55,10 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
         setCurrentAuctionHouse(null)
         setAuctionHouseId(null)
     }, [faction, region, setAuctionHouseId])
+
+    useEffect(() => {
+        setCurrentAuctionHouse({ label: 'Living Flame', value: 513 })
+    }, [])
 
     const onChange = (selectedOption: any) => {
         setAuctionHouseId(selectedOption ? selectedOption.value : null)
