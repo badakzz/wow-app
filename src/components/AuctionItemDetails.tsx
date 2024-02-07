@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
-import { ItemPricingDifferential } from '.'
+import { ItemPricingDifferential, ItemSellPrice } from '.'
 import axios from 'axios'
 import { AuctionItem } from '../utils/types'
-import { minutesSinceTimestamp } from '../utils/helpers/tsmAuctionItemHelper'
+import {
+    formatRawPriceToCopperSilverGold,
+    minutesSinceTimestamp,
+} from '../utils/helpers/tsmAuctionItemHelper'
 
 type AuctionItemDetailsProps = {
     itemId: number
@@ -16,13 +19,17 @@ const AuctionItemDetails: React.FC<AuctionItemDetailsProps> = ({
     const [data, setData] = useState<AuctionItem[] | null>(null)
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState('')
+    const itemSellPrice =
+        data && data.length > 0
+            ? formatRawPriceToCopperSilverGold(data[0].minBuyout)
+            : null
 
     const fetchAuctionItemDetails = () => {
         setIsLoading(true)
         axios
             .get(`/api/v2/${itemId}/${auctionHouseId}`)
             .then((response) => {
-                setData(response.data)
+                setData(response.data as AuctionItem[])
                 setError('')
             })
             .catch((err) => {
@@ -50,7 +57,16 @@ const AuctionItemDetails: React.FC<AuctionItemDetailsProps> = ({
                 {!isLoading && !error && data && data[0].quantity > 0 ? (
                     <>
                         <div>{minutesSinceTimestamp(data[0].snapshotDate)}</div>
-                        <div>Minimum Buyout: {data[0].minBuyout}</div>
+                        <div>
+                            Minimum Buyout :
+                            {itemSellPrice && (
+                                <ItemSellPrice
+                                    gold={itemSellPrice.gold}
+                                    silver={itemSellPrice.silver}
+                                    copper={itemSellPrice.copper}
+                                />
+                            )}
+                        </div>
                         <div>Number of auctions: {data[0].numAuctions}</div>
                         <ItemPricingDifferential
                             itemId={itemId}

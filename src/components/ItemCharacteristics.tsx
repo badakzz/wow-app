@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { Image } from 'react-bootstrap'
 import { getItemColorByRarity } from '../utils/helpers'
 import { ITEM_RARITY } from '@/utils/constants'
-import { ItemNpcSellPrice } from '.'
+import { ItemSellPrice } from '.'
 
 type ItemCharacteristicsProps = {
     itemId: number | null
@@ -122,20 +122,26 @@ const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
                                 </div>
                             )}
                             {item.itemData.preview_item.sell_price && (
-                                <ItemNpcSellPrice
-                                    gold={parseInt(
-                                        item.itemData.preview_item.sell_price
-                                            .display_strings.gold
-                                    )}
-                                    silver={parseInt(
-                                        item.itemData.preview_item.sell_price
-                                            .display_strings.silver
-                                    )}
-                                    copper={parseInt(
-                                        item.itemData.preview_item.sell_price
-                                            .display_strings.copper
-                                    )}
-                                />
+                                <>
+                                    Sell price:
+                                    <ItemSellPrice
+                                        className="ml-5"
+                                        gold={parseInt(
+                                            item.itemData.preview_item
+                                                .sell_price.display_strings.gold
+                                        )}
+                                        silver={parseInt(
+                                            item.itemData.preview_item
+                                                .sell_price.display_strings
+                                                .silver
+                                        )}
+                                        copper={parseInt(
+                                            item.itemData.preview_item
+                                                .sell_price.display_strings
+                                                .copper
+                                        )}
+                                    />
+                                </>
                             )}
                         </div>
                     </div>
