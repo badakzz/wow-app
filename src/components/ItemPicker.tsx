@@ -6,7 +6,7 @@ import debounce from 'lodash.debounce'
 import { Item } from '../utils/types'
 import { getItemColorByRarity } from '../utils/helpers'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { ItemDetails } from '.'
+import { ItemCharacteristics } from '.'
 
 type ItemPickerProps = {
     itemId: number | null
@@ -66,7 +66,7 @@ const ItemPicker: React.FC<ItemPickerProps> = ({ itemId, setItemId }) => {
                     placement="bottom"
                     overlay={
                         <Tooltip className="item-tooltip">
-                            <ItemDetails itemId={props.value} />
+                            <ItemCharacteristics itemId={props.value} />
                         </Tooltip>
                     }
                 >
