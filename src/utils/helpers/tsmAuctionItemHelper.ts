@@ -1,3 +1,5 @@
+import { GameCurrency } from '../types'
+
 export function minutesSinceTimestamp(timestamp: string): string {
     const timestampDate = new Date(timestamp).getTime()
     const now = new Date().getTime()
@@ -23,7 +25,7 @@ export function minutesSinceTimestamp(timestamp: string): string {
 
 export function formatRawPriceToCopperSilverGold(
     rawPrice: number
-): { copper: number; silver: number; gold: number } | null {
+): GameCurrency | null {
     return rawPrice > 0
         ? {
               gold: Math.floor(rawPrice / 10000),
