@@ -156,6 +156,10 @@ h1 {
     color: white !important;
 }
 
+.react-select__indicator {
+    padding-left: 0 !important;
+}
+
 .tooltip-inner {
     background-color: transparent !important;
 }
