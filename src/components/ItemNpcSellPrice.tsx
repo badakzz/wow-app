@@ -1,12 +1,12 @@
 import { Image } from 'react-bootstrap'
 
-type ItemSellPriceProps = {
+type ItemNpcSellPriceProps = {
     gold: string
     silver: string
     copper: string
 }
 
-const ItemSellPrice: React.FC<ItemSellPriceProps> = ({
+const ItemNpcSellPrice: React.FC<ItemNpcSellPriceProps> = ({
     gold,
     silver,
     copper,
@@ -20,4 +20,4 @@ const ItemSellPrice: React.FC<ItemSellPriceProps> = ({
         </div>
     )
 }
-export default ItemSellPrice
+export default ItemNpcSellPrice

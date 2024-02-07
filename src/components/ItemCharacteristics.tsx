@@ -3,13 +3,15 @@ import { useEffect, useState } from 'react'
 import { Image } from 'react-bootstrap'
 import { getItemColorByRarity } from '../utils/helpers'
 import { ITEM_RARITY } from '@/utils/constants'
-import { ItemSellPrice } from '.'
+import { ItemNpcSellPrice } from '.'
 
-type ActionHouseItemProps = {
+type ItemCharacteristicsProps = {
     itemId: number | null
 }
 
-const ItemDetails: React.FC<ActionHouseItemProps> = ({ itemId }) => {
+const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
+    itemId,
+}) => {
     const [item, setItem] = useState<{
         itemMedia: { assets: any[] }
         itemData: {
@@ -120,7 +122,7 @@ const ItemDetails: React.FC<ActionHouseItemProps> = ({ itemId }) => {
                                 </div>
                             )}
                             {item.itemData.preview_item.sell_price && (
-                                <ItemSellPrice
+                                <ItemNpcSellPrice
                                     gold={
                                         item.itemData.preview_item.sell_price
                                             .display_strings.gold
@@ -143,4 +145,4 @@ const ItemDetails: React.FC<ActionHouseItemProps> = ({ itemId }) => {
     )
 }
 
-export default ItemDetails
+export default ItemCharacteristics
