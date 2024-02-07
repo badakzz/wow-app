@@ -57,8 +57,8 @@ const AuctionItemDetails: React.FC<AuctionItemDetailsProps> = ({
                 {!isLoading && !error && data && data[0].quantity > 0 ? (
                     <>
                         <div>{minutesSinceTimestamp(data[0].snapshotDate)}</div>
-                        <div>
-                            Minimum Buyout :
+                        <div className="d-flex gap-2">
+                            Minimum buyout :
                             {itemSellPrice && (
                                 <ItemSellPrice
                                     gold={itemSellPrice.gold}

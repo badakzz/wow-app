@@ -29,18 +29,20 @@ const ItemPricingDifferential: React.FC<ItemPricingDifferentialProps> = ({
     }, [itemId, auctionHouseId])
 
     return (
-        <div>
+        <>
             {data && (
-                <div>
+                <div className="d-flex gap-2">
                     Market Value :
                     {data.difference >= 0 ? (
-                        <div style={{ color: 'green' }}>+{data.difference}</div>
+                        <span style={{ color: 'green' }}>
+                            +{data.difference}
+                        </span>
                     ) : (
-                        <div style={{ color: 'red' }}>{data.difference}</div>
+                        <span style={{ color: 'red' }}>{data.difference}</span>
                     )}
                 </div>
             )}
-        </div>
+        </>
     )
 }
 

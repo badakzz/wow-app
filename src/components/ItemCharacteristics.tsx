@@ -122,7 +122,7 @@ const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
                                 </div>
                             )}
                             {item.itemData.preview_item.sell_price && (
-                                <>
+                                <div className="d-flex gap-2">
                                     Sell price:
                                     <ItemSellPrice
                                         className="ml-5"
@@ -141,7 +141,7 @@ const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
                                                 .copper
                                         )}
                                     />
-                                </>
+                                </div>
                             )}
                         </div>
                     </div>
