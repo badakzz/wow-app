@@ -26,7 +26,7 @@ const RegionPicker: React.FC<RegionPickerProps> = ({
     const SingleValue: FunctionComponent<SingleValueProps> = (props: any) => {
         return (
             <components.SingleValue {...props}>
-                <div className="d-flex align-items-center justify-content-center text-align-center gap-2">
+                <div className="d-flex align-items-center justify-content-center text-align-center gap-3">
                     <span>{props.data.label}</span>
                     <div className="logo-round-container">
                         <Image
@@ -42,7 +42,7 @@ const RegionPicker: React.FC<RegionPickerProps> = ({
 
     const Option: FunctionComponent<OptionProps> = (props: any) => (
         <components.Option {...props}>
-            <div className="d-flex align-items-center gap-2">
+            <div className="d-flex align-items-center gap-3">
                 <span>{props.data.label}</span>
                 <div className="logo-round-container">
                     <Image

@@ -123,18 +123,18 @@ const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
                             )}
                             {item.itemData.preview_item.sell_price && (
                                 <ItemNpcSellPrice
-                                    gold={
+                                    gold={parseInt(
                                         item.itemData.preview_item.sell_price
                                             .display_strings.gold
-                                    }
-                                    silver={
+                                    )}
+                                    silver={parseInt(
                                         item.itemData.preview_item.sell_price
                                             .display_strings.silver
-                                    }
-                                    copper={
+                                    )}
+                                    copper={parseInt(
                                         item.itemData.preview_item.sell_price
                                             .display_strings.copper
-                                    }
+                                    )}
                                 />
                             )}
                         </div>
