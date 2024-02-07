@@ -1,16 +1,7 @@
+import { GameCurrency } from '@/utils/types'
 import { Image } from 'react-bootstrap'
 
-type ItemNpcSellPriceProps = {
-    gold: string
-    silver: string
-    copper: string
-}
-
-const ItemNpcSellPrice: React.FC<ItemNpcSellPriceProps> = ({
-    gold,
-    silver,
-    copper,
-}) => {
+const ItemNpcSellPrice: React.FC<GameCurrency> = ({ gold, silver, copper }) => {
     return (
         <div>
             Sell price: {gold}
