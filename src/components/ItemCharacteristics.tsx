@@ -70,14 +70,14 @@ const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
                 <div className="d-flex gap-2">
                     <div>
                         <Image
-                            className="auction-house-item-img-border"
+                            className="auction-item-img-border"
                             height={50}
                             width={50}
                             src={item.itemMedia.assets[0].value}
                             alt={`Item ${itemId}`}
                         />
                     </div>
-                    <div className="auction-house-item-container">
+                    <div className=" auction-item-details-container">
                         <div>
                             <div
                                 style={{
@@ -88,7 +88,7 @@ const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
                             >
                                 {item.itemData.name}
                             </div>
-                            <div className="d-flex flex-col justify-content-between">
+                            <div className="d-flex justify-content-between">
                                 {item.itemData.inventory_type.name && (
                                     <div>
                                         {item.itemData.inventory_type.name}

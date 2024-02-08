@@ -52,12 +52,12 @@ h1 {
     padding: 5rem !important;
 }
 
-.auction-house-item-img-border {
+.auction-item-img-border {
     border: 2px solid rgb(170, 169, 169);
     border-radius: 5px;
 }
 
-.auction-house-item-container {
+.auction-item-details-container {
     border: 2px solid rgb(170, 169, 169);
     border-radius: 5px;
     background-color: var(--midgrey);
@@ -174,7 +174,26 @@ h1 {
 }
 
 .realm-picker {
-    min-width: 30% !important;
+    min-width: 40% !important;
+}
+
+.item-picker {
+    max-width: 40% !important;
+}
+
+.test {
+    display: flex;
+    justify-content: space-between; /* For larger screens */
+    max-width: 40% !important;
+    /* Additional styles as needed */
+}
+
+@media (max-width: 1650px) {
+    /* Adjust this breakpoint as needed */
+    .test {
+        flex-direction: column;
+        justify-content: flex-start; /* Or another value as needed for your layout */
+    }
 }
 
 @media (min-width: 768px) {

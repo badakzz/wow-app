@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { useState } from 'react'
+import { CSSProperties, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import {
     ItemCharacteristics,
@@ -51,9 +51,12 @@ const Auction = () => {
                         />
                     </div>
                 </div>
-
-                <ItemPicker itemId={itemId} setItemId={setItemId} />
-                <div className="d-flex flex-row gap-3 my-5">
+                <ItemPicker
+                    className="item-picker"
+                    itemId={itemId}
+                    setItemId={setItemId}
+                />
+                <div className="d-flex align-items-start justify-content-between my-5 test">
                     {itemId && <ItemCharacteristics itemId={itemId} />}
                     {itemId && auctionHouseId && (
                         <AuctionItemDetails
