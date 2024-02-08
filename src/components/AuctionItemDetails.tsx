@@ -50,37 +50,33 @@ const AuctionItemDetails: React.FC<AuctionItemDetailsProps> = ({
     }, [itemId, auctionHouseId])
 
     return (
-        <>
-            <div>
-                {isLoading && <div>Loading...</div>}
-                {!isLoading && error && <div>{error}</div>}
-                {!isLoading && !error && data && data[0].quantity > 0 ? (
-                    <>
-                        <div>{minutesSinceTimestamp(data[0].snapshotDate)}</div>
-                        <div className="d-flex gap-2">
-                            Minimum buyout :
-                            {itemSellPrice && (
-                                <ItemSellPrice
-                                    gold={itemSellPrice.gold}
-                                    silver={itemSellPrice.silver}
-                                    copper={itemSellPrice.copper}
-                                />
-                            )}
-                        </div>
-                        <div>Number of auctions: {data[0].numAuctions}</div>
-                        <ItemPricingDifferential
-                            itemId={itemId}
-                            auctionHouseId={auctionHouseId}
-                        />
-                    </>
-                ) : (
-                    <div>No recent sell for this item.</div>
-                )}
-                {!isLoading && !error && !data && (
-                    <div>No data to display.</div>
-                )}
-            </div>
-        </>
+        <div className="d-flex flex-column justify-content-start auction-item-details-container">
+            {isLoading && <div>Loading...</div>}
+            {!isLoading && error && <div>{error}</div>}
+            {!isLoading && !error && data && data[0].quantity > 0 ? (
+                <>
+                    <div>{minutesSinceTimestamp(data[0].snapshotDate)}</div>
+                    <div className="d-flex gap-2">
+                        Minimum buyout :
+                        {itemSellPrice && (
+                            <ItemSellPrice
+                                gold={itemSellPrice.gold}
+                                silver={itemSellPrice.silver}
+                                copper={itemSellPrice.copper}
+                            />
+                        )}
+                    </div>
+                    <div>Number of auctions: {data[0].numAuctions}</div>
+                    <ItemPricingDifferential
+                        itemId={itemId}
+                        auctionHouseId={auctionHouseId}
+                    />
+                </>
+            ) : (
+                <div>No recent sell for this item.</div>
+            )}
+            {!isLoading && !error && !data && <div>No data to display.</div>}
+        </div>
     )
 }
 
