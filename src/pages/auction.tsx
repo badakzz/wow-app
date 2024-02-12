@@ -56,13 +56,15 @@ const Auction = () => {
                     itemId={itemId}
                     setItemId={setItemId}
                 />
-                <div className="d-flex align-items-start justify-content-between my-5 test">
+                <div className="d-flex align-items-start justify-content-between my-5 auction-item-container">
                     {itemId && <ItemCharacteristics itemId={itemId} />}
                     {itemId && auctionHouseId && (
-                        <AuctionItemDetails
-                            itemId={itemId}
-                            auctionHouseId={auctionHouseId}
-                        />
+                        <div className="auction-item-details-margin">
+                            <AuctionItemDetails
+                                itemId={itemId}
+                                auctionHouseId={auctionHouseId}
+                            />
+                        </div>
                     )}
                 </div>
             </Container>
