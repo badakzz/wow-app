@@ -1,19 +1,29 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import AsyncSelect from 'react-select/async'
-import { OptionProps, SingleValueProps, components } from 'react-select'
+import {
+    DropdownIndicatorProps,
+    OptionProps,
+    SingleValueProps,
+    components,
+} from 'react-select'
 import axios from 'axios'
 import debounce from 'lodash.debounce'
 import { Item } from '../utils/types'
 import { getItemColorByRarity } from '../utils/helpers'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { ItemDetails } from '.'
+import { ItemCharacteristics } from '.'
+import { FaSearch } from 'react-icons/fa'
 
 type ItemPickerProps = {
     itemId: number | null
     setItemId: React.Dispatch<React.SetStateAction<number | null>>
-}
+} & any
 
-const ItemPicker: React.FC<ItemPickerProps> = ({ itemId, setItemId }) => {
+const ItemPicker: React.FC<ItemPickerProps> = ({
+    itemId,
+    setItemId,
+    ...restOfProps
+}) => {
     const [currentItem, setCurrentItem] = useState<Item | null>(null)
 
     const debouncedFetchItems = debounce(
@@ -66,7 +76,7 @@ const ItemPicker: React.FC<ItemPickerProps> = ({ itemId, setItemId }) => {
                     placement="bottom"
                     overlay={
                         <Tooltip className="item-tooltip">
-                            <ItemDetails itemId={props.value} />
+                            <ItemCharacteristics itemId={props.value} />
                         </Tooltip>
                     }
                 >
@@ -88,11 +98,24 @@ const ItemPicker: React.FC<ItemPickerProps> = ({ itemId, setItemId }) => {
         </components.SingleValue>
     )
 
+    const DropdownIndicator: FunctionComponent<DropdownIndicatorProps> = (
+        props: any
+    ) => {
+        return (
+            components.DropdownIndicator && (
+                <components.DropdownIndicator {...props}>
+                    <FaSearch />
+                </components.DropdownIndicator>
+            )
+        )
+    }
+
     return (
         <AsyncSelect
+            {...restOfProps}
             instanceId="itemPicker"
             loadOptions={fetchItemsByName}
-            noOptionsMessage={() => 'Unable to load items'}
+            noOptionsMessage={() => 'No item matching criteria found'}
             loadingMessage={() => 'Loading...'}
             placeholder="Search an item..."
             cacheOptions
@@ -100,7 +123,7 @@ const ItemPicker: React.FC<ItemPickerProps> = ({ itemId, setItemId }) => {
             value={currentItem}
             onChange={onChange}
             isSearchable
-            components={{ SingleValue, Option }}
+            components={{ SingleValue, Option, DropdownIndicator }}
             classNamePrefix="react-select"
         />
     )

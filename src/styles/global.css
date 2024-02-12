@@ -52,12 +52,12 @@ h1 {
     padding: 5rem !important;
 }
 
-.auction-house-item-img-border {
+.auction-item-img-border {
     border: 2px solid rgb(170, 169, 169);
     border-radius: 5px;
 }
 
-.auction-house-item-container {
+.auction-item-details-container {
     border: 2px solid rgb(170, 169, 169);
     border-radius: 5px;
     background-color: var(--midgrey);
@@ -156,6 +156,10 @@ h1 {
     color: white !important;
 }
 
+.react-select__indicator {
+    padding-left: 0 !important;
+}
+
 .tooltip-inner {
     background-color: transparent !important;
 }
@@ -170,7 +174,31 @@ h1 {
 }
 
 .realm-picker {
-    min-width: 30% !important;
+    min-width: 40% !important;
+}
+
+.item-picker {
+    max-width: 40% !important;
+}
+
+.auction-item-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 40% !important;
+}
+
+@media (max-width: 1635px) {
+    .auction-item-container {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    .auction-item-details-margin {
+        margin-left: 3.55rem;
+    }
+    .auction-item-details-fixed-width {
+        width: 11rem;
+        margin-top: 1rem;
+    }
 }
 
 @media (min-width: 768px) {

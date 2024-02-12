@@ -76,7 +76,7 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
             {...restOfProps}
             instanceId={'realmPicker'}
             loadOptions={fetchRealmsByName}
-            noOptionsMessage={() => 'Unable to load auction houses'}
+            noOptionsMessage={() => 'No realm matching criteria found'}
             loadingMessage={() => 'Loading...'}
             placeholder={'Select a realm...'}
             cacheOptions
