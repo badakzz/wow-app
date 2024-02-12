@@ -1,0 +1,38 @@
+import axios from 'axios'
+
+let cachedToken: {
+    value: string | null
+    expiry: number | null
+} = {
+    value: null,
+    expiry: null,
+}
+
+export async function fetchWowApiToken() {
+    const response = await axios.post(
+        'https://oauth.battle.net/token',
+        'grant_type=client_credentials',
+        {
+            auth: {
+                username: process.env.WOW_CLIENT_ID ?? '',
+                password: process.env.WOW_SECRET_KEY ?? '',
+            },
+        }
+    )
+
+    const { access_token, expires_in } = response.data
+
+    console.log('access_token', access_token)
+    cachedToken = {
+        value: access_token,
+        expiry: expires_in * 1000,
+    }
+    return access_token
+}
+
+export async function getWowApiToken() {
+    if (!cachedToken.value || Date.now() > (cachedToken.expiry || 0)) {
+        return await fetchWowApiToken()
+    }
+    return cachedToken.value
+}
