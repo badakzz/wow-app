@@ -1,13 +1,14 @@
 import Head from 'next/head'
-import { useState } from 'react'
+import { CSSProperties, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import {
-    ItemDetails,
+    ItemCharacteristics,
     RealmPicker,
     FactionPicker,
     RegionPicker,
     ItemPicker,
-    ItemPriceDifferential,
+    ItemPricingDifferential,
+    AuctionItemDetails,
 } from '../components'
 import { FACTION, REGION } from '../utils/constants'
 
@@ -50,15 +51,20 @@ const Auction = () => {
                         />
                     </div>
                 </div>
-
-                <ItemPicker itemId={itemId} setItemId={setItemId} />
-                <div className="d-flex flex-row gap-3 my-5">
-                    {itemId && <ItemDetails itemId={itemId} />}
+                <ItemPicker
+                    className="item-picker"
+                    itemId={itemId}
+                    setItemId={setItemId}
+                />
+                <div className="d-flex align-items-start justify-content-between my-5 auction-item-container">
+                    {itemId && <ItemCharacteristics itemId={itemId} />}
                     {itemId && auctionHouseId && (
-                        <ItemPriceDifferential
-                            itemId={itemId}
-                            auctionHouseId={auctionHouseId}
-                        />
+                        <div className="auction-item-details-margin">
+                            <AuctionItemDetails
+                                itemId={itemId}
+                                auctionHouseId={auctionHouseId}
+                            />
+                        </div>
                     )}
                 </div>
             </Container>
