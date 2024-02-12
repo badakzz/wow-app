@@ -21,6 +21,7 @@ const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
             inventory_type: {
                 name: string
             }
+            level: string
             quality: {
                 type: ITEM_RARITY
             }
@@ -39,6 +40,13 @@ const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
                         gold: string
                     }
                 }
+                stats: [
+                    {
+                        display: {
+                            display_string: string
+                        }
+                    }
+                ]
                 requirements: {
                     level: {
                         display_string: string
@@ -58,6 +66,7 @@ const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
         try {
             const response = await axios.get(`/api/v1/wow/items/${itemId}`)
             const item = response.data
+            console.log(item)
             setItem(item)
         } catch (error) {
             console.error('Error fetching item:', error)
@@ -88,6 +97,30 @@ const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
                             >
                                 {item.itemData.name}
                             </div>
+                            {item.itemData.preview_item.requirements && (
+                                <div
+                                    className="d-flex gap-1"
+                                    style={{ color: 'rgb(255, 216, 44)' }}
+                                >
+                                    <span>Item level</span>
+                                    <span>{item.itemData.level}</span>
+                                </div>
+                            )}
+                            {item.itemData.preview_item.binding && (
+                                <div>
+                                    {item.itemData.preview_item.binding.name}
+                                </div>
+                            )}
+                            {item.itemData.preview_item.stats &&
+                                item.itemData.preview_item.stats.map(
+                                    (stat, index) => {
+                                        return (
+                                            <div key={index}>
+                                                {stat.display.display_string}
+                                            </div>
+                                        )
+                                    }
+                                )}
                             <div className="d-flex justify-content-between">
                                 {item.itemData.inventory_type.name && (
                                     <div>
@@ -109,16 +142,11 @@ const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
                                 </div>
                             )}
                             {item.itemData.preview_item.requirements && (
-                                <div style={{ color: 'rgb(255, 216, 44)' }}>
+                                <div>
                                     {
                                         item.itemData.preview_item.requirements
                                             .level.display_string
                                     }
-                                </div>
-                            )}
-                            {item.itemData.preview_item.binding && (
-                                <div>
-                                    {item.itemData.preview_item.binding.name}
                                 </div>
                             )}
                             {item.itemData.preview_item.sell_price && (
