@@ -1,3 +1,10 @@
+:root {
+    --lightblue: rgb(100, 177, 255);
+    --lightgrey: rgb(98, 98, 101);
+    --darkgrey: rgb(28, 28, 28);
+    --midgrey: rgb(27, 36, 44);
+}
+
 body {
     background-color: black !important;
     color: white !important;
@@ -5,13 +12,13 @@ body {
 
 h1 {
     font-size: 2rem;
-    color: rgb(100, 177, 255) !important;
+    color: var(--lightblue) !important;
 }
 
 .custom-navbar {
     background-color: rgb(59, 57, 61) !important;
     margin-bottom: 2rem;
-    border-bottom: 2px solid rgb(98, 98, 101);
+    border-bottom: 2px solid var(--lightgrey);
     padding-left: 5rem !important;
     padding-right: 5rem !important;
 }
@@ -22,11 +29,11 @@ h1 {
 .custom-navbar .navbar-text,
 .custom-navbar .dropdown-item {
     color: white !important;
-    background-color: rgb(28, 28, 28) !important;
+    background-color: var(--darkgrey) !important;
 }
 
 .custom-navbar .nav-link:hover {
-    color: rgb(100, 177, 255) !important;
+    color: var(--lightblue) !important;
     transition-delay: 0.1s;
 }
 
@@ -38,27 +45,176 @@ h1 {
     margin-top: 5rem;
 }
 
-.custom-container {
+.main-container {
     max-width: 90%;
-    background-color: rgb(28, 28, 28) !important;
-    border: 2px solid rgb(98, 98, 101);
+    background-color: var(--darkgrey) !important;
+    border: 2px solid var(--lightgrey);
     padding: 5rem !important;
 }
 
+.auction-item-img-border {
+    border: 2px solid rgb(170, 169, 169);
+    border-radius: 5px;
+}
+
+.auction-item-details-container {
+    border: 2px solid rgb(170, 169, 169);
+    border-radius: 5px;
+    background-color: var(--midgrey);
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    flex-shrink: 0;
+    text-align: start;
+}
+
+.faction-picker {
+    width: 30%;
+}
+
+/* General react select styles */
+
+.react-select__picker-indicator {
+    background-color: var(--darkgrey);
+}
+
+.react-select__dropdown-indicator {
+    background-color: var(--darkgrey);
+}
+
+.react-select__dropdown-indicator svg {
+    color: var(--lightblue);
+}
+
+.react-select__indicator-separator {
+    background-color: var(--darkgrey) !important;
+    color: black !important;
+}
+
+.react-select__indicator-container {
+    background-color: var(--darkgrey) !important;
+}
+
+.react-select__loading-indicator {
+    background-color: var(--darkgrey) !important;
+    border: 0px solid black !important;
+}
+
+.react-select__indicators {
+    background-color: var(--darkgrey) !important;
+}
+
+.react-select__control {
+    border: 2px solid var(--lightgrey) !important;
+    background-color: var(--darkgrey) !important;
+}
+
+.react-select__control--is-focused {
+    border: 1px solid var(--lightblue) !important;
+}
+
+.react-select__value-container {
+    background-color: var(--darkgrey) !important;
+    color: white !important;
+}
+
+.react-select__input {
+    color: white !important;
+}
+
+.react-select__placeholder {
+    color: white !important;
+}
+
+.react-select__single-value {
+    color: white !important;
+}
+
+.react-select__menu-notice--loading {
+    color: white !important;
+}
+
+.react-select__menu-notice--no-options {
+    color: white !important;
+}
+
+.react-select__option--is-selected {
+    background-color: var(--midgrey) !important;
+}
+
+.react-select__option--is-focused {
+    background-color: var(--midgrey) !important;
+}
+
+.react-select__menu {
+    background-color: white !important;
+}
+
+.react-select__menu-list {
+    background-color: var(--darkgrey) !important;
+    color: white !important;
+}
+
+.react-select__indicator {
+    padding-left: 0 !important;
+}
+
+.tooltip-inner {
+    background-color: transparent !important;
+}
+
+.logo-round-container {
+    width: '20px';
+    height: '20px';
+    overflow: 'hidden';
+    display: 'flex';
+    align-items: 'center';
+    justify-content: 'center';
+}
+
+.realm-picker {
+    min-width: 40% !important;
+}
+
+.item-picker {
+    max-width: 40% !important;
+}
+
+.auction-item-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 40% !important;
+}
+
+@media (max-width: 1635px) {
+    .auction-item-container {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    .auction-item-details-margin {
+        margin-left: 3.55rem;
+    }
+    .auction-item-details-fixed-width {
+        width: 11rem;
+        margin-top: 1rem;
+    }
+}
+
 @media (min-width: 768px) {
-    .custom-container {
+    .main-container {
         max-width: 90%;
     }
 }
 
 @media (min-width: 992px) {
-    .custom-container {
+    .main-container {
         max-width: 90%;
     }
 }
 
 @media (min-width: 1200px) {
-    .custom-container {
+    .main-container {
         max-width: 90%;
     }
 }
