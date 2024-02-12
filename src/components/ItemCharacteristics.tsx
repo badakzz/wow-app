@@ -5,11 +5,13 @@ import { getItemColorByRarity } from '../utils/helpers'
 import { ITEM_RARITY } from '@/utils/constants'
 import { ItemSellPrice } from '.'
 
-type ActionHouseItemProps = {
+type ItemCharacteristicsProps = {
     itemId: number | null
 }
 
-const ItemDetails: React.FC<ActionHouseItemProps> = ({ itemId }) => {
+const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
+    itemId,
+}) => {
     const [item, setItem] = useState<{
         itemMedia: { assets: any[] }
         itemData: {
@@ -19,6 +21,7 @@ const ItemDetails: React.FC<ActionHouseItemProps> = ({ itemId }) => {
             inventory_type: {
                 name: string
             }
+            level: string
             quality: {
                 type: ITEM_RARITY
             }
@@ -37,6 +40,13 @@ const ItemDetails: React.FC<ActionHouseItemProps> = ({ itemId }) => {
                         gold: string
                     }
                 }
+                stats: [
+                    {
+                        display: {
+                            display_string: string
+                        }
+                    }
+                ]
                 requirements: {
                     level: {
                         display_string: string
@@ -56,6 +66,7 @@ const ItemDetails: React.FC<ActionHouseItemProps> = ({ itemId }) => {
         try {
             const response = await axios.get(`/api/v1/wow/items/${itemId}`)
             const item = response.data
+            console.log(item)
             setItem(item)
         } catch (error) {
             console.error('Error fetching item:', error)
@@ -68,14 +79,14 @@ const ItemDetails: React.FC<ActionHouseItemProps> = ({ itemId }) => {
                 <div className="d-flex gap-2">
                     <div>
                         <Image
-                            className="auction-house-item-img-border"
+                            className="auction-item-img-border"
                             height={50}
                             width={50}
                             src={item.itemMedia.assets[0].value}
                             alt={`Item ${itemId}`}
                         />
                     </div>
-                    <div className="auction-house-item-container">
+                    <div className=" auction-item-details-container">
                         <div>
                             <div
                                 style={{
@@ -86,7 +97,31 @@ const ItemDetails: React.FC<ActionHouseItemProps> = ({ itemId }) => {
                             >
                                 {item.itemData.name}
                             </div>
-                            <div className="d-flex flex-col justify-content-between">
+                            {item.itemData.preview_item.requirements && (
+                                <div
+                                    className="d-flex gap-1"
+                                    style={{ color: 'rgb(255, 216, 44)' }}
+                                >
+                                    <span>Item level</span>
+                                    <span>{item.itemData.level}</span>
+                                </div>
+                            )}
+                            {item.itemData.preview_item.binding && (
+                                <div>
+                                    {item.itemData.preview_item.binding.name}
+                                </div>
+                            )}
+                            {item.itemData.preview_item.stats &&
+                                item.itemData.preview_item.stats.map(
+                                    (stat, index) => {
+                                        return (
+                                            <div key={index}>
+                                                {stat.display.display_string}
+                                            </div>
+                                        )
+                                    }
+                                )}
+                            <div className="d-flex justify-content-between">
                                 {item.itemData.inventory_type.name && (
                                     <div>
                                         {item.itemData.inventory_type.name}
@@ -107,33 +142,34 @@ const ItemDetails: React.FC<ActionHouseItemProps> = ({ itemId }) => {
                                 </div>
                             )}
                             {item.itemData.preview_item.requirements && (
-                                <div style={{ color: 'rgb(255, 216, 44)' }}>
+                                <div>
                                     {
                                         item.itemData.preview_item.requirements
                                             .level.display_string
                                     }
                                 </div>
                             )}
-                            {item.itemData.preview_item.binding && (
-                                <div>
-                                    {item.itemData.preview_item.binding.name}
-                                </div>
-                            )}
                             {item.itemData.preview_item.sell_price && (
-                                <ItemSellPrice
-                                    gold={
-                                        item.itemData.preview_item.sell_price
-                                            .display_strings.gold
-                                    }
-                                    silver={
-                                        item.itemData.preview_item.sell_price
-                                            .display_strings.silver
-                                    }
-                                    copper={
-                                        item.itemData.preview_item.sell_price
-                                            .display_strings.copper
-                                    }
-                                />
+                                <div className="d-flex gap-2">
+                                    Sell price:
+                                    <ItemSellPrice
+                                        className="ml-5"
+                                        gold={parseInt(
+                                            item.itemData.preview_item
+                                                .sell_price.display_strings.gold
+                                        )}
+                                        silver={parseInt(
+                                            item.itemData.preview_item
+                                                .sell_price.display_strings
+                                                .silver
+                                        )}
+                                        copper={parseInt(
+                                            item.itemData.preview_item
+                                                .sell_price.display_strings
+                                                .copper
+                                        )}
+                                    />
+                                </div>
                             )}
                         </div>
                     </div>
@@ -143,4 +179,4 @@ const ItemDetails: React.FC<ActionHouseItemProps> = ({ itemId }) => {
     )
 }
 
-export default ItemDetails
+export default ItemCharacteristics
