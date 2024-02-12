@@ -181,18 +181,23 @@ h1 {
     max-width: 40% !important;
 }
 
-.test {
+.auction-item-container {
     display: flex;
-    justify-content: space-between; /* For larger screens */
+    justify-content: space-between;
     max-width: 40% !important;
-    /* Additional styles as needed */
 }
 
-@media (max-width: 1650px) {
-    /* Adjust this breakpoint as needed */
-    .test {
+@media (max-width: 1500px) {
+    .auction-item-container {
         flex-direction: column;
-        justify-content: flex-start; /* Or another value as needed for your layout */
+        justify-content: flex-start;
+    }
+    .auction-item-details-margin {
+        margin-left: 3.55rem;
+    }
+    .auction-item-details-fixed-width {
+        width: 11rem;
+        margin-top: 1rem;
     }
 }
 

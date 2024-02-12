@@ -50,7 +50,7 @@ const AuctionItemDetails: React.FC<AuctionItemDetailsProps> = ({
     }, [itemId, auctionHouseId])
 
     return (
-        <div className="d-flex flex-column justify-content-start auction-item-details-container">
+        <div className="d-flex flex-column justify-content-start auction-item-details-container auction-item-details-fixed-width">
             {isLoading && <div>Loading...</div>}
             {!isLoading && error && <div>{error}</div>}
             {!isLoading && !error && data && data[0].quantity > 0 ? (
