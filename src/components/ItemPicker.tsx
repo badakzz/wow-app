@@ -115,7 +115,7 @@ const ItemPicker: React.FC<ItemPickerProps> = ({
             {...restOfProps}
             instanceId="itemPicker"
             loadOptions={fetchItemsByName}
-            noOptionsMessage={() => 'Unable to load items'}
+            noOptionsMessage={() => 'No item matching criteria found'}
             loadingMessage={() => 'Loading...'}
             placeholder="Search an item..."
             cacheOptions
