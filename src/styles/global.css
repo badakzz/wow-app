@@ -187,7 +187,7 @@ h1 {
     max-width: 40% !important;
 }
 
-@media (max-width: 1500px) {
+@media (max-width: 1635px) {
     .auction-item-container {
         flex-direction: column;
         justify-content: flex-start;
