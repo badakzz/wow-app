@@ -17,16 +17,17 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
     setAuctionHouseId,
     ...restOfProps
 }) => {
-    const defaultValue = { label: 'Living Flame', value: 513 }
     const [currentAuctionHouse, setCurrentAuctionHouse] = useState<{
         label: string
         value: number
-    } | null>(defaultValue)
+    } | null>(null)
+    const [isLoading, setIsLoading] = useState<boolean>(true)
 
     const debouncedFetchRealms = useCallback(
         debounce(
             async (inputValue: string, callback: (options: any) => void) => {
                 try {
+                    setIsLoading(true)
                     const response = await axios.get<AuctionHouse[]>(
                         `/api/v1/tsm/realms?faction=${encodeURIComponent(
                             faction
@@ -38,9 +39,12 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
                         label: `${result.realmName}`,
                         value: result.auctionHouseId,
                     }))
+                    if (options.length > 0) setCurrentAuctionHouse(options[0])
+                    setIsLoading(false)
                     callback(options)
                 } catch (error) {
                     console.error('Error fetching data:', error)
+                    setIsLoading(false)
                     callback([])
                 }
             },
@@ -48,6 +52,10 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
         ),
         [faction, region]
     )
+
+    useEffect(() => {
+        if (!isLoading) setCurrentAuctionHouse(currentAuctionHouse)
+    }, [isLoading, currentAuctionHouse])
 
     const fetchRealmsByName = (
         inputValue: string,
@@ -59,12 +67,9 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
     useEffect(() => {
         setCurrentAuctionHouse(null)
         setAuctionHouseId(null)
-    }, [faction, region])
+    }, [region])
 
-    useEffect(() => {
-        setCurrentAuctionHouse(defaultValue)
-        setAuctionHouseId(defaultValue.value)
-    }, [])
+    console.log(currentAuctionHouse)
 
     const onChange = (selectedOption: any) => {
         setAuctionHouseId(selectedOption ? selectedOption.value : null)
