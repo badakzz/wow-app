@@ -1,4 +1,5 @@
 export * from './sanitizeQuery'
 export * from './tsmTokenHelper'
+export * from './warcraftLogsTokenHelper'
 export * from './wowItemHelper'
 export * from './wowTokenHelper'
