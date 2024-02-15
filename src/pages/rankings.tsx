@@ -2,12 +2,15 @@ import axios from 'axios'
 import Head from 'next/head'
 import { Container, Image } from 'react-bootstrap'
 import { useState } from 'react'
-import { Raid } from '../utils/types'
+import { Encounter, Raid } from '../utils/types'
 import { RaidPicker } from '../components'
+import EncounterPicker from '@/components/EncounterPicker'
 
 const Rankings = () => {
     const [raid, setRaid] = useState<Raid | null>(null)
-    console.log(raid)
+    const [encounter, setEncounter] = useState<Encounter | null>(null)
+
+    console.log('aaa', raid)
     // axios
     //     .get('/api/v1/warcraftlogs/raids/latest_encounter')
     //     .then(({ data }) => data)
@@ -23,6 +26,13 @@ const Rankings = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <RaidPicker raid={raid} setRaid={setRaid} />
+            {raid && (
+                <EncounterPicker
+                    raidId={raid.value}
+                    encounter={encounter}
+                    setEncounter={setEncounter}
+                />
+            )}
             <Container className="container-top-margin main-container p-5">
                 <div className="d-flex align-items-center justify-content-center">
                     <div className="flex-half text-align-start">

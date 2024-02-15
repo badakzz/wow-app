@@ -1,11 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios'
 import { getWarcraftLogsApiToken } from '../../../../../utils/helpers'
-
-interface Raid {
-    id: number
-    name: string
-}
+import { Raid } from '../../../../../utils/types'
 
 export default async function warcraftLogsQueryHandler(
     req: NextApiRequest,

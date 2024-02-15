@@ -1,4 +1,4 @@
 export type Raid = {
-    id: number
-    name: string
+    value: number
+    label: string
 }
