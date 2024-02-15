@@ -66,7 +66,6 @@ const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
         try {
             const response = await axios.get(`/api/v1/wow/items/${itemId}`)
             const item = response.data
-            console.log(item)
             setItem(item)
         } catch (error) {
             console.error('Error fetching item:', error)
