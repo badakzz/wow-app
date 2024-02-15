@@ -21,13 +21,11 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
         label: string
         value: number
     } | null>(null)
-    const [isLoading, setIsLoading] = useState<boolean>(true)
 
     const debouncedFetchRealms = useCallback(
         debounce(
             async (inputValue: string, callback: (options: any) => void) => {
                 try {
-                    setIsLoading(true)
                     const response = await axios.get<AuctionHouse[]>(
                         `/api/v1/tsm/realms?faction=${encodeURIComponent(
                             faction
@@ -39,12 +37,11 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
                         label: `${result.realmName}`,
                         value: result.auctionHouseId,
                     }))
-                    if (options.length > 0) setCurrentAuctionHouse(options[0])
-                    setIsLoading(false)
+                    if (options.length > 0 && !currentAuctionHouse)
+                        setCurrentAuctionHouse(options[0])
                     callback(options)
                 } catch (error) {
                     console.error('Error fetching data:', error)
-                    setIsLoading(false)
                     callback([])
                 }
             },
@@ -52,10 +49,6 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
         ),
         [faction, region]
     )
-
-    useEffect(() => {
-        if (!isLoading) setCurrentAuctionHouse(currentAuctionHouse)
-    }, [isLoading, currentAuctionHouse])
 
     const fetchRealmsByName = (
         inputValue: string,

@@ -2,20 +2,14 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios'
 import { getWarcraftLogsApiToken } from '../../../../../../utils/helpers'
 
-interface Zone {
-    id: number
-    name: string
-    encounters: Encounter[]
-}
-
-interface Encounter {
+interface Raid {
     id: number
     name: string
 }
 
-export default async function handler(
+export default async function warcraftLogsQueryHandler(
     req: NextApiRequest,
-    res: NextApiResponse<Encounter[] | { error: string }>
+    res: NextApiResponse<Raid[] | { error: string }>
 ) {
     const query = `
     query {
@@ -23,10 +17,6 @@ export default async function handler(
         zones {
           id
           name
-          encounters {
-            id
-            name
-          }
         }
       }
     }`
@@ -45,21 +35,7 @@ export default async function handler(
             { headers }
         )
 
-        const zones = graphqlResponse.data.data.worldData.zones
-
-        const latestZone = zones.reduce((prev: Zone, current: Zone) =>
-            prev.id > current.id ? prev : current
-        )
-
-        const encounters: Encounter[] = latestZone.encounters.map(
-            (encounter: Encounter) => {
-                return { id: encounter.id, name: encounter.name }
-            }
-        )
-
-        console.log(encounters)
-
-        res.status(200).json(encounters)
+        res.status(200).json(graphqlResponse.data.data.worldData.zones)
     } catch (error) {
         if (axios.isAxiosError(error) && error.response) {
             res.status(error.response.status).json(error.response.data)

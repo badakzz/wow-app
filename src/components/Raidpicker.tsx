@@ -13,30 +13,25 @@ const RaidPicker: React.FC<RaidPickerProps> = ({
     setRaid,
     ...restOfProps
 }) => {
-    const [isLoading, setIsLoading] = useState<boolean>(true)
-
-    const fetchRaids = () =>
+    const fetchRaids = async () =>
         axios
-            .get<Raid[]>(`/api/v1/warcraftlogs/raids`)
+            .post(`/api/v1/warcraftlogs/raids/test`, {
+                operation: 'listRaids',
+            })
             .then((response) => {
-                const options = response.data.map((raid) => ({
+                const options = response.data.map((raid: Raid) => ({
                     label: raid.name,
                     value: raid.id,
                 }))
-                if (options.length > 0) setRaid(options[0])
+                if (options.length > 0 && !raid) setRaid(options[0])
                 return options
             })
             .catch((error) => {
                 console.error('Error fetching raids:', error)
                 return []
             })
-            .finally(() => setIsLoading(false))
 
-    useEffect(() => {
-        if (!isLoading) setRaid(raid)
-    }, [isLoading, raid])
-
-    const onChange = (selectedOption: any) => {
+    const onChange = (selectedOption: { label: string; value: number }) => {
         setRaid(selectedOption)
     }
 
