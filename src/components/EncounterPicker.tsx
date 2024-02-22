@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React from 'react'
 import AsyncSelect from 'react-select/async'
 import axios from 'axios'
 import { Encounter } from '../utils/types'
@@ -16,15 +16,17 @@ const EncounterPicker: React.FC<EncounterPickerProps> = ({
 }) => {
     const fetchRaids = async () =>
         axios
-            .post(`/api/v1/warcraftlogs/raids/test`, {
+            .post(`/api/v1/warcraftlogs/raids`, {
                 operation: 'listEncounters',
                 parameters: { raidId: raidId },
             })
             .then((response) => {
-                const options = response.data.map((encounter: Encounter) => ({
-                    label: encounter.name,
-                    value: encounter.id,
-                }))
+                const options = response.data.map(
+                    (encounter: { id: number; name: string }) => ({
+                        label: encounter.name,
+                        value: encounter.id,
+                    })
+                )
                 if (options.length > 0 && !encounter) setEncounter(options[0])
                 return options
             })
@@ -33,7 +35,7 @@ const EncounterPicker: React.FC<EncounterPickerProps> = ({
                 return []
             })
 
-    const onChange = (selectedOption: any) => {
+    const onChange = (selectedOption: Encounter) => {
         setEncounter(selectedOption)
     }
 

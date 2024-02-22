@@ -15,14 +15,16 @@ const RaidPicker: React.FC<RaidPickerProps> = ({
 }) => {
     const fetchRaids = async () =>
         axios
-            .post(`/api/v1/warcraftlogs/raids/test`, {
+            .post(`/api/v1/warcraftlogs/raids`, {
                 operation: 'listRaids',
             })
             .then((response) => {
-                const options = response.data.map((raid: Raid) => ({
-                    label: raid.name,
-                    value: raid.id,
-                }))
+                const options = response.data.map(
+                    (raid: { name: string; id: number }) => ({
+                        label: raid.name,
+                        value: raid.id,
+                    })
+                )
                 if (options.length > 0 && !raid) setRaid(options[0])
                 return options
             })
@@ -31,7 +33,7 @@ const RaidPicker: React.FC<RaidPickerProps> = ({
                 return []
             })
 
-    const onChange = (selectedOption: { label: string; value: number }) => {
+    const onChange = (selectedOption: Raid) => {
         setRaid(selectedOption)
     }
 
