@@ -1,0 +1,11 @@
+export enum RANKING_CLASS {
+    MAGE = 'MAGE',
+    WARRIOR = 'WARRIOR',
+    DRUID = 'DRUID',
+    HUNTER = 'HUNTER',
+    PALADIN = 'PALADIN',
+    PRIEST = 'PRIEST',
+    ROGUE = 'ROGUE',
+    SHAMAN = 'SHAMAN',
+    WARLOCK = 'WARLOCK',
+}
