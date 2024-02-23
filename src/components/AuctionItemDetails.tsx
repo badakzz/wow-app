@@ -16,6 +16,7 @@ const AuctionItemDetails: React.FC<AuctionItemDetailsProps> = ({
     itemId,
     auctionHouseId,
 }) => {
+    console.log('b')
     const [data, setData] = useState<AuctionItem[] | null>(null)
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState('')
