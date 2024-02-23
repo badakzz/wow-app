@@ -1,12 +1,29 @@
 /* eslint-disable react/jsx-key */
 import React, { useMemo, useState, useEffect } from 'react'
-import { useTable } from 'react-table'
+import { useTable, useFilters } from 'react-table'
 import axios from 'axios'
 import { Encounter, Ranking } from '../utils/types'
 import { getRankingClassColor } from '../utils/helpers'
+import { Form } from 'react-bootstrap'
 
 type TopRankingPerformersTableProps = {
     encounter: Encounter
+}
+
+const DefaultColumnFilter = ({
+    column: { filterValue, preFilteredRows, setFilter },
+}) => {
+    const count = preFilteredRows.length
+
+    return (
+        <input
+            value={filterValue || ''}
+            onChange={(e) => {
+                setFilter(e.target.value || undefined) // Set undefined to remove the filter entirely
+            }}
+            placeholder={`Search ${count} records...`}
+        />
+    )
 }
 
 const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
@@ -15,6 +32,7 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
     const [data, setData] = useState<Ranking[]>([])
     const [page, setPage] = useState<number>(1)
     const [hasMorePages, setHasMorePages] = useState<boolean>(false)
+    const [filter, setFilter] = useState<string>('')
 
     const fetchData = async (encounterId: number, page: number) => {
         try {
@@ -42,28 +60,46 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                 Cell: ({ row }: any) => (
                     <div
                         style={{
-                            color: getRankingClassColor(
-                                row.original.class.toUpperCase()
-                            ),
+                            color: getRankingClassColor(row.original.class),
                         }}
                     >
                         {row.original.name}
                     </div>
                 ),
+                Filter: DefaultColumnFilter,
             },
             {
                 Header: 'Amount',
                 accessor: 'amount' as keyof Ranking,
+                disableFilters: true, // Disable filters for this column
             },
         ],
         []
     )
-
-    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-        useTable({ columns, data })
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        rows,
+        prepareRow,
+        state,
+    } = useTable(
+        {
+            columns,
+            data,
+        },
+        useFilters // Use the useFilters hook
+    )
 
     return (
         <>
+            {/* <Form.Group>
+                <Form.Control
+                    type="text"
+                    onChange={(e) => setFilter(e.target.value)}
+                    placeholder="Filter by class..."
+                ></Form.Control>
+            </Form.Group> */}
             <table {...getTableProps()}>
                 <thead>
                     {headerGroups.map((headerGroup) => (
@@ -71,6 +107,12 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                             {headerGroup.headers.map((column) => (
                                 <th {...column.getHeaderProps()}>
                                     {column.render('Header')}
+                                    {/* Render the column filter UI */}
+                                    <div>
+                                        {column.canFilter
+                                            ? column.render('Filter')
+                                            : null}
+                                    </div>
                                 </th>
                             ))}
                         </tr>
