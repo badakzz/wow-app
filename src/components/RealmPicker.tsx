@@ -17,11 +17,10 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
     setAuctionHouseId,
     ...restOfProps
 }) => {
-    const defaultValue = { label: 'Living Flame', value: 513 }
     const [currentAuctionHouse, setCurrentAuctionHouse] = useState<{
         label: string
         value: number
-    } | null>(defaultValue)
+    } | null>(null)
 
     const debouncedFetchRealms = useCallback(
         debounce(
@@ -38,6 +37,8 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
                         label: `${result.realmName}`,
                         value: result.auctionHouseId,
                     }))
+                    if (options.length > 0 && !currentAuctionHouse)
+                        setCurrentAuctionHouse(options[0])
                     callback(options)
                 } catch (error) {
                     console.error('Error fetching data:', error)
@@ -59,12 +60,7 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
     useEffect(() => {
         setCurrentAuctionHouse(null)
         setAuctionHouseId(null)
-    }, [faction, region])
-
-    useEffect(() => {
-        setCurrentAuctionHouse(defaultValue)
-        setAuctionHouseId(defaultValue.value)
-    }, [])
+    }, [region])
 
     const onChange = (selectedOption: any) => {
         setAuctionHouseId(selectedOption ? selectedOption.value : null)

@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { CSSProperties, useState } from 'react'
+import { useState } from 'react'
 import { Container } from 'react-bootstrap'
 import {
     ItemCharacteristics,
@@ -7,7 +7,6 @@ import {
     FactionPicker,
     RegionPicker,
     ItemPicker,
-    ItemPricingDifferential,
     AuctionItemDetails,
 } from '../components'
 import { FACTION, REGION } from '../utils/constants'
