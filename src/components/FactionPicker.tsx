@@ -13,11 +13,10 @@ const FactionPicker: React.FC<FactionPickerProps> = ({
     setFaction,
     ...restOfProps
 }) => {
-    const options = [
-        { value: FACTION.ALLIANCE, label: FACTION.ALLIANCE },
-        { value: FACTION.HORDE, label: FACTION.HORDE },
-        // { value: FACTION.NEUTRAL, label: FACTION.NEUTRAL },
-    ]
+    const options = Object.entries(FACTION).map(([key, value]) => ({
+        value,
+        label: value,
+    }))
 
     const selectedOption = options.find((option) => option.value === faction)
 

@@ -1,8 +1,282 @@
 _type: export
 __export_format: 4
-__export_date: 2024-02-05T12:35:01.073Z
+__export_date: 2024-02-22T17:23:15.717Z
 __export_source: insomnia.desktop.app:v8.6.0
 resources:
+  - _id: req_b16cda3fca5a48158a649d01d03e4b94
+    parentId: wrk_884dd77382fc47edb784ebcac45681b9
+    modified: 1708622378249
+    created: 1708015937277
+    url: http://localhost:3000/api/v1/warcraftlogs/raids
+    name: V1 - List Raids
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "operation": "listRaids"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/8.6.0
+    authentication: {}
+    metaSortKey: -1708015937277
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: wrk_884dd77382fc47edb784ebcac45681b9
+    parentId: null
+    modified: 1706792205154
+    created: 1706792205154
+    name: Wow App
+    description: ""
+    scope: collection
+    _type: workspace
+  - _id: req_039faca5d00045d38ca97c3c2238437a
+    parentId: wrk_884dd77382fc47edb784ebcac45681b9
+    modified: 1708622346033
+    created: 1708621639308
+    url: http://localhost:3000/api/v1/warcraftlogs/raids
+    name: V1 - List Encounters
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "operation": "listEncounters",
+          "parameters": { "raidId": 2008 }
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/8.6.0
+    authentication: {}
+    metaSortKey: -1708009358681
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_1ac78b7268874c8e9bc621dc64c3ecc0
+    parentId: wrk_884dd77382fc47edb784ebcac45681b9
+    modified: 1708622566844
+    created: 1708622404244
+    url: http://localhost:3000/api/v1/warcraftlogs/raids
+    name: V1 - Get Rankings for encounter
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"operation": "getEncounterDetails",
+        	"parameters": {
+        		"encounterId": 2925,
+        		"page": 1,
+        		"className": "Mage"
+        	}
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/8.6.0
+    authentication: {}
+    metaSortKey: -1708006069383
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_c3c6f83419c94221a693fa5d2c5e2b37
+    parentId: wrk_884dd77382fc47edb784ebcac45681b9
+    modified: 1708015647839
+    created: 1708002780085
+    url: https://sod.warcraftlogs.com/api/v2/client
+    name: Encounter By Id
+    description: ""
+    method: POST
+    body:
+      mimeType: application/graphql
+      text: '{"query":"query {\n  worldData {\n    encounter(id: 2925)
+        {\n      id\n      name\n      characterRankings\n    }\n  }\n}\n"}'
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/8.6.0
+        id: pair_8b925df2bd5f4009b3a724f269fdd4b4
+      - name: Content-Type
+        value: application/json
+        id: pair_1e3a92a977584cc28d639e47aabe7188
+    authentication:
+      type: bearer
+      token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjU3Nzc4Yi1iMjBlLTQyM2YtYTkwMy04MDQ3OGU1MTdmZjMiLCJqdGkiOiI2M2E5NTQ5ODFiZTg5ZGY1NTY4OGIzMzAxYjk3OTkzZjgxZWYwNmQ2OGNmZGQ5ZmZkMGM5MWEwMzNiYmUwOGRiMmY2MDkwNTE1NGFlNDc0OCIsImlhdCI6MTcwODAwMDgxMC4yMzE2MDYsIm5iZiI6MTcwODAwMDgxMC4yMzE2MSwiZXhwIjoxNzM5MTA0ODEwLjIxOTg0Niwic3ViIjoiIiwic2NvcGVzIjpbInZpZXctdXNlci1wcm9maWxlIiwidmlldy1wcml2YXRlLXJlcG9ydHMiXX0.sypowIfAPCysNZB8qJrqPT1sx0p16HP55AWtzNoMfBM5a-rM1-ijicV9C8fhPQqFylnoOAcp98CI-51eoxlkM3wIx9a_5aMdLUy1do2_BWc7zNOkO-WP-EeCQZpZm2vkMOsXC5kaXe_etBE3o6cRN3ahh-kTOBUukGHV5TN2qlaMCilct3Y3E6GZKKHyYDHrVYgUL9Y9SG5_HWXHLkLPZ9FvZ7R2KqVFoTTEV_FzCfD_81B6CiQGINC_dtwvAVPnwwCRZy2lvIKUuo_8FF_REF6-xYwq-_4V3GTqtFwP1bp_5nkwKc7x2dlpsgqSEV4UJ-v5FG7LZ0gubM1Gqq4AGe_d9v0ZT_bMdZvGlDwYmPFeHClkw7pBf2zg15lhyR0DwkUi9hFQ1VZ0VR_iIePhMUWsBuX23-rAM-BgiNk3a1nFDpQs5mz-LqQ2enLp0RTf0OTWPHGE1Efc_QldiS8r-BD2BSm9sOGFNGbHXhRTj_fTgl8djbxzbv9P61_GTjCKWddKFgjhpk0-Trpd296Jctp8iteFMK08vigL7rJhKbdpX8k-_RvyEOWPJkieafjVxmMifE--ypapV4K42BijuVpj8C4QEOyJ_R1CD8xNyvwsqNwxIRY92I1kL9wAMAlSQC9ff5h2UzpuqAdBIrEei3eRmc3xJ4MCNOPzxqe7db8
+    metaSortKey: -1708002780085
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_61acd97bdbe34f4cb2002650a544d21a
+    parentId: wrk_884dd77382fc47edb784ebcac45681b9
+    modified: 1708617918382
+    created: 1708015639674
+    url: https://sod.warcraftlogs.com/api/v2/client
+    name: Encounter By Id And Class
+    description: ""
+    method: POST
+    body:
+      mimeType: application/graphql
+      text: '{"query":"query {\n  worldData {\n    encounter(id: 2925)
+        {\n      id\n      name\n      characterRankings(\n        className:
+        \"Mage\", page: 2)\n    }\n  }\n}\n"}'
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/8.6.0
+        id: pair_8b925df2bd5f4009b3a724f269fdd4b4
+      - name: Content-Type
+        value: application/json
+        id: pair_1e3a92a977584cc28d639e47aabe7188
+    authentication:
+      type: bearer
+      token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjU3Nzc4Yi1iMjBlLTQyM2YtYTkwMy04MDQ3OGU1MTdmZjMiLCJqdGkiOiI2M2E5NTQ5ODFiZTg5ZGY1NTY4OGIzMzAxYjk3OTkzZjgxZWYwNmQ2OGNmZGQ5ZmZkMGM5MWEwMzNiYmUwOGRiMmY2MDkwNTE1NGFlNDc0OCIsImlhdCI6MTcwODAwMDgxMC4yMzE2MDYsIm5iZiI6MTcwODAwMDgxMC4yMzE2MSwiZXhwIjoxNzM5MTA0ODEwLjIxOTg0Niwic3ViIjoiIiwic2NvcGVzIjpbInZpZXctdXNlci1wcm9maWxlIiwidmlldy1wcml2YXRlLXJlcG9ydHMiXX0.sypowIfAPCysNZB8qJrqPT1sx0p16HP55AWtzNoMfBM5a-rM1-ijicV9C8fhPQqFylnoOAcp98CI-51eoxlkM3wIx9a_5aMdLUy1do2_BWc7zNOkO-WP-EeCQZpZm2vkMOsXC5kaXe_etBE3o6cRN3ahh-kTOBUukGHV5TN2qlaMCilct3Y3E6GZKKHyYDHrVYgUL9Y9SG5_HWXHLkLPZ9FvZ7R2KqVFoTTEV_FzCfD_81B6CiQGINC_dtwvAVPnwwCRZy2lvIKUuo_8FF_REF6-xYwq-_4V3GTqtFwP1bp_5nkwKc7x2dlpsgqSEV4UJ-v5FG7LZ0gubM1Gqq4AGe_d9v0ZT_bMdZvGlDwYmPFeHClkw7pBf2zg15lhyR0DwkUi9hFQ1VZ0VR_iIePhMUWsBuX23-rAM-BgiNk3a1nFDpQs5mz-LqQ2enLp0RTf0OTWPHGE1Efc_QldiS8r-BD2BSm9sOGFNGbHXhRTj_fTgl8djbxzbv9P61_GTjCKWddKFgjhpk0-Trpd296Jctp8iteFMK08vigL7rJhKbdpX8k-_RvyEOWPJkieafjVxmMifE--ypapV4K42BijuVpj8C4QEOyJ_R1CD8xNyvwsqNwxIRY92I1kL9wAMAlSQC9ff5h2UzpuqAdBIrEei3eRmc3xJ4MCNOPzxqe7db8
+    metaSortKey: -1707783165576.5
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_1e575475e2004e04b0649895820383db
+    parentId: wrk_884dd77382fc47edb784ebcac45681b9
+    modified: 1708014562501
+    created: 1708004652481
+    url: https://sod.warcraftlogs.com/api/v2/client
+    name: Encounters
+    description: ""
+    method: POST
+    body:
+      mimeType: application/graphql
+      text: '{"query":"query {\n  worldData {\n    zones
+        {\n      id\n      name\n      encounters
+        {\n        id\n        name\n      }\n    }\n  }\n}\n"}'
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/8.6.0
+        id: pair_8b925df2bd5f4009b3a724f269fdd4b4
+      - name: Content-Type
+        value: application/json
+        id: pair_1e3a92a977584cc28d639e47aabe7188
+    authentication:
+      type: bearer
+      token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjU3Nzc4Yi1iMjBlLTQyM2YtYTkwMy04MDQ3OGU1MTdmZjMiLCJqdGkiOiI2M2E5NTQ5ODFiZTg5ZGY1NTY4OGIzMzAxYjk3OTkzZjgxZWYwNmQ2OGNmZGQ5ZmZkMGM5MWEwMzNiYmUwOGRiMmY2MDkwNTE1NGFlNDc0OCIsImlhdCI6MTcwODAwMDgxMC4yMzE2MDYsIm5iZiI6MTcwODAwMDgxMC4yMzE2MSwiZXhwIjoxNzM5MTA0ODEwLjIxOTg0Niwic3ViIjoiIiwic2NvcGVzIjpbInZpZXctdXNlci1wcm9maWxlIiwidmlldy1wcml2YXRlLXJlcG9ydHMiXX0.sypowIfAPCysNZB8qJrqPT1sx0p16HP55AWtzNoMfBM5a-rM1-ijicV9C8fhPQqFylnoOAcp98CI-51eoxlkM3wIx9a_5aMdLUy1do2_BWc7zNOkO-WP-EeCQZpZm2vkMOsXC5kaXe_etBE3o6cRN3ahh-kTOBUukGHV5TN2qlaMCilct3Y3E6GZKKHyYDHrVYgUL9Y9SG5_HWXHLkLPZ9FvZ7R2KqVFoTTEV_FzCfD_81B6CiQGINC_dtwvAVPnwwCRZy2lvIKUuo_8FF_REF6-xYwq-_4V3GTqtFwP1bp_5nkwKc7x2dlpsgqSEV4UJ-v5FG7LZ0gubM1Gqq4AGe_d9v0ZT_bMdZvGlDwYmPFeHClkw7pBf2zg15lhyR0DwkUi9hFQ1VZ0VR_iIePhMUWsBuX23-rAM-BgiNk3a1nFDpQs5mz-LqQ2enLp0RTf0OTWPHGE1Efc_QldiS8r-BD2BSm9sOGFNGbHXhRTj_fTgl8djbxzbv9P61_GTjCKWddKFgjhpk0-Trpd296Jctp8iteFMK08vigL7rJhKbdpX8k-_RvyEOWPJkieafjVxmMifE--ypapV4K42BijuVpj8C4QEOyJ_R1CD8xNyvwsqNwxIRY92I1kL9wAMAlSQC9ff5h2UzpuqAdBIrEei3eRmc3xJ4MCNOPzxqe7db8
+    metaSortKey: -1707563551068
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_10540e98e6b546f28cb3ac81cb1cf4ab
+    parentId: wrk_884dd77382fc47edb784ebcac45681b9
+    modified: 1708015487626
+    created: 1708014660665
+    url: https://sod.warcraftlogs.com/api/v2/client
+    name: Encounters By Raid Id
+    description: ""
+    method: POST
+    body:
+      mimeType: application/graphql
+      text: '{"query":"query {\n  worldData {\n    zone(id: 2008) {\n      encounters
+        {\n        id\n        name\n      }\n    }\n  }\n}\n"}'
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/8.6.0
+        id: pair_8b925df2bd5f4009b3a724f269fdd4b4
+      - name: Content-Type
+        value: application/json
+        id: pair_1e3a92a977584cc28d639e47aabe7188
+    authentication:
+      type: bearer
+      token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjU3Nzc4Yi1iMjBlLTQyM2YtYTkwMy04MDQ3OGU1MTdmZjMiLCJqdGkiOiI2M2E5NTQ5ODFiZTg5ZGY1NTY4OGIzMzAxYjk3OTkzZjgxZWYwNmQ2OGNmZGQ5ZmZkMGM5MWEwMzNiYmUwOGRiMmY2MDkwNTE1NGFlNDc0OCIsImlhdCI6MTcwODAwMDgxMC4yMzE2MDYsIm5iZiI6MTcwODAwMDgxMC4yMzE2MSwiZXhwIjoxNzM5MTA0ODEwLjIxOTg0Niwic3ViIjoiIiwic2NvcGVzIjpbInZpZXctdXNlci1wcm9maWxlIiwidmlldy1wcml2YXRlLXJlcG9ydHMiXX0.sypowIfAPCysNZB8qJrqPT1sx0p16HP55AWtzNoMfBM5a-rM1-ijicV9C8fhPQqFylnoOAcp98CI-51eoxlkM3wIx9a_5aMdLUy1do2_BWc7zNOkO-WP-EeCQZpZm2vkMOsXC5kaXe_etBE3o6cRN3ahh-kTOBUukGHV5TN2qlaMCilct3Y3E6GZKKHyYDHrVYgUL9Y9SG5_HWXHLkLPZ9FvZ7R2KqVFoTTEV_FzCfD_81B6CiQGINC_dtwvAVPnwwCRZy2lvIKUuo_8FF_REF6-xYwq-_4V3GTqtFwP1bp_5nkwKc7x2dlpsgqSEV4UJ-v5FG7LZ0gubM1Gqq4AGe_d9v0ZT_bMdZvGlDwYmPFeHClkw7pBf2zg15lhyR0DwkUi9hFQ1VZ0VR_iIePhMUWsBuX23-rAM-BgiNk3a1nFDpQs5mz-LqQ2enLp0RTf0OTWPHGE1Efc_QldiS8r-BD2BSm9sOGFNGbHXhRTj_fTgl8djbxzbv9P61_GTjCKWddKFgjhpk0-Trpd296Jctp8iteFMK08vigL7rJhKbdpX8k-_RvyEOWPJkieafjVxmMifE--ypapV4K42BijuVpj8C4QEOyJ_R1CD8xNyvwsqNwxIRY92I1kL9wAMAlSQC9ff5h2UzpuqAdBIrEei3eRmc3xJ4MCNOPzxqe7db8
+    metaSortKey: -1707453743813.75
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_062940fa71b34233895aab2deb9ffd58
+    parentId: wrk_884dd77382fc47edb784ebcac45681b9
+    modified: 1708008325278
+    created: 1708008319716
+    url: https://sod.warcraftlogs.com/api/v2/client
+    name: Raids
+    description: ""
+    method: POST
+    body:
+      mimeType: application/graphql
+      text: '{"query":"query {\n  worldData {\n    zones
+        {\n      id\n      name\n    }\n  }\n}\n"}'
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/8.6.0
+        id: pair_8b925df2bd5f4009b3a724f269fdd4b4
+      - name: Content-Type
+        value: application/json
+        id: pair_1e3a92a977584cc28d639e47aabe7188
+    authentication:
+      type: bearer
+      token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjU3Nzc4Yi1iMjBlLTQyM2YtYTkwMy04MDQ3OGU1MTdmZjMiLCJqdGkiOiI2M2E5NTQ5ODFiZTg5ZGY1NTY4OGIzMzAxYjk3OTkzZjgxZWYwNmQ2OGNmZGQ5ZmZkMGM5MWEwMzNiYmUwOGRiMmY2MDkwNTE1NGFlNDc0OCIsImlhdCI6MTcwODAwMDgxMC4yMzE2MDYsIm5iZiI6MTcwODAwMDgxMC4yMzE2MSwiZXhwIjoxNzM5MTA0ODEwLjIxOTg0Niwic3ViIjoiIiwic2NvcGVzIjpbInZpZXctdXNlci1wcm9maWxlIiwidmlldy1wcml2YXRlLXJlcG9ydHMiXX0.sypowIfAPCysNZB8qJrqPT1sx0p16HP55AWtzNoMfBM5a-rM1-ijicV9C8fhPQqFylnoOAcp98CI-51eoxlkM3wIx9a_5aMdLUy1do2_BWc7zNOkO-WP-EeCQZpZm2vkMOsXC5kaXe_etBE3o6cRN3ahh-kTOBUukGHV5TN2qlaMCilct3Y3E6GZKKHyYDHrVYgUL9Y9SG5_HWXHLkLPZ9FvZ7R2KqVFoTTEV_FzCfD_81B6CiQGINC_dtwvAVPnwwCRZy2lvIKUuo_8FF_REF6-xYwq-_4V3GTqtFwP1bp_5nkwKc7x2dlpsgqSEV4UJ-v5FG7LZ0gubM1Gqq4AGe_d9v0ZT_bMdZvGlDwYmPFeHClkw7pBf2zg15lhyR0DwkUi9hFQ1VZ0VR_iIePhMUWsBuX23-rAM-BgiNk3a1nFDpQs5mz-LqQ2enLp0RTf0OTWPHGE1Efc_QldiS8r-BD2BSm9sOGFNGbHXhRTj_fTgl8djbxzbv9P61_GTjCKWddKFgjhpk0-Trpd296Jctp8iteFMK08vigL7rJhKbdpX8k-_RvyEOWPJkieafjVxmMifE--ypapV4K42BijuVpj8C4QEOyJ_R1CD8xNyvwsqNwxIRY92I1kL9wAMAlSQC9ff5h2UzpuqAdBIrEei3eRmc3xJ4MCNOPzxqe7db8
+    metaSortKey: -1707343936559.5
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
   - _id: req_71c85f0c6ca44ca5864ba3df7a309400
     parentId: wrk_884dd77382fc47edb784ebcac45681b9
     modified: 1707136472374
@@ -35,14 +309,6 @@ resources:
     settingRebuildPath: true
     settingFollowRedirects: global
     _type: request
-  - _id: wrk_884dd77382fc47edb784ebcac45681b9
-    parentId: null
-    modified: 1706792205154
-    created: 1706792205154
-    name: Wow App
-    description: ""
-    scope: collection
-    _type: workspace
   - _id: req_4568962edfb54394ada22cb733d389bd
     parentId: wrk_884dd77382fc47edb784ebcac45681b9
     modified: 1707124319405

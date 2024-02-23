@@ -13,12 +13,10 @@ const RegionPicker: React.FC<RegionPickerProps> = ({
     setRegion,
     ...restOfProps
 }) => {
-    const options = [
-        { value: REGION.EUROPE, label: REGION.EUROPE },
-        { value: REGION.KOREA, label: REGION.KOREA },
-        { value: REGION.NORTH_AMERICA, label: REGION.NORTH_AMERICA },
-        { value: REGION.TAIWAN, label: REGION.TAIWAN },
-    ]
+    const options = Object.entries(REGION).map(([key, value]) => ({
+        value,
+        label: value,
+    }))
 
     const getFlagSrc = (props: any) =>
         `${FLAG[props.data.value as keyof typeof FLAG]}`

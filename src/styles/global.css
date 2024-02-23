@@ -2,7 +2,7 @@
     --lightblue: rgb(100, 177, 255);
     --lightgrey: rgb(98, 98, 101);
     --darkgrey: rgb(28, 28, 28);
-    --midgrey: rgb(27, 36, 44);
+    --bluegrey: rgb(27, 36, 44);
 }
 
 body {
@@ -60,7 +60,7 @@ h1 {
 .auction-item-details-container {
     border: 2px solid rgb(170, 169, 169);
     border-radius: 5px;
-    background-color: var(--midgrey);
+    background-color: var(--bluegrey);
     padding-top: 0.3rem;
     padding-bottom: 0.3rem;
     padding-right: 0.5rem;
@@ -85,6 +85,18 @@ h1 {
 
 .react-select__dropdown-indicator svg {
     color: var(--lightblue);
+}
+
+.react-select__dropdown-indicator:hover svg {
+    color: white;
+}
+
+.react-select__clear-indicator svg {
+    color: var(--lightblue);
+}
+
+.react-select__clear-indicator:hover svg {
+    color: white;
 }
 
 .react-select__indicator-separator {
@@ -140,11 +152,11 @@ h1 {
 }
 
 .react-select__option--is-selected {
-    background-color: var(--midgrey) !important;
+    background-color: var(--bluegrey) !important;
 }
 
 .react-select__option--is-focused {
-    background-color: var(--midgrey) !important;
+    background-color: var(--bluegrey) !important;
 }
 
 .react-select__menu {
@@ -185,6 +197,93 @@ h1 {
     display: flex;
     justify-content: space-between;
     max-width: 40% !important;
+}
+
+.page-button {
+    background-color: var(--bluegrey);
+    border: none;
+}
+
+.page-button:hover {
+    background-color: var(--bluegrey);
+    border: none;
+    color: var(--lightblue);
+}
+
+.page-button:disabled {
+    background-color: var(--bluegrey);
+    border: none;
+}
+
+.rankings-main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.rankings-picker-table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 70%;
+}
+
+.rankings-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    background-color: var(--bluegrey);
+}
+
+.rankings-table th,
+.rankings-table td {
+    border-top: 2px solid var(--lightgrey);
+    border-bottom: 2px solid var(--lightgrey);
+    text-align: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    width: 50%;
+}
+
+.rankings-table th:first-child {
+    border-right: 2px solid var(--lightgrey);
+    border-bottom: 2px solid white;
+}
+
+.rankings-table th:last-child {
+    border-right: 2px solid var(--lightgrey);
+    border-bottom: 2px solid white;
+}
+
+.rankings-table td:first-child {
+    border-right: 2px solid var(--lightgrey);
+    border-bottom: none;
+}
+
+.rankings-table td:last-child {
+    border-bottom: none;
+}
+
+.rankings-table-container {
+    border: 2px solid white;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 70%;
+    background-color: var(--bluegrey);
+}
+
+.rankings-pagination {
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.spinner {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 1rem;
 }
 
 @media (max-width: 1635px) {

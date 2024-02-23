@@ -22,7 +22,6 @@ export async function fetchWowApiToken() {
 
     const { access_token, expires_in } = response.data
 
-    console.log('access_token', access_token)
     cachedToken = {
         value: access_token,
         expiry: expires_in * 1000,

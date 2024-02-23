@@ -1,4 +1,6 @@
 export * from './sanitizeQuery'
 export * from './tsmTokenHelper'
+export * from './warcraftLogsRankingHelper'
+export * from './warcraftLogsTokenHelper'
 export * from './wowItemHelper'
 export * from './wowTokenHelper'
