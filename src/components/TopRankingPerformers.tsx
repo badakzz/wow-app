@@ -5,6 +5,8 @@ import axios from 'axios'
 import { Encounter, Ranking } from '../utils/types'
 import { getRankingClassColor } from '../utils/helpers'
 import { Form } from 'react-bootstrap'
+import { RankingClassPicker } from '.'
+import { RANKING_CLASS } from '@/utils/constants'
 
 type TopRankingPerformersTableProps = {
     encounter: Encounter
@@ -33,6 +35,7 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
     const [page, setPage] = useState<number>(1)
     const [hasMorePages, setHasMorePages] = useState<boolean>(false)
     const [filter, setFilter] = useState<string>('')
+    const [rankingClass, setRankingClass] = useState<RANKING_CLASS | null>(null)
 
     const fetchData = async (encounterId: number, page: number) => {
         try {
@@ -100,6 +103,10 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                     placeholder="Filter by class..."
                 ></Form.Control>
             </Form.Group> */}
+            <RankingClassPicker
+                rankingClass={rankingClass}
+                setRankingClass={setRankingClass}
+            />
             <table {...getTableProps()}>
                 <thead>
                     {headerGroups.map((headerGroup) => (
