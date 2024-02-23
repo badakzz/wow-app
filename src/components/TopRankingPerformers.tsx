@@ -81,7 +81,7 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
     }, [encounter, pageIndex])
 
     return (
-        <div className="d-flex flex-column align-items-center justify-content-center rankings-main-container">
+        <div className="d-flex flex-column align-items-center justify-content-end rankings-main-container">
             <div className="rankings-picker-table-container d-flex flex-column align-items-start">
                 <RankingClassPicker
                     className="mb-3"
@@ -97,7 +97,7 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                 )}
             </div>
             {!isLoading && (
-                <div className="d-flex flex-wrap rankings-table-container">
+                <div className="d-flex flex-wrap justify-content-end rankings-table-container">
                     <table {...getTableProps()} className="rankings-table">
                         <thead>
                             {headerGroups.map((headerGroup) => (
@@ -127,7 +127,7 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                             })}
                         </tbody>
                     </table>
-                    <div className="pagination">
+                    <div className="rankings-pagination">
                         <Button
                             className="page-button"
                             onClick={() =>
