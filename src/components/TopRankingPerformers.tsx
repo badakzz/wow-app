@@ -1,40 +1,23 @@
 /* eslint-disable react/jsx-key */
-import React, { useMemo, useState, useEffect } from 'react'
-import { useTable, useFilters } from 'react-table'
+import React, { useMemo, useState, useEffect, CSSProperties } from 'react'
+import { useTable, useFilters, usePagination } from 'react-table'
 import axios from 'axios'
 import { Encounter, Ranking } from '../utils/types'
 import { getRankingClassColor } from '../utils/helpers'
-import { Form } from 'react-bootstrap'
 import { RankingClassPicker } from '.'
 import { RANKING_CLASS } from '@/utils/constants'
+import { Button } from 'react-bootstrap'
 
 type TopRankingPerformersTableProps = {
     encounter: Encounter
-}
-
-const DefaultColumnFilter = ({
-    column: { filterValue, preFilteredRows, setFilter },
-}) => {
-    const count = preFilteredRows.length
-
-    return (
-        <input
-            value={filterValue || ''}
-            onChange={(e) => {
-                setFilter(e.target.value || undefined) // Set undefined to remove the filter entirely
-            }}
-            placeholder={`Search ${count} records...`}
-        />
-    )
 }
 
 const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
     encounter,
 }) => {
     const [data, setData] = useState<Ranking[]>([])
-    const [page, setPage] = useState<number>(1)
     const [hasMorePages, setHasMorePages] = useState<boolean>(false)
-    const [filter, setFilter] = useState<string>('')
+    const [pageIndex, setPageIndex] = useState<number>(0)
     const [rankingClass, setRankingClass] = useState<RANKING_CLASS | null>(null)
 
     const fetchData = async (encounterId: number, page: number) => {
@@ -51,10 +34,6 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
         }
     }
 
-    useEffect(() => {
-        fetchData(encounter.value, page)
-    }, [encounter, page])
-
     const columns = useMemo(
         () => [
             {
@@ -69,40 +48,37 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                         {row.original.name}
                     </div>
                 ),
-                Filter: DefaultColumnFilter,
             },
             {
                 Header: 'Amount',
                 accessor: 'amount' as keyof Ranking,
-                disableFilters: true, // Disable filters for this column
+                disableFilters: true,
             },
         ],
         []
     )
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        rows,
-        prepareRow,
-        state,
-    } = useTable(
-        {
-            columns,
-            data,
-        },
-        useFilters // Use the useFilters hook
-    )
+
+    const filteredData = useMemo(() => {
+        if (!rankingClass) return data
+        return data.filter((item) => item.class === rankingClass)
+    }, [data, rankingClass])
+
+    const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows } =
+        useTable(
+            {
+                columns,
+                data: filteredData,
+            },
+            useFilters,
+            usePagination
+        )
+
+    useEffect(() => {
+        fetchData(encounter.value, pageIndex + 1)
+    }, [encounter, pageIndex])
 
     return (
         <>
-            {/* <Form.Group>
-                <Form.Control
-                    type="text"
-                    onChange={(e) => setFilter(e.target.value)}
-                    placeholder="Filter by class..."
-                ></Form.Control>
-            </Form.Group> */}
             <RankingClassPicker
                 rankingClass={rankingClass}
                 setRankingClass={setRankingClass}
@@ -114,12 +90,6 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                             {headerGroup.headers.map((column) => (
                                 <th {...column.getHeaderProps()}>
                                     {column.render('Header')}
-                                    {/* Render the column filter UI */}
-                                    <div>
-                                        {column.canFilter
-                                            ? column.render('Filter')
-                                            : null}
-                                    </div>
                                 </th>
                             ))}
                         </tr>
@@ -142,11 +112,24 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                     })}
                 </tbody>
             </table>
-            {hasMorePages && (
-                <button onClick={() => setPage((prev) => prev + 1)}>
-                    Next Page
-                </button>
-            )}
+            <div className="pagination">
+                <Button
+                    className="page-button"
+                    onClick={() => setPageIndex((old) => Math.max(old - 1, 0))}
+                    disabled={pageIndex === 0}
+                >
+                    <span>{'<'}</span>
+                </Button>
+                <Button
+                    className="page-button"
+                    onClick={() =>
+                        setPageIndex((old) => (!hasMorePages ? old : old + 1))
+                    }
+                    disabled={!hasMorePages}
+                >
+                    <span>{'>'}</span>
+                </Button>
+            </div>
         </>
     )
 }
