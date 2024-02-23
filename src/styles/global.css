@@ -215,6 +215,70 @@ h1 {
     border: none;
 }
 
+.rankings-main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.rankings-picker-table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 70%;
+}
+
+.rankings-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    background-color: var(--midgrey);
+}
+
+.rankings-table th,
+.rankings-table td {
+    border-top: 2px solid var(--lightgrey);
+    border-bottom: 2px solid var(--lightgrey);
+    text-align: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    width: 50%;
+}
+
+.rankings-table th:first-child {
+    border-right: 2px solid var(--lightgrey);
+    border-bottom: 2px solid white;
+}
+
+.rankings-table th:last-child {
+    border-right: 2px solid var(--lightgrey);
+    border-bottom: 2px solid white;
+}
+
+.rankings-table td:first-child {
+    border-right: 2px solid var(--lightgrey);
+    border-bottom: none;
+}
+
+.rankings-table td:last-child {
+    border-bottom: none;
+}
+
+.rankings-table-container {
+    border: 2px solid white;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 70%;
+}
+
+.spinner {
+    display: flex;
+    justify-content: center;
+    margin: '20px 0';
+}
+
 @media (max-width: 1635px) {
     .auction-item-container {
         flex-direction: column;
