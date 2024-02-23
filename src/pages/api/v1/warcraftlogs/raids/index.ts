@@ -25,7 +25,6 @@ export default async function warcraftLogsQueryHandler(
                     responsePath: (data: any) => data.worldData.zones,
                 }
             case 'listEncounters':
-                console.log(parameters?.raidId)
                 return {
                     query: `{ worldData { zone(id: ${parameters?.raidId}) { encounters { id name } } } }`,
                     responsePath: (data: any) => data.worldData.zone.encounters,

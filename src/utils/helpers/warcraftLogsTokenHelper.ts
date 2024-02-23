@@ -11,8 +11,6 @@ export async function fetchWarcraftLogsApiToken() {
             `${process.env.WARCRAFT_LOGS_CLIENT_ID}:${process.env.WARCRAFT_LOGS_CLIENT_SECRET}`
         ).toString('base64')
 
-        console.log(auth)
-
         const response = await axios.post(
             'https://www.warcraftlogs.com/oauth/token',
             'grant_type=client_credentials',
