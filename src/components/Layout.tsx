@@ -27,7 +27,7 @@ const Layout: React.FC<Props> = ({ children }) => {
                                 Auction House Tracker
                             </Nav.Link>
                             <Nav.Link href="#link">Runes</Nav.Link>
-                            <Nav.Link href="#link">Logs</Nav.Link>
+                            <Nav.Link href="rankings">Rankings</Nav.Link>
                             <Nav.Link href="#link">BiS List</Nav.Link>
                             {/* <NavDropdown
                                 title="Dropdown"

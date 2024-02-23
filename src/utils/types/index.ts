@@ -1,4 +1,7 @@
 export * from './AuctionHouse'
 export * from './AuctionItem'
+export * from './Encounter'
 export * from './GameCurrency'
 export * from './Item'
+export * from './Raid'
+export * from './Ranking'
