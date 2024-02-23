@@ -1,6 +1,7 @@
 import Select, { OptionProps, SingleValueProps, components } from 'react-select'
 import { RANKING_CLASS } from '../utils/constants'
 import { FunctionComponent } from 'react'
+import { getRankingClassColor } from '@/utils/helpers'
 
 type RankingClassPickerProps = {
     rankingClass: string
@@ -20,13 +21,20 @@ const RankingClassPicker: React.FC<RankingClassPickerProps> = ({
     const SingleValue: FunctionComponent<SingleValueProps> = (props: any) => {
         return (
             <components.SingleValue {...props}>
-                {props.data.label}
+                <span style={{ color: getRankingClassColor(props.data.label) }}>
+                    {props.data.label}
+                </span>
             </components.SingleValue>
         )
     }
 
     const Option: FunctionComponent<OptionProps> = (props: any) => (
-        <components.Option {...props}>{props.data.label}</components.Option>
+        <components.Option {...props}>
+            {' '}
+            <span style={{ color: getRankingClassColor(props.data.label) }}>
+                {props.data.label}
+            </span>
+        </components.Option>
     )
 
     const selectedOption = options.find(
@@ -34,7 +42,7 @@ const RankingClassPicker: React.FC<RankingClassPickerProps> = ({
     )
 
     const onChange = (newValue: any) => {
-        if (newValue.value !== rankingClass) setRankingClass(newValue.value)
+        if (newValue?.value !== rankingClass) setRankingClass(newValue?.value)
     }
 
     return (
@@ -45,6 +53,8 @@ const RankingClassPicker: React.FC<RankingClassPickerProps> = ({
             value={selectedOption}
             onChange={onChange}
             isSearchable={false}
+            isClearable
+            placeholder="Filter by class..."
             classNamePrefix="react-select"
             components={{ SingleValue, Option }}
         />

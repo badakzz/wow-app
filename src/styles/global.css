@@ -87,6 +87,18 @@ h1 {
     color: var(--lightblue);
 }
 
+.react-select__dropdown-indicator:hover svg {
+    color: white;
+}
+
+.react-select__clear-indicator svg {
+    color: var(--lightblue);
+}
+
+.react-select__clear-indicator:hover svg {
+    color: white;
+}
+
 .react-select__indicator-separator {
     background-color: var(--darkgrey) !important;
     color: black !important;
