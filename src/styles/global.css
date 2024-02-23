@@ -2,7 +2,7 @@
     --lightblue: rgb(100, 177, 255);
     --lightgrey: rgb(98, 98, 101);
     --darkgrey: rgb(28, 28, 28);
-    --midgrey: rgb(27, 36, 44);
+    --bluegrey: rgb(27, 36, 44);
 }
 
 body {
@@ -60,7 +60,7 @@ h1 {
 .auction-item-details-container {
     border: 2px solid rgb(170, 169, 169);
     border-radius: 5px;
-    background-color: var(--midgrey);
+    background-color: var(--bluegrey);
     padding-top: 0.3rem;
     padding-bottom: 0.3rem;
     padding-right: 0.5rem;
@@ -152,11 +152,11 @@ h1 {
 }
 
 .react-select__option--is-selected {
-    background-color: var(--midgrey) !important;
+    background-color: var(--bluegrey) !important;
 }
 
 .react-select__option--is-focused {
-    background-color: var(--midgrey) !important;
+    background-color: var(--bluegrey) !important;
 }
 
 .react-select__menu {
@@ -200,18 +200,18 @@ h1 {
 }
 
 .page-button {
-    background-color: var(--darkgrey);
+    background-color: var(--bluegrey);
     border: none;
 }
 
 .page-button:hover {
-    background-color: var(--darkgrey);
+    background-color: var(--bluegrey);
     border: none;
     color: var(--lightblue);
 }
 
 .page-button:disabled {
-    background-color: var(--darkgrey);
+    background-color: var(--bluegrey);
     border: none;
 }
 
@@ -234,7 +234,7 @@ h1 {
     border-collapse: separate;
     border-spacing: 0;
     width: 100%;
-    background-color: var(--midgrey);
+    background-color: var(--bluegrey);
 }
 
 .rankings-table th,
@@ -271,12 +271,19 @@ h1 {
     border-radius: 5px;
     overflow: hidden;
     width: 70%;
+    background-color: var(--bluegrey);
+}
+
+.rankings-pagination {
+    padding: 0.5rem;
+    border-radius: 0.25rem;
 }
 
 .spinner {
     display: flex;
     justify-content: center;
-    margin: '20px 0';
+    width: 100%;
+    margin-top: 1rem;
 }
 
 @media (max-width: 1635px) {
