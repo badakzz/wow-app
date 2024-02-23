@@ -30,7 +30,6 @@ const RankingClassPicker: React.FC<RankingClassPickerProps> = ({
 
     const Option: FunctionComponent<OptionProps> = (props: any) => (
         <components.Option {...props}>
-            {' '}
             <span style={{ color: getRankingClassColor(props.data.label) }}>
                 {props.data.label}
             </span>

@@ -199,6 +199,22 @@ h1 {
     max-width: 40% !important;
 }
 
+.page-button {
+    background-color: var(--darkgrey);
+    border: none;
+}
+
+.page-button:hover {
+    background-color: var(--darkgrey);
+    border: none;
+    color: var(--lightblue);
+}
+
+.page-button:disabled {
+    background-color: var(--darkgrey);
+    border: none;
+}
+
 @media (max-width: 1635px) {
     .auction-item-container {
         flex-direction: column;
