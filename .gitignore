@@ -39,3 +39,5 @@ next-env.d.ts
 # database
 database/prices.db
 database/res.json
+database/logs
+database/prices.db-journal
