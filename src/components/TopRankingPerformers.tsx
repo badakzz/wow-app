@@ -26,7 +26,11 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
         try {
             const response = await axios.post('/api/v1/warcraftlogs/raids', {
                 operation: 'getEncounterDetails',
-                parameters: { encounterId: encounterId, page: page },
+                parameters: {
+                    encounterId: encounterId,
+                    className: rankingClass,
+                    page: page,
+                },
             })
             setData(response.data.rankings)
             setHasMorePages(response.data.hasMorePages)
@@ -61,24 +65,26 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
         []
     )
 
-    const filteredData = useMemo(() => {
-        if (!rankingClass) return data
-        return data.filter((item) => item.class === rankingClass)
-    }, [data, rankingClass])
+    // const filteredData = useMemo(() => {
+    //     if (!rankingClass) return data
+    //     return data.filter((item) => item.class === rankingClass)
+    // }, [data, rankingClass])
 
     const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows } =
         useTable(
             {
                 columns,
-                data: filteredData,
+                data,
             },
             useFilters,
             usePagination
         )
 
+    console.log(rankingClass)
+
     useEffect(() => {
         fetchData(encounter.value, pageIndex + 1)
-    }, [encounter, pageIndex])
+    }, [encounter, rankingClass, pageIndex])
 
     return (
         <div className="d-flex flex-column align-items-center justify-content-end rankings-main-container">
