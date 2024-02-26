@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import AsyncSelect from 'react-select/async'
 import axios from 'axios'
 import { Encounter } from '../utils/types'
@@ -38,6 +38,12 @@ const EncounterPicker: React.FC<EncounterPickerProps> = ({
     const onChange = (selectedOption: Encounter) => {
         setEncounter(selectedOption)
     }
+
+    useEffect(() => {
+        if (raidId) {
+            setEncounter(null)
+        }
+    }, [raidId])
 
     return (
         <AsyncSelect

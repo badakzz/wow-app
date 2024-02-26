@@ -61,9 +61,10 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
         setCurrentAuctionHouse(null)
         setAuctionHouseId(null)
     }, [region])
-
     useEffect(() => {
-        currentAuctionHouse && setAuctionHouseId(currentAuctionHouse)
+        currentAuctionHouse?.value &&
+            setAuctionHouseId(currentAuctionHouse.value)
+        currentAuctionHouse && console.log({ 1: currentAuctionHouse.value })
     }, [currentAuctionHouse])
 
     const onChange = (selectedOption: any) => {

@@ -2,7 +2,9 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaClient } from '@prisma/client'
 import { sanitizeInput } from '../../../../../utils/helpers'
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient({
+    log: ['query'],
+})
 
 export default async function handler(
     req: NextApiRequest,
