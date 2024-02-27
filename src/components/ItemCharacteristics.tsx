@@ -144,7 +144,7 @@ const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
                                 <div>
                                     {
                                         item.itemData.preview_item.requirements
-                                            .level.display_string
+                                            .level?.display_string
                                     }
                                 </div>
                             )}
