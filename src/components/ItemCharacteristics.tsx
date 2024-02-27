@@ -120,7 +120,7 @@ const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
                                         )
                                     }
                                 )}
-                            <div className="d-flex justify-content-between">
+                            <div className="d-flex justify-content-between gap-2">
                                 {item.itemData.inventory_type.name && (
                                     <div>
                                         {item.itemData.inventory_type.name}
