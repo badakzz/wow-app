@@ -289,9 +289,9 @@ h1 {
 .graph-tooltip {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
     justify-content: center;
-    text-align: center;
+    text-align: start;
     padding-top: 0.1rem;
     padding-bottom: 0.1rem;
     padding-left: 0.2rem;
