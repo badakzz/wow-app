@@ -80,8 +80,6 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
             usePagination
         )
 
-    console.log(rankingClass)
-
     useEffect(() => {
         fetchData(encounter.value, pageIndex + 1)
     }, [encounter, rankingClass, pageIndex])
