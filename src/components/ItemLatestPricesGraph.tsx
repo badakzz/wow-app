@@ -12,6 +12,7 @@ import {
     Tooltip,
     Legend,
 } from 'recharts'
+import { ItemSellPrice } from '.'
 
 type ItemLatestPricesGraphProps = {
     itemId: number
@@ -52,17 +53,11 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
             const marketValue = formatRawPriceToCopperSilverGold(
                 payload[0].value
             )
-            const marketValueFormatted = marketValue
-                ? `${marketValue.gold}g ${marketValue.silver}s ${marketValue.copper}c`
-                : 'N/A'
 
             const minBuyout = payload.find((p) => p.dataKey === 'minBuyout')
             const minBuyoutValue = formatRawPriceToCopperSilverGold(
                 minBuyout?.value
             )
-            const minBuyoutFormatted = minBuyoutValue
-                ? `${minBuyoutValue.gold}g ${minBuyoutValue.silver}s ${minBuyoutValue.copper}c`
-                : 'N/A'
 
             const date = new Date(label as string)
             const time = `${date.getHours()}:${
@@ -70,11 +65,31 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
             }${date.getMinutes()}`
 
             return (
-                <div className="graph-tooltip">
-                    <div className="label">{`${time}`}</div>
-                    <div className="intro">{`Market Value: ${marketValueFormatted}`}</div>
-                    <div className="intro">{`Min Buyout: ${minBuyoutFormatted}`}</div>
-                </div>
+                <>
+                    <div className="graph-tooltip">
+                        <div className="label">{`Scanned at ${time}`}</div>
+                        {minBuyoutValue && (
+                            <div className="d-flex gap-2">
+                                <span>Min Buyout:</span>
+                                <ItemSellPrice
+                                    gold={minBuyoutValue.gold}
+                                    silver={minBuyoutValue.silver}
+                                    copper={minBuyoutValue.copper}
+                                />
+                            </div>
+                        )}
+                        {marketValue && (
+                            <div className="d-flex gap-2">
+                                <span>Market Value:</span>
+                                <ItemSellPrice
+                                    gold={marketValue.gold}
+                                    silver={marketValue.silver}
+                                    copper={marketValue.copper}
+                                />
+                            </div>
+                        )}
+                    </div>
+                </>
             )
         }
 
