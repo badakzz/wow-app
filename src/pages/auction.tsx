@@ -8,6 +8,7 @@ import {
     RegionPicker,
     ItemPicker,
     AuctionItemDetails,
+    ItemLatestPricesGraph,
 } from '../components'
 import { FACTION, REGION } from '../utils/constants'
 
@@ -15,7 +16,7 @@ const Auction = () => {
     const [itemId, setItemId] = useState<number | null>(null)
     const [faction, setFaction] = useState<string>(FACTION.ALLIANCE)
     const [region, setRegion] = useState<string>(REGION.EUROPE)
-    const [auctionHouseId, setAuctionHouseId] = useState<number | null>(null)
+    const [auctionHouseId, setAuctionHouseId] = useState<number | null>()
 
     return (
         <>
@@ -55,15 +56,24 @@ const Auction = () => {
                     itemId={itemId}
                     setItemId={setItemId}
                 />
-                <div className="d-flex align-items-start justify-content-between my-5 auction-item-container">
-                    {itemId && <ItemCharacteristics itemId={itemId} />}
+                <div className="auction-core-container d-flex justify-content-between gap-5 w-100 my-5">
+                    <div className="w-50 align-items-start justify-content-between auction-item-container">
+                        {itemId && <ItemCharacteristics itemId={itemId} />}
+                        {itemId && auctionHouseId && (
+                            <div className="auction-item-details-margin">
+                                <AuctionItemDetails
+                                    itemId={itemId}
+                                    auctionHouseId={auctionHouseId}
+                                />
+                            </div>
+                        )}
+                    </div>
                     {itemId && auctionHouseId && (
-                        <div className="auction-item-details-margin">
-                            <AuctionItemDetails
-                                itemId={itemId}
-                                auctionHouseId={auctionHouseId}
-                            />
-                        </div>
+                        <ItemLatestPricesGraph
+                            className="w-50"
+                            itemId={itemId}
+                            auctionHouseId={auctionHouseId}
+                        />
                     )}
                 </div>
             </Container>

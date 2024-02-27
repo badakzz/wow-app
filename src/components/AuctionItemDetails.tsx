@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react'
-import { ItemPricingDifferential, ItemSellPrice } from '.'
+import {
+    ItemLatestPricesGraph,
+    ItemPricingDifferential,
+    ItemSellPrice,
+} from '.'
 import axios from 'axios'
 import { AuctionItem } from '../utils/types'
 import {
     formatRawPriceToCopperSilverGold,
     minutesSinceTimestamp,
-} from '../utils/helpers/tsmAuctionItemHelper'
+} from '../utils/helpers'
 
 type AuctionItemDetailsProps = {
     itemId: number
@@ -16,7 +20,6 @@ const AuctionItemDetails: React.FC<AuctionItemDetailsProps> = ({
     itemId,
     auctionHouseId,
 }) => {
-    console.log('b')
     const [data, setData] = useState<AuctionItem[] | null>(null)
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState('')
