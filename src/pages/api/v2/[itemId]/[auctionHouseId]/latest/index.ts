@@ -29,7 +29,7 @@ export default async function handler(
                 "yyyy-MM-dd'T'HH:mm"
             ),
         }))
-
+        console.log(formattedData)
         res.status(200).json(formattedData)
     } catch (error) {
         console.error('Request error', error)

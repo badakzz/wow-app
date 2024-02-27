@@ -9,7 +9,7 @@ import { AuctionItem } from '../utils/types'
 import {
     formatRawPriceToCopperSilverGold,
     minutesSinceTimestamp,
-} from '../utils/helpers/tsmAuctionItemHelper'
+} from '../utils/helpers'
 
 type AuctionItemDetailsProps = {
     itemId: number
@@ -72,10 +72,6 @@ const AuctionItemDetails: React.FC<AuctionItemDetailsProps> = ({
                     </div>
                     <div>Number of auctions: {data[0].numAuctions}</div>
                     <ItemPricingDifferential
-                        itemId={itemId}
-                        auctionHouseId={auctionHouseId}
-                    />
-                    <ItemLatestPricesGraph
                         itemId={itemId}
                         auctionHouseId={auctionHouseId}
                     />
