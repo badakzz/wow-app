@@ -15,7 +15,7 @@ const Auction = () => {
     const [itemId, setItemId] = useState<number | null>(null)
     const [faction, setFaction] = useState<string>(FACTION.ALLIANCE)
     const [region, setRegion] = useState<string>(REGION.EUROPE)
-    const [auctionHouseId, setAuctionHouseId] = useState<number | null>(null)
+    const [auctionHouseId, setAuctionHouseId] = useState<number | null>()
 
     return (
         <>

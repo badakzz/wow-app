@@ -1,6 +1,5 @@
 const axios = require('axios')
 const { PrismaClient } = require('@prisma/client')
-const { logger } = require('../../next-logger.config.js')
 
 const prisma = new PrismaClient()
 
