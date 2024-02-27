@@ -38,7 +38,12 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
                         value: result.auctionHouseId,
                     }))
                     if (options.length > 0 && !currentAuctionHouse)
-                        setCurrentAuctionHouse(options[0])
+                        // setCurrentAuctionHouse(options[0])
+                        // temp
+                        setCurrentAuctionHouse({
+                            label: 'Living Flame',
+                            value: 513,
+                        })
                     callback(options)
                 } catch (error) {
                     console.error('Error fetching data:', error)
@@ -64,7 +69,6 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
     useEffect(() => {
         currentAuctionHouse?.value &&
             setAuctionHouseId(currentAuctionHouse.value)
-        currentAuctionHouse && console.log({ 1: currentAuctionHouse.value })
     }, [currentAuctionHouse])
 
     const onChange = (selectedOption: any) => {
