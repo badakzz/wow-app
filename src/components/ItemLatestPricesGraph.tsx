@@ -43,6 +43,8 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
         }
     }
 
+    console.log(data)
+
     const CustomTooltip: React.FC<CustomTooltipProps> = ({
         active,
         payload,
@@ -123,33 +125,21 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
                             dataKey="snapshotDate"
                             tickFormatter={formatXAxis}
                         />
-                        <YAxis
-                            yAxisId="left"
-                            orientation="left"
-                            stroke="#8884d8"
-                        />
-                        <YAxis
-                            yAxisId="right"
-                            orientation="right"
-                            stroke="#82ca9d"
-                        />
+                        <YAxis orientation="left" stroke="#8884d8" />
                         <Tooltip content={<CustomTooltip />} />
                         <Legend />
                         <Bar
-                            yAxisId="right"
                             dataKey="quantity"
                             fill="rgb(100, 177, 255)"
                             name="Quantity"
                         />
                         <Line
-                            yAxisId="left"
                             type="monotone"
                             dataKey="marketValue"
-                            stroke="rgb(87, 26, 156)"
+                            stroke="rgb(238, 205, 21)"
                             name="Market Value"
                         />
                         <Line
-                            yAxisId="left"
                             type="monotone"
                             dataKey="minBuyout"
                             stroke="rgb(235, 37, 136)"
