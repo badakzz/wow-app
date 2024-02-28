@@ -18,6 +18,10 @@ export default async function handler(
                 auctionHouseId: parseInt(auctionHouseId),
                 itemId: parseInt(itemId),
             },
+            orderBy: {
+                snapshotDate: 'desc',
+            },
+            take: 1,
         })
 
         if (data.length === 0) {
