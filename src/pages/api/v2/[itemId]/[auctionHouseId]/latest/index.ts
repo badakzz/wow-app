@@ -20,6 +20,7 @@ export default async function handler(
             orderBy: {
                 snapshotDate: 'asc',
             },
+            take: 20,
         })
 
         const formattedData = data.map((entry: any) => ({
