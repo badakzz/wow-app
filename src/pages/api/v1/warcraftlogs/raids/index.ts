@@ -8,6 +8,7 @@ export default async function warcraftLogsQueryHandler(
     res: NextApiResponse<Raid[] | { error: string }>
 ) {
     const { operation, parameters } = req.body
+    const encounteredSpecs = new Set()
 
     const getQueryAndResponsePath = (
         operation: string,
@@ -15,6 +16,7 @@ export default async function warcraftLogsQueryHandler(
             raidId?: number
             encounterId?: number
             className?: string
+            metric?: string
             page?: number
         }
     ) => {
@@ -33,9 +35,9 @@ export default async function warcraftLogsQueryHandler(
                 return {
                     query: `{ worldData { encounter(id: ${
                         parameters?.encounterId
-                    }) { id name characterRankings(className: "${
-                        parameters?.className
-                    }", page: ${
+                    }) { id name characterRankings(metric: ${
+                        parameters?.metric
+                    }, className: "${parameters?.className}", page: ${
                         parameters?.page ? parameters?.page : 1
                     }) } } }`,
                     responsePath: (data: any) =>
@@ -66,6 +68,16 @@ export default async function warcraftLogsQueryHandler(
         )
 
         const responseData = responsePath(graphqlResponse.data.data)
+
+        if (operation === 'getEncounterDetails' && responseData?.rankings) {
+            responseData.rankings.forEach((ranking) => {
+                // Check if the spec is already logged
+                if (!encounteredSpecs.has(ranking.spec)) {
+                    encounteredSpecs.add(ranking.spec)
+                }
+            })
+        }
+        console.log('All encountered specs:', Array.from(encounteredSpecs))
 
         res.status(200).json(responseData)
     } catch (error: any) {

@@ -6,7 +6,7 @@ import { Encounter, Ranking } from '../utils/types'
 import { getRankingClassColor } from '../utils/helpers'
 import { RankingClassPicker } from '.'
 import { RANKING_CLASS } from '@/utils/constants'
-import { Button, Spinner } from 'react-bootstrap'
+import { Button, Spinner, Image, Form } from 'react-bootstrap'
 
 type TopRankingPerformersTableProps = {
     encounter: Encounter
@@ -20,6 +20,7 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
     const [pageIndex, setPageIndex] = useState<number>(0)
     const [rankingClass, setRankingClass] = useState<RANKING_CLASS | null>(null)
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [metric, setMetric] = useState('hps') // State to hold the selected metric
 
     const fetchData = async (encounterId: number, page: number) => {
         setIsLoading(true)
@@ -30,6 +31,7 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                     encounterId: encounterId,
                     className: rankingClass,
                     page: page,
+                    metric: metric,
                 },
             })
             setData(response.data.rankings)
@@ -52,6 +54,10 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                             color: getRankingClassColor(row.original.class),
                         }}
                     >
+                        {/* <Image
+                            src={getRankingClassSpec(row.original.spec)}
+                            alt="spec"
+                        /> */}
                         {row.original.name}
                     </div>
                 ),
@@ -82,7 +88,7 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
 
     useEffect(() => {
         fetchData(encounter.value, pageIndex + 1)
-    }, [encounter, rankingClass, pageIndex])
+    }, [encounter, rankingClass, pageIndex, metric])
 
     return (
         <div className="d-flex flex-column align-items-center justify-content-end rankings-main-container">
@@ -92,6 +98,23 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                     rankingClass={rankingClass}
                     setRankingClass={setRankingClass}
                 />
+                <Form.Check
+                    type={'radio'}
+                    id={`radio-dps`}
+                    name="metric"
+                    label={`DPS`}
+                    onClick={() => setMetric('dps')}
+                    checked={metric === 'dps'}
+                />
+                <Form.Check
+                    type={'radio'}
+                    id={`radio-hps`}
+                    name="metric"
+                    label={`HPS`}
+                    onClick={() => setMetric('hps')}
+                    checked={metric === 'hps'}
+                />
+
                 {isLoading && (
                     <div className="spinner">
                         <Spinner animation="border" role="status">
