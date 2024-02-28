@@ -31,7 +31,6 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
     ...restOfProps
 }) => {
     const [data, setData] = useState([])
-    console.log(data)
 
     const fetchLatestPrices = async () => {
         try {
@@ -109,9 +108,14 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
         }
     }, [itemId, auctionHouseId])
 
+    const accumulatedQuantity = data.reduce(
+        (acc, curr: any) => acc + curr.quantity,
+        0
+    )
+
     return (
         <>
-            {data && (
+            {data && accumulatedQuantity !== 0 && (
                 <ResponsiveContainer width="100%" height={400} {...restOfProps}>
                     <ComposedChart data={data}>
                         <CartesianGrid strokeDasharray="3 3" />
@@ -141,14 +145,14 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
                             yAxisId="left"
                             type="monotone"
                             dataKey="marketValue"
-                            stroke="#a884d8"
+                            stroke="rgb(87, 26, 156)"
                             name="Market Value"
                         />
                         <Line
                             yAxisId="left"
                             type="monotone"
                             dataKey="minBuyout"
-                            stroke="#82ca9d"
+                            stroke="rgb(235, 37, 136)"
                             name="Minimum Buyout"
                         />
                     </ComposedChart>
