@@ -8,7 +8,6 @@ export default async function warcraftLogsQueryHandler(
     res: NextApiResponse<Raid[] | { error: string }>
 ) {
     const { operation, parameters } = req.body
-    const encounteredSpecs = new Set()
 
     const getQueryAndResponsePath = (
         operation: string,
@@ -68,16 +67,6 @@ export default async function warcraftLogsQueryHandler(
         )
 
         const responseData = responsePath(graphqlResponse.data.data)
-
-        if (operation === 'getEncounterDetails' && responseData?.rankings) {
-            responseData.rankings.forEach((ranking) => {
-                // Check if the spec is already logged
-                if (!encounteredSpecs.has(ranking.spec)) {
-                    encounteredSpecs.add(ranking.spec)
-                }
-            })
-        }
-        console.log('All encountered specs:', Array.from(encounteredSpecs))
 
         res.status(200).json(responseData)
     } catch (error: any) {

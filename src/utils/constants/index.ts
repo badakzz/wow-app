@@ -1,4 +1,5 @@
 export * from './factions'
 export * from './itemRarities'
 export * from './rankingClasses'
+export * from './rankingSpecs'
 export * from './regions'
