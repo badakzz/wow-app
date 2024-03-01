@@ -1,12 +1,12 @@
 /* eslint-disable react/jsx-key */
-import React, { useMemo, useState, useEffect, CSSProperties } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import { useTable, useFilters, usePagination } from 'react-table'
 import axios from 'axios'
 import { Encounter, Ranking } from '../utils/types'
 import { getRankingClassColor } from '../utils/helpers'
-import { RankingClassPicker } from '.'
+import { RankingClassPicker, RankingSpecIcon } from '.'
 import { RANKING_CLASS } from '@/utils/constants'
-import { Button, Spinner, Image, Form } from 'react-bootstrap'
+import { Button, Spinner, Form } from 'react-bootstrap'
 
 type TopRankingPerformersTableProps = {
     encounter: Encounter
@@ -20,7 +20,7 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
     const [pageIndex, setPageIndex] = useState<number>(0)
     const [rankingClass, setRankingClass] = useState<RANKING_CLASS | null>(null)
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const [metric, setMetric] = useState('hps') // State to hold the selected metric
+    const [metric, setMetric] = useState('dps')
 
     const fetchData = async (encounterId: number, page: number) => {
         setIsLoading(true)
@@ -54,10 +54,11 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                             color: getRankingClassColor(row.original.class),
                         }}
                     >
-                        {/* <Image
-                            src={getRankingClassSpec(row.original.spec)}
-                            alt="spec"
-                        /> */}
+                        <RankingSpecIcon
+                            rankingClass={row.original.class}
+                            rankingSpec={row.original.spec}
+                        />
+
                         {row.original.name}
                     </div>
                 ),
@@ -70,11 +71,6 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
         ],
         []
     )
-
-    // const filteredData = useMemo(() => {
-    //     if (!rankingClass) return data
-    //     return data.filter((item) => item.class === rankingClass)
-    // }, [data, rankingClass])
 
     const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows } =
         useTable(
@@ -92,29 +88,34 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
 
     return (
         <div className="d-flex flex-column align-items-center justify-content-end rankings-main-container">
-            <div className="rankings-picker-table-container d-flex flex-column align-items-start">
-                <RankingClassPicker
-                    className="mb-3"
-                    rankingClass={rankingClass}
-                    setRankingClass={setRankingClass}
-                />
-                <Form.Check
-                    type={'radio'}
-                    id={`radio-dps`}
-                    name="metric"
-                    label={`DPS`}
-                    onClick={() => setMetric('dps')}
-                    checked={metric === 'dps'}
-                />
-                <Form.Check
-                    type={'radio'}
-                    id={`radio-hps`}
-                    name="metric"
-                    label={`HPS`}
-                    onClick={() => setMetric('hps')}
-                    checked={metric === 'hps'}
-                />
-
+            <div className="rankings-picker-table-container d-flex flex-row justify-content-between align-items-start">
+                {!isLoading && (
+                    <>
+                        <RankingClassPicker
+                            className="mb-3"
+                            rankingClass={rankingClass}
+                            setRankingClass={setRankingClass}
+                        />
+                        <div className="d-flex gap-3">
+                            <Form.Check
+                                type={'radio'}
+                                id={`radio-dps`}
+                                name="metric"
+                                label={`DPS`}
+                                onChange={() => setMetric('dps')}
+                                checked={metric === 'dps'}
+                            />
+                            <Form.Check
+                                type={'radio'}
+                                id={`radio-hps`}
+                                name="metric"
+                                label={`HPS`}
+                                onChange={() => setMetric('hps')}
+                                checked={metric === 'hps'}
+                            />
+                        </div>
+                    </>
+                )}
                 {isLoading && (
                     <div className="spinner">
                         <Spinner animation="border" role="status">
