@@ -43,8 +43,6 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
         }
     }
 
-    console.log(data)
-
     const CustomTooltip: React.FC<CustomTooltipProps> = ({
         active,
         payload,
