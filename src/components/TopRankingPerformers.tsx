@@ -7,6 +7,7 @@ import { classToSpecMap, getRankingClassColor } from '../utils/helpers'
 import { RankingClassPicker, RankingSpecIcon, RankingSpecPicker } from '.'
 import { RANKING_METRIC, RANKING_CLASS, RANKING_SPEC } from '@/utils/constants'
 import { Button, Spinner, Form } from 'react-bootstrap'
+import Link from 'next/link'
 
 type TopRankingPerformersTableProps = {
     encounter: Encounter
@@ -51,23 +52,32 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                 Header: 'Name',
                 accessor: 'name' as keyof Ranking,
                 Cell: ({ row }: any) => (
-                    <div
+                    <a
+                        href={`https://sod.warcraftlogs.com/character/${row.original.server.region.toLowerCase()}/${row.original.server.name
+                            .replace(/\s/g, '-')
+                            .toLowerCase()}/${row.original.name.toLowerCase()}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="d-flex gap-3 align-items-start text-align-center"
                         style={{
                             color: getRankingClassColor(row.original.class),
+                            textDecoration: 'none',
                         }}
                     >
+                        {console.log(row)}
+
                         <RankingSpecIcon
+                            className="table-spec-icon"
                             rankingClass={row.original.class}
                             rankingSpec={row.original.spec}
                         />
 
                         {row.original.name}
-                    </div>
+                    </a>
                 ),
             },
             {
-                Header: 'DPS',
+                Header: `${metric}`,
                 accessor: 'amount' as keyof Ranking,
                 disableFilters: true,
             },
@@ -123,6 +133,7 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                         </div>
                         <div className="d-flex gap-3">
                             <Form.Check
+                                className="custom-radio-input"
                                 type={'radio'}
                                 id={`radio-dps`}
                                 name="metric"
@@ -131,6 +142,7 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                                 checked={metric === RANKING_METRIC.DPS}
                             />
                             <Form.Check
+                                className="custom-radio-input"
                                 type={'radio'}
                                 id={`radio-hps`}
                                 name="metric"
