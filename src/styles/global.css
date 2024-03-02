@@ -307,6 +307,15 @@ h1 {
     margin-top: 6rem !important;
 }
 
+.form-check-input:checked {
+    background-color: var(--lightblue);
+    border: 8px solid var(--lightblue);
+}
+
+.table-spec-icon {
+    margin-left: 3rem;
+}
+
 /* .item-tooltip {
     display: flex;
     align-items: flex-start;

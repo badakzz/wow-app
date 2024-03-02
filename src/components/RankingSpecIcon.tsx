@@ -2,14 +2,15 @@ import React from 'react'
 import { RANKING_CLASS, RANKING_SPEC } from '@/utils/constants'
 import { getSpecIconIndex } from '@/utils/helpers'
 
-interface RankingSpecIconProps {
+type RankingSpecIconProps = {
     rankingClass: RANKING_CLASS
     rankingSpec: RANKING_SPEC
-}
+} & any
 
 const RankingSpecIcon: React.FC<RankingSpecIconProps> = ({
     rankingClass,
     rankingSpec,
+    ...restOfProps
 }) => {
     const displayIconSize = 24
     const originalIconSize = 36
@@ -31,7 +32,7 @@ const RankingSpecIcon: React.FC<RankingSpecIconProps> = ({
         border: '1px solid grey',
     }
 
-    return <div style={containerStyle}></div>
+    return <div {...restOfProps} style={containerStyle}></div>
 }
 
 export default RankingSpecIcon
