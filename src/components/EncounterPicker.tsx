@@ -14,26 +14,25 @@ const EncounterPicker: React.FC<EncounterPickerProps> = ({
     setEncounter,
     ...restOfProps
 }) => {
-    const fetchRaids = async () =>
-        axios
-            .post(`/api/v1/warcraftlogs/raids`, {
+    const fetchRaids = async (inputValue: string) => {
+        try {
+            const response = await axios.post(`/api/v1/warcraftlogs/raids`, {
                 operation: 'listEncounters',
-                parameters: { raidId: raidId },
+                parameters: { raidId },
             })
-            .then((response) => {
-                const options = response.data.map(
-                    (encounter: { id: number; name: string }) => ({
-                        label: encounter.name,
-                        value: encounter.id,
-                    })
-                )
-                if (options.length > 0 && !encounter) setEncounter(options[0])
-                return options
-            })
-            .catch((error) => {
-                console.error('Error fetching raids:', error)
-                return []
-            })
+            const options = response.data.map(
+                (encounter: { id: number; name: string }) => ({
+                    label: encounter.name,
+                    value: encounter.id,
+                })
+            )
+            if (options.length > 0 && !encounter) setEncounter(options[0])
+            return options
+        } catch (error) {
+            console.error('Error fetching raids:', error)
+            return []
+        }
+    }
 
     const onChange = (selectedOption: Encounter) => {
         setEncounter(selectedOption)
@@ -59,7 +58,7 @@ const EncounterPicker: React.FC<EncounterPickerProps> = ({
             onChange={onChange}
             isSearchable={false}
             classNamePrefix="react-select"
-            key={`${encounter?.id}`}
+            key={`encounter-picker-${raidId}`}
         />
     )
 }

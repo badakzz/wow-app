@@ -245,6 +245,8 @@ h1 {
     padding-left: 1rem;
     padding-right: 1rem;
     width: 50%;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
 }
 
 .rankings-table th:first-child {
@@ -303,6 +305,15 @@ h1 {
 
 .auction-core-container {
     margin-top: 6rem !important;
+}
+
+.form-check-input:checked {
+    background-color: var(--lightblue);
+    border: 8px solid var(--lightblue);
+}
+
+.table-spec-icon {
+    margin-left: 3rem;
 }
 
 /* .item-tooltip {
