@@ -38,9 +38,7 @@ export default async function warcraftLogsQueryHandler(
                 return {
                     query: `{ worldData { encounter(id: ${
                         parameters?.encounterId
-                    }) { id name characterRankings(metric: ${
-                        parameters?.metric
-                    }, className: "${
+                    }) { id name characterRankings(metric: ${parameters?.metric?.toLocaleLowerCase()}, className: "${
                         parameters?.className
                     }", ${specName}page: ${
                         parameters?.page ? parameters?.page : 1

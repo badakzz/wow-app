@@ -1,6 +1,6 @@
+import React from 'react'
 import { RANKING_CLASS, RANKING_SPEC } from '@/utils/constants'
 import { getSpecIconIndex } from '@/utils/helpers'
-import React from 'react'
 
 interface RankingSpecIconProps {
     rankingClass: RANKING_CLASS
@@ -11,21 +11,27 @@ const RankingSpecIcon: React.FC<RankingSpecIconProps> = ({
     rankingClass,
     rankingSpec,
 }) => {
-    const iconSize = 36
-    const specIndex = getSpecIconIndex(rankingClass, rankingSpec)
+    const displayIconSize = 24
+    const originalIconSize = 36
+    const totalIcons = 81
 
-    const positionX = specIndex * iconSize
+    const scaledSpriteWidth =
+        (displayIconSize / originalIconSize) * totalIcons * originalIconSize
+
+    const specIndex = getSpecIconIndex(rankingClass, rankingSpec)
+    const backgroundPositionX = -(specIndex * displayIconSize)
 
     const containerStyle = {
-        width: `${iconSize}px`,
-        height: `${iconSize}px`,
+        width: `${displayIconSize}px`,
+        height: `${displayIconSize}px`,
         display: 'inline-block',
-        backgroundImage: `url('/spec-icons.jpg')`,
-        backgroundPosition: `-${positionX}px 0px`,
-        backgroundSize: 'auto',
+        backgroundImage: 'url(/spec-icons.jpg)',
+        backgroundPosition: `${backgroundPositionX}px 0px`,
+        backgroundSize: `${scaledSpriteWidth}px ${displayIconSize}px`,
+        border: '1px solid grey',
     }
 
-    return <div style={containerStyle} />
+    return <div style={containerStyle}></div>
 }
 
 export default RankingSpecIcon

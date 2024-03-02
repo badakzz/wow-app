@@ -43,7 +43,7 @@ const classSpecToIconIndexMap: { [key: string]: number } = {
     [`${RANKING_CLASS.WARLOCK}-${RANKING_SPEC.TANK}`]: 71,
     [`${RANKING_CLASS.WARRIOR}-${RANKING_SPEC.FURY}`]: 75,
     [`${RANKING_CLASS.WARRIOR}-${RANKING_SPEC.ARMS}`]: 73,
-    [`${RANKING_CLASS.WARRIOR}-${RANKING_SPEC.TANK}`]: 78,
+    [`${RANKING_CLASS.WARRIOR}-${RANKING_SPEC.PROTECTION}`]: 78,
 }
 
 export const classToSpecMap: Record<RANKING_CLASS, RANKING_SPEC[]> = {

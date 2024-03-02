@@ -1,7 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import Select, { SingleValue } from 'react-select'
+import React, { FunctionComponent, useEffect, useState } from 'react'
+import Select, {
+    OptionProps,
+    SingleValue,
+    SingleValueProps,
+    components,
+} from 'react-select'
 import { RANKING_CLASS, RANKING_SPEC } from '@/utils/constants'
-import { classToSpecMap } from '@/utils/helpers'
+import { classToSpecMap, getRankingClassColor } from '@/utils/helpers'
+import { RankingSpecIcon } from '.'
 
 type RankingSpecProps = {
     rankingSpec: RANKING_SPEC
@@ -43,6 +49,41 @@ const RankingSpecPicker: React.FC<RankingSpecProps> = ({
         (option) => option.value === rankingSpec
     )
 
+    const SingleValue: FunctionComponent<SingleValueProps> = (props: any) => {
+        console.log(props)
+        return (
+            <components.SingleValue {...props}>
+                <div className="d-flex gap-2">
+                    <RankingSpecIcon
+                        rankingClass={rankingClass}
+                        rankingSpec={props.data.value}
+                    />
+                    <span
+                        style={{
+                            color: getRankingClassColor(rankingClass),
+                        }}
+                    >
+                        {props.data.label}
+                    </span>
+                </div>
+            </components.SingleValue>
+        )
+    }
+
+    const Option: FunctionComponent<OptionProps> = (props: any) => (
+        <components.Option {...props}>
+            <div className="d-flex gap-2">
+                <RankingSpecIcon
+                    rankingClass={rankingClass}
+                    rankingSpec={props.data.value}
+                />
+                <span style={{ color: getRankingClassColor(rankingClass) }}>
+                    {props.data.label}
+                </span>
+            </div>
+        </components.Option>
+    )
+
     return (
         <Select
             {...restOfProps}
@@ -52,6 +93,7 @@ const RankingSpecPicker: React.FC<RankingSpecProps> = ({
             onChange={onChange}
             isSearchable={false}
             classNamePrefix="react-select"
+            components={{ Option, SingleValue }}
         />
     )
 }

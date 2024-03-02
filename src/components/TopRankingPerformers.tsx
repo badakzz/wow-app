@@ -5,7 +5,7 @@ import axios from 'axios'
 import { Encounter, Ranking } from '../utils/types'
 import { classToSpecMap, getRankingClassColor } from '../utils/helpers'
 import { RankingClassPicker, RankingSpecIcon, RankingSpecPicker } from '.'
-import { RANKING_CLASS, RANKING_SPEC } from '@/utils/constants'
+import { RANKING_METRIC, RANKING_CLASS, RANKING_SPEC } from '@/utils/constants'
 import { Button, Spinner, Form } from 'react-bootstrap'
 
 type TopRankingPerformersTableProps = {
@@ -21,7 +21,7 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
     const [rankingClass, setRankingClass] = useState<RANKING_CLASS | null>(null)
     const [rankingSpec, setRankingSpec] = useState<RANKING_SPEC | null>(null)
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const [metric, setMetric] = useState('dps')
+    const [metric, setMetric] = useState<RANKING_METRIC>(RANKING_METRIC.DPS)
 
     const fetchData = async (encounterId: number, page: number) => {
         setIsLoading(true)
@@ -52,6 +52,7 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                 accessor: 'name' as keyof Ranking,
                 Cell: ({ row }: any) => (
                     <div
+                        className="d-flex gap-3 align-items-start text-align-center"
                         style={{
                             color: getRankingClassColor(row.original.class),
                         }}
@@ -125,17 +126,17 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                                 type={'radio'}
                                 id={`radio-dps`}
                                 name="metric"
-                                label={`DPS`}
-                                onChange={() => setMetric('dps')}
-                                checked={metric === 'dps'}
+                                label={RANKING_METRIC.DPS}
+                                onChange={() => setMetric(RANKING_METRIC.DPS)}
+                                checked={metric === RANKING_METRIC.DPS}
                             />
                             <Form.Check
                                 type={'radio'}
                                 id={`radio-hps`}
                                 name="metric"
-                                label={`HPS`}
-                                onChange={() => setMetric('hps')}
-                                checked={metric === 'hps'}
+                                label={RANKING_METRIC.HPS}
+                                onChange={() => setMetric(RANKING_METRIC.HPS)}
+                                checked={metric === RANKING_METRIC.HPS}
                             />
                         </div>
                     </>
