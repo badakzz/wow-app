@@ -7,7 +7,6 @@ import { classToSpecMap, getRankingClassColor } from '../utils/helpers'
 import { RankingClassPicker, RankingSpecIcon, RankingSpecPicker } from '.'
 import { RANKING_METRIC, RANKING_CLASS, RANKING_SPEC } from '@/utils/constants'
 import { Button, Spinner, Form } from 'react-bootstrap'
-import Link from 'next/link'
 
 type TopRankingPerformersTableProps = {
     encounter: Encounter
@@ -64,8 +63,6 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                             textDecoration: 'none',
                         }}
                     >
-                        {console.log(row)}
-
                         <RankingSpecIcon
                             className="table-spec-icon"
                             rankingClass={row.original.class}
@@ -82,7 +79,7 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                 disableFilters: true,
             },
         ],
-        []
+        [metric]
     )
 
     const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows } =

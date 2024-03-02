@@ -50,7 +50,6 @@ const RankingSpecPicker: React.FC<RankingSpecProps> = ({
     )
 
     const SingleValue: FunctionComponent<SingleValueProps> = (props: any) => {
-        console.log(props)
         return (
             <components.SingleValue {...props}>
                 <div className="d-flex gap-2">
