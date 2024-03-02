@@ -15,10 +15,14 @@ export default async function warcraftLogsQueryHandler(
             raidId?: number
             encounterId?: number
             className?: string
+            specName?: string
             metric?: string
             page?: number
         }
     ) => {
+        const specName = parameters?.specName
+            ? `specName: "${parameters.specName}", `
+            : ''
         switch (operation) {
             case 'listRaids':
                 return {
@@ -36,7 +40,9 @@ export default async function warcraftLogsQueryHandler(
                         parameters?.encounterId
                     }) { id name characterRankings(metric: ${
                         parameters?.metric
-                    }, className: "${parameters?.className}", page: ${
+                    }, className: "${
+                        parameters?.className
+                    }", ${specName}page: ${
                         parameters?.page ? parameters?.page : 1
                     }) } } }`,
                     responsePath: (data: any) =>

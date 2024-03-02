@@ -3,9 +3,9 @@ import React, { useMemo, useState, useEffect } from 'react'
 import { useTable, useFilters, usePagination } from 'react-table'
 import axios from 'axios'
 import { Encounter, Ranking } from '../utils/types'
-import { getRankingClassColor } from '../utils/helpers'
-import { RankingClassPicker, RankingSpecIcon } from '.'
-import { RANKING_CLASS } from '@/utils/constants'
+import { classToSpecMap, getRankingClassColor } from '../utils/helpers'
+import { RankingClassPicker, RankingSpecIcon, RankingSpecPicker } from '.'
+import { RANKING_CLASS, RANKING_SPEC } from '@/utils/constants'
 import { Button, Spinner, Form } from 'react-bootstrap'
 
 type TopRankingPerformersTableProps = {
@@ -19,6 +19,7 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
     const [hasMorePages, setHasMorePages] = useState<boolean>(false)
     const [pageIndex, setPageIndex] = useState<number>(0)
     const [rankingClass, setRankingClass] = useState<RANKING_CLASS | null>(null)
+    const [rankingSpec, setRankingSpec] = useState<RANKING_SPEC | null>(null)
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [metric, setMetric] = useState('dps')
 
@@ -30,6 +31,7 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                 parameters: {
                     encounterId: encounterId,
                     className: rankingClass,
+                    specName: rankingSpec,
                     page: page,
                     metric: metric,
                 },
@@ -83,19 +85,41 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
         )
 
     useEffect(() => {
-        fetchData(encounter.value, pageIndex + 1)
-    }, [encounter, rankingClass, pageIndex, metric])
+        const isValidSpecForClass = () => {
+            if (!rankingClass && rankingSpec) return false
+            const validSpecs = classToSpecMap[rankingClass as RANKING_CLASS]
+            return !rankingSpec || validSpecs?.includes(rankingSpec)
+        }
+
+        if (isValidSpecForClass()) {
+            fetchData(encounter.value, pageIndex + 1)
+        }
+    }, [encounter, rankingClass, pageIndex, metric, rankingSpec])
+
+    useEffect(() => {
+        setRankingSpec(null)
+    }, [rankingClass])
 
     return (
         <div className="d-flex flex-column align-items-center justify-content-end rankings-main-container">
             <div className="rankings-picker-table-container d-flex flex-row justify-content-between align-items-start">
                 {!isLoading && (
                     <>
-                        <RankingClassPicker
-                            className="mb-3"
-                            rankingClass={rankingClass}
-                            setRankingClass={setRankingClass}
-                        />
+                        <div className="d-flex gap-3">
+                            <RankingClassPicker
+                                className="mb-3"
+                                rankingClass={rankingClass}
+                                setRankingClass={setRankingClass}
+                            />
+                            {rankingClass && (
+                                <RankingSpecPicker
+                                    key={rankingClass || 'default-key'}
+                                    rankingClass={rankingClass}
+                                    rankingSpec={rankingSpec}
+                                    setRankingSpec={setRankingSpec}
+                                />
+                            )}
+                        </div>
                         <div className="d-flex gap-3">
                             <Form.Check
                                 type={'radio'}
