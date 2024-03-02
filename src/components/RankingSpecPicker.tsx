@@ -85,16 +85,18 @@ const RankingSpecPicker: React.FC<RankingSpecProps> = ({
     )
 
     return (
-        <Select
-            {...restOfProps}
-            instanceId={'rankingSpecPicker'}
-            options={options}
-            value={selectedOption}
-            onChange={onChange}
-            isSearchable={false}
-            classNamePrefix="react-select"
-            components={{ Option, SingleValue }}
-        />
+        <div style={{ width: '11rem' }}>
+            <Select
+                {...restOfProps}
+                instanceId={'rankingSpecPicker'}
+                options={options}
+                value={selectedOption}
+                onChange={onChange}
+                isSearchable={false}
+                classNamePrefix="react-select"
+                components={{ Option, SingleValue }}
+            />
+        </div>
     )
 }
 
