@@ -83,6 +83,27 @@ const RankingSpecPicker: React.FC<RankingSpecProps> = ({
         </components.Option>
     )
 
+    const customStyles = {
+        indicatorSeparator: (provided: any) => ({
+            ...provided,
+            backgroundColor: 'var(--lightgrey) !important',
+            marginRight: '0.8rem',
+        }),
+        control: (provided: any, state: any) => ({
+            ...provided,
+            borderColor: state.isFocused
+                ? `${getRankingClassColor(rankingClass)} !important`
+                : ``,
+            '&:hover': {
+                borderColor: `${getRankingClassColor(rankingClass)} !important`,
+            },
+        }),
+        placeholder: (provided: any) => ({
+            ...provided,
+            color: `${getRankingClassColor(rankingClass)} !important`,
+        }),
+    }
+
     return (
         <div style={{ width: '11rem' }}>
             <Select
@@ -94,6 +115,7 @@ const RankingSpecPicker: React.FC<RankingSpecProps> = ({
                 isSearchable={false}
                 classNamePrefix="react-select"
                 components={{ Option, SingleValue }}
+                styles={customStyles}
             />
         </div>
     )

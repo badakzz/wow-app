@@ -44,10 +44,27 @@ const RankingClassPicker: React.FC<RankingClassPickerProps> = ({
         if (newValue?.value !== rankingClass) setRankingClass(newValue?.value)
     }
 
+    const customStyles = {
+        indicatorSeparator: (provided: any) => ({
+            ...provided,
+            backgroundColor: 'var(--lightgrey) !important',
+            marginRight: '0.8rem',
+        }),
+        control: (provided: any, state: any) => ({
+            ...provided,
+            borderColor: state.isFocused
+                ? `${getRankingClassColor(rankingClass)} !important`
+                : ``,
+            '&:hover': {
+                borderColor: `${getRankingClassColor(rankingClass)} !important`,
+            },
+        }),
+    }
+
     return (
         <Select
             {...restOfProps}
-            instanceId={'regionPicker'}
+            instanceId={'rankingClassPicker'}
             options={options}
             value={selectedOption}
             onChange={onChange}
@@ -56,6 +73,7 @@ const RankingClassPicker: React.FC<RankingClassPickerProps> = ({
             placeholder="Filter by class..."
             classNamePrefix="react-select"
             components={{ SingleValue, Option }}
+            styles={customStyles}
         />
     )
 }

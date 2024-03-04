@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { FunctionComponent, useEffect } from 'react'
 import AsyncSelect from 'react-select/async'
 import axios from 'axios'
 import { Encounter } from '../utils/types'
+import { OptionProps, SingleValueProps, components } from 'react-select'
 
 type EncounterPickerProps = {
     encounter: Encounter | null
@@ -44,22 +45,43 @@ const EncounterPicker: React.FC<EncounterPickerProps> = ({
         }
     }, [raidId])
 
+    // const SingleValue: FunctionComponent<SingleValueProps> = (props: any) => {
+    //     return (
+    //         <components.SingleValue {...props}>
+    //             <div className="d-flex justify-content-center text-align-center">
+    //                 {props.data.label}
+    //             </div>
+    //         </components.SingleValue>
+    //     )
+    // }
+
+    // const Option: FunctionComponent<OptionProps> = (props: any) => (
+    //     <components.Option {...props}>
+    //         <div className="d-flex justify-content-center  text-align-center">
+    //             {props.data.label}
+    //         </div>
+    //     </components.Option>
+    // )
+
     return (
-        <AsyncSelect
-            {...restOfProps}
-            instanceId={'EncounterPicker'}
-            loadOptions={fetchRaids}
-            noOptionsMessage={() => 'No encounter found'}
-            loadingMessage={() => 'Loading...'}
-            placeholder={'Select a encounter...'}
-            cacheOptions
-            defaultOptions
-            value={encounter}
-            onChange={onChange}
-            isSearchable={false}
-            classNamePrefix="react-select"
-            key={`encounter-picker-${raidId}`}
-        />
+        <div style={{ width: '15rem' }}>
+            <AsyncSelect
+                {...restOfProps}
+                instanceId={'encounterPicker'}
+                loadOptions={fetchRaids}
+                noOptionsMessage={() => 'No encounter found'}
+                loadingMessage={() => 'Loading...'}
+                placeholder={'Select a encounter...'}
+                cacheOptions
+                defaultOptions
+                value={encounter}
+                onChange={onChange}
+                isSearchable={false}
+                classNamePrefix="react-select"
+                key={`encounter-picker-${raidId}`}
+                // components={{ SingleValue, Option }}
+            />
+        </div>
     )
 }
 
