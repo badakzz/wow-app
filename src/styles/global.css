@@ -176,15 +176,6 @@ h1 {
     background-color: transparent !important;
 }
 
-.logo-round-container {
-    width: '20px';
-    height: '20px';
-    overflow: 'hidden';
-    display: 'flex';
-    align-items: 'center';
-    justify-content: 'center';
-}
-
 .realm-picker {
     min-width: 40% !important;
 }
@@ -266,6 +257,8 @@ h1 {
 
 .rankings-table td:last-child {
     border-bottom: none;
+    border-right: none !important;
+    border-left: none !important;
 }
 
 .rankings-table-container {
@@ -309,7 +302,7 @@ h1 {
 
 .form-check-input:checked {
     background-color: var(--lightblue);
-    border: 8px solid var(--lightblue);
+    /* border: 8px solid var(--lightblue); */
 }
 
 .table-spec-icon {
