@@ -63,6 +63,9 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                             textDecoration: 'none',
                         }}
                     >
+                        <span style={{ color: 'white', width: '1rem' }}>
+                            {parseInt(row.id) + 1 + '.'}
+                        </span>
                         <RankingSpecIcon
                             className="table-spec-icon"
                             rankingClass={row.original.class}
@@ -115,7 +118,7 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                     <>
                         <div className="d-flex gap-3">
                             <RankingClassPicker
-                                className="mb-3"
+                                className="class-picker mb-3"
                                 rankingClass={rankingClass}
                                 setRankingClass={setRankingClass}
                             />

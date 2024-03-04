@@ -40,7 +40,7 @@ const RaidPicker: React.FC<RaidPickerProps> = ({
     return (
         <AsyncSelect
             {...restOfProps}
-            instanceId={'RaidPicker'}
+            instanceId={'raidPicker'}
             loadOptions={fetchRaids}
             noOptionsMessage={() => 'No raid found'}
             loadingMessage={() => 'Loading...'}
