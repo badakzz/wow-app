@@ -22,13 +22,13 @@ const Layout: React.FC<Props> = ({ children }) => {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
-                            <Nav.Link href="#link">Blue Post Tracker</Nav.Link>
+                            {/* <Nav.Link href="#link">Blue Post Tracker</Nav.Link> */}
                             <Nav.Link href="auction">
                                 Auction House Tracker
                             </Nav.Link>
-                            <Nav.Link href="#link">Runes</Nav.Link>
+                            {/* <Nav.Link href="#link">Runes</Nav.Link> */}
                             <Nav.Link href="rankings">Rankings</Nav.Link>
-                            <Nav.Link href="#link">BiS List</Nav.Link>
+                            {/* <Nav.Link href="#link">BiS List</Nav.Link> */}
                             {/* <NavDropdown
                                 title="Dropdown"
                                 id="basic-nav-dropdown"

@@ -3,6 +3,7 @@ import AsyncSelect from 'react-select/async'
 import axios from 'axios'
 import { Encounter } from '../utils/types'
 import { OptionProps, SingleValueProps, components } from 'react-select'
+import { Image } from 'react-bootstrap'
 
 type EncounterPickerProps = {
     encounter: Encounter | null
@@ -45,26 +46,36 @@ const EncounterPicker: React.FC<EncounterPickerProps> = ({
         }
     }, [raidId])
 
-    // const SingleValue: FunctionComponent<SingleValueProps> = (props: any) => {
-    //     return (
-    //         <components.SingleValue {...props}>
-    //             <div className="d-flex justify-content-center text-align-center">
-    //                 {props.data.label}
-    //             </div>
-    //         </components.SingleValue>
-    //     )
-    // }
+    const SingleValue: FunctionComponent<SingleValueProps> = (props: any) => {
+        return (
+            <components.SingleValue {...props}>
+                <div className="d-flex align-items-center justify-content-start gap-2">
+                    <Image
+                        src={`/${props.data.value}-icon.jpg`}
+                        alt="encounter-icon"
+                        className="circular-icon"
+                    />
+                    <span>{props.data.label}</span>
+                </div>
+            </components.SingleValue>
+        )
+    }
 
-    // const Option: FunctionComponent<OptionProps> = (props: any) => (
-    //     <components.Option {...props}>
-    //         <div className="d-flex justify-content-center  text-align-center">
-    //             {props.data.label}
-    //         </div>
-    //     </components.Option>
-    // )
+    const Option: FunctionComponent<OptionProps> = (props: any) => (
+        <components.Option {...props}>
+            <div className="d-flex align-items-center justify-content-start gap-2">
+                <Image
+                    src={`/${props.data.value}-icon.jpg`}
+                    alt="encounter-icon"
+                    className="circular-icon"
+                />
+                <span>{props.data.label}</span>
+            </div>
+        </components.Option>
+    )
 
     return (
-        <div style={{ width: '15rem' }}>
+        <div style={{ width: '17rem' }}>
             <AsyncSelect
                 {...restOfProps}
                 instanceId={'encounterPicker'}
@@ -79,7 +90,7 @@ const EncounterPicker: React.FC<EncounterPickerProps> = ({
                 isSearchable={false}
                 classNamePrefix="react-select"
                 key={`encounter-picker-${raidId}`}
-                // components={{ SingleValue, Option }}
+                components={{ SingleValue, Option }}
             />
         </div>
     )
