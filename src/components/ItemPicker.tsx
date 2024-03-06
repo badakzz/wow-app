@@ -34,8 +34,6 @@ const ItemPicker: React.FC<ItemPickerProps> = ({
                         inputValue
                     )}&limit=10`
                 )
-                console.log(response)
-
                 const options = response.data.map((result) => ({
                     label: result.itemName,
                     value: result.itemId,
