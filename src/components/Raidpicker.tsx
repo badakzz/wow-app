@@ -28,7 +28,6 @@ const RaidPicker: React.FC<RaidPickerProps> = ({
                     })
                 )
                 if (options.length > 0 && !raid) setRaid(options[0])
-                console.log(options)
                 return options
             })
             .catch((error) => {
