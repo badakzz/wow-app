@@ -10,9 +10,10 @@ import axios from 'axios'
 import debounce from 'lodash.debounce'
 import { Item } from '../utils/types'
 import { getItemColorByRarity } from '../utils/helpers'
-import { OverlayTrigger, Tooltip, Image } from 'react-bootstrap'
+import { Image } from 'react-bootstrap'
 import { ItemCharacteristics } from '.'
 import { FaSearch } from 'react-icons/fa'
+import { Tooltip } from 'react-tooltip'
 
 type ItemPickerProps = {
     itemId: number | null
@@ -65,52 +66,55 @@ const ItemPicker: React.FC<ItemPickerProps> = ({
         setCurrentItem(selectedOption)
     }
 
-    const Option: FunctionComponent<OptionProps> = (props: any) => (
-        <components.Option {...props}>
-            <div
-                style={{
-                    color: getItemColorByRarity(props.data.rarity),
-                }}
-            >
-                <OverlayTrigger
-                    placement="bottom"
-                    overlay={
-                        <Tooltip className="item-tooltip">
-                            <ItemCharacteristics itemId={props.value} />
-                        </Tooltip>
-                    }
-                >
-                    <div className="d-flex gap-3">
-                        <Image
-                            src={props.data.mediaUrl}
-                            alt="raid-icon"
-                            className="item-icon-sm"
-                        />
-                        <span>{props.children}</span>
-                    </div>
-                </OverlayTrigger>
-            </div>
-        </components.Option>
-    )
+    const Option: FunctionComponent<OptionProps> = (props: any) => {
+        const tooltipId = `tooltip-option-${props.data.value}`
 
-    const SingleValue: FunctionComponent<SingleValueProps> = (props: any) => (
-        <components.SingleValue {...props}>
-            <div
-                style={{
-                    color: getItemColorByRarity(props.data.rarity),
-                }}
-            >
+        return (
+            <components.Option {...props}>
                 <div className="d-flex gap-3">
                     <Image
                         src={props.data.mediaUrl}
-                        alt="raid-icon"
+                        alt="item-icon"
                         className="item-icon-sm"
                     />
-                    <span>{props.children}</span>
+                    <span
+                        data-tooltip-id={tooltipId}
+                        data-tooltip-float
+                        style={{
+                            color: getItemColorByRarity(props.data.rarity),
+                        }}
+                    >
+                        {props.data.label}
+                    </span>
                 </div>
-            </div>
-        </components.SingleValue>
-    )
+                <Tooltip id={tooltipId} className="tooltip-inner">
+                    <ItemCharacteristics itemId={props.data.value} />
+                </Tooltip>
+            </components.Option>
+        )
+    }
+
+    const SingleValue: FunctionComponent<SingleValueProps> = (props: any) => {
+        console.log(props)
+        return (
+            <components.SingleValue {...props}>
+                <div className="d-flex gap-3">
+                    <Image
+                        src={props.data.mediaUrl}
+                        alt="item-icon"
+                        className="item-icon-sm"
+                    />
+                    <span
+                        style={{
+                            color: getItemColorByRarity(props.data.rarity),
+                        }}
+                    >
+                        {props.data.label}
+                    </span>
+                </div>
+            </components.SingleValue>
+        )
+    }
 
     const DropdownIndicator: FunctionComponent<DropdownIndicatorProps> = (
         props: any

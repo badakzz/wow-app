@@ -24,7 +24,7 @@ def get_access_token(client_id, client_secret):
     return response.json().get('access_token') if response.status_code == 200 else None
 
 def fetch_item_details(access_token, item_id):
-    item_url = f"https://{REGION}.api.blizzard.com/data/wow/item/{item_id}?namespace=static-{REGION}&locale={LOCALE}&access_token={access_token}"
+    item_url = f"https://{REGION}.api.blizzard.com/data/wow/item/{item_id}?namespace=static-classic-{REGION}&locale={LOCALE}&access_token={access_token}"
     media_url = f"https://{REGION}.api.blizzard.com/data/wow/media/item/{item_id}?namespace=static-{REGION}&locale={LOCALE}&access_token={access_token}"
 
     item_response = requests.get(item_url)
@@ -46,6 +46,7 @@ def fetch_item_details(access_token, item_id):
 conn = sqlite3.connect('prices.db')
 cursor = conn.cursor()
 
+# Update the table schema to include mediaUrl
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS items (
     itemId INTEGER PRIMARY KEY,
