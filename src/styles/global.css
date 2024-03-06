@@ -321,6 +321,24 @@ h1 {
     object-fit: cover !important;
 }
 
+.ranking-page-loading-modal .modal-content {
+    background-color: var(--darkgrey);
+    color: white;
+}
+
+.modal.fade .modal-dialog {
+    transition: opacity 0.5s ease-in-out !important;
+    transform: none !important;
+}
+
+.modal.show .modal-dialog {
+    opacity: 1;
+}
+
+.modal-dialog {
+    opacity: 0;
+}
+
 @media (max-width: 1635px) {
     .auction-item-container {
         flex-direction: column;
