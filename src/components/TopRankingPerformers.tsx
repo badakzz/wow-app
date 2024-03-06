@@ -6,7 +6,7 @@ import { Encounter, Ranking } from '../utils/types'
 import { classToSpecMap, getRankingClassColor } from '../utils/helpers'
 import { RankingClassPicker, RankingSpecIcon, RankingSpecPicker } from '.'
 import { RANKING_METRIC, RANKING_CLASS, RANKING_SPEC } from '@/utils/constants'
-import { Button, Spinner, Form } from 'react-bootstrap'
+import { Button, Spinner, Form, Modal } from 'react-bootstrap'
 
 type TopRankingPerformersTableProps = {
     encounter: Encounter
@@ -114,108 +114,112 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
     return (
         <div className="d-flex flex-column align-items-center justify-content-end rankings-main-container">
             <div className="rankings-picker-table-container d-flex flex-row justify-content-between align-items-start">
-                {!isLoading && (
-                    <>
-                        <div className="d-flex gap-3">
-                            <RankingClassPicker
-                                className="class-picker mb-3"
+                <>
+                    <div className="d-flex gap-3">
+                        <RankingClassPicker
+                            className="class-picker mb-3"
+                            rankingClass={rankingClass}
+                            setRankingClass={setRankingClass}
+                        />
+                        {rankingClass && (
+                            <RankingSpecPicker
+                                key={rankingClass || 'default-key'}
                                 rankingClass={rankingClass}
-                                setRankingClass={setRankingClass}
+                                rankingSpec={rankingSpec}
+                                setRankingSpec={setRankingSpec}
                             />
-                            {rankingClass && (
-                                <RankingSpecPicker
-                                    key={rankingClass || 'default-key'}
-                                    rankingClass={rankingClass}
-                                    rankingSpec={rankingSpec}
-                                    setRankingSpec={setRankingSpec}
-                                />
-                            )}
-                        </div>
-                        <div className="d-flex gap-3">
-                            <Form.Check
-                                className="custom-radio-input"
-                                type={'radio'}
-                                id={`radio-dps`}
-                                name="metric"
-                                label={RANKING_METRIC.DPS}
-                                onChange={() => setMetric(RANKING_METRIC.DPS)}
-                                checked={metric === RANKING_METRIC.DPS}
-                            />
-                            <Form.Check
-                                className="custom-radio-input"
-                                type={'radio'}
-                                id={`radio-hps`}
-                                name="metric"
-                                label={RANKING_METRIC.HPS}
-                                onChange={() => setMetric(RANKING_METRIC.HPS)}
-                                checked={metric === RANKING_METRIC.HPS}
-                            />
-                        </div>
-                    </>
-                )}
-                {isLoading && (
-                    <div className="spinner">
-                        <Spinner animation="border" role="status">
-                            <span className="visually-hidden">Loading...</span>
-                        </Spinner>
+                        )}
                     </div>
+                    <div className="d-flex gap-3">
+                        <Form.Check
+                            className="custom-radio-input"
+                            type={'radio'}
+                            id={`radio-dps`}
+                            name="metric"
+                            label={RANKING_METRIC.DPS}
+                            onChange={() => setMetric(RANKING_METRIC.DPS)}
+                            checked={metric === RANKING_METRIC.DPS}
+                        />
+                        <Form.Check
+                            className="custom-radio-input"
+                            type={'radio'}
+                            id={`radio-hps`}
+                            name="metric"
+                            label={RANKING_METRIC.HPS}
+                            onChange={() => setMetric(RANKING_METRIC.HPS)}
+                            checked={metric === RANKING_METRIC.HPS}
+                        />
+                    </div>
+                </>
+                {isLoading && (
+                    <Modal
+                        className="ranking-page-loading-modal"
+                        show={isLoading}
+                        size="sm"
+                        aria-labelledby="contained-modal-title-vcenter"
+                        centered
+                        onHide={() => {}} // Modal should not be dismissible by clicking outside or pressing escape
+                    >
+                        <Modal.Body className="d-flex flex-column align-items-center gap-3 justify-content-center text-align-center">
+                            <Spinner animation="border" role="status"></Spinner>
+                            <span>Loading...</span>
+                        </Modal.Body>
+                    </Modal>
                 )}
             </div>
-            {!isLoading && (
-                <div className="d-flex flex-wrap justify-content-end rankings-table-container">
-                    <table {...getTableProps()} className="rankings-table">
-                        <thead>
-                            {headerGroups.map((headerGroup) => (
-                                <tr {...headerGroup.getHeaderGroupProps()}>
-                                    {headerGroup.headers.map((column) => (
-                                        <th {...column.getHeaderProps()}>
-                                            {column.render('Header')}
-                                        </th>
-                                    ))}
+            <div className="d-flex flex-wrap justify-content-end rankings-table-container">
+                <table {...getTableProps()} className="rankings-table">
+                    <thead>
+                        {headerGroups.map((headerGroup) => (
+                            <tr {...headerGroup.getHeaderGroupProps()}>
+                                {headerGroup.headers.map((column) => (
+                                    <th {...column.getHeaderProps()}>
+                                        {column.render('Header')}
+                                    </th>
+                                ))}
+                            </tr>
+                        ))}
+                    </thead>
+                    <tbody {...getTableBodyProps()}>
+                        {rows.map((row) => {
+                            prepareRow(row)
+                            return (
+                                <tr {...row.getRowProps()}>
+                                    {row.cells.map((cell) => {
+                                        return (
+                                            <td {...cell.getCellProps()}>
+                                                {cell.render('Cell')}
+                                            </td>
+                                        )
+                                    })}
                                 </tr>
-                            ))}
-                        </thead>
-                        <tbody {...getTableBodyProps()}>
-                            {rows.map((row) => {
-                                prepareRow(row)
-                                return (
-                                    <tr {...row.getRowProps()}>
-                                        {row.cells.map((cell) => {
-                                            return (
-                                                <td {...cell.getCellProps()}>
-                                                    {cell.render('Cell')}
-                                                </td>
-                                            )
-                                        })}
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
-                    <div className="rankings-pagination">
-                        <Button
-                            className="page-button"
-                            onClick={() =>
-                                setPageIndex((old) => Math.max(old - 1, 0))
-                            }
-                            disabled={pageIndex === 0}
-                        >
-                            <span>{'<'}</span>
-                        </Button>
-                        <Button
-                            className="page-button"
-                            onClick={() =>
-                                setPageIndex((old) =>
-                                    !hasMorePages ? old : old + 1
-                                )
-                            }
-                            disabled={!hasMorePages}
-                        >
-                            <span>{'>'}</span>
-                        </Button>
-                    </div>
+                            )
+                        })}
+                    </tbody>
+                </table>
+                <div className="rankings-pagination">
+                    <Button
+                        className="page-button"
+                        onClick={() =>
+                            setPageIndex((old) => Math.max(old - 1, 0))
+                        }
+                        disabled={pageIndex === 0}
+                    >
+                        <span>{'<'}</span>
+                    </Button>
+                    <Button
+                        className="page-button"
+                        onClick={() =>
+                            setPageIndex((old) =>
+                                !hasMorePages ? old : old + 1
+                            )
+                        }
+                        disabled={!hasMorePages}
+                    >
+                        <span>{'>'}</span>
+                    </Button>
                 </div>
-            )}
+            </div>
         </div>
     )
 }
