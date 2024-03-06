@@ -54,7 +54,10 @@ const RankingClassPicker: React.FC<RankingClassPickerProps> = ({
             ...provided,
             borderColor: state.isFocused
                 ? `${getRankingClassColor(rankingClass)} !important`
-                : ``,
+                : provided.borderColor,
+            boxShadow: state.isFocused
+                ? `0 0 0 1px ${getRankingClassColor(rankingClass)} !important`
+                : provided.boxShadow,
             '&:hover': {
                 borderColor: `${getRankingClassColor(rankingClass)} !important`,
             },
