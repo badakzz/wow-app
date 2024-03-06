@@ -28,13 +28,25 @@ h1 {
 .custom-navbar .nav-link,
 .custom-navbar .navbar-text,
 .custom-navbar .dropdown-item {
-    color: white !important;
     background-color: var(--darkgrey) !important;
 }
 
-.custom-navbar .nav-link:hover {
+.custom-navbar-active {
     color: var(--lightblue) !important;
-    transition-delay: 0.1s;
+}
+
+.custom-navbar-active:hover {
+    color: rgb(152, 204, 255) !important;
+    transition: color 0.3s ease;
+}
+
+.custom-navbar-inactive {
+    color: white !important;
+}
+
+.custom-navbar-inactive:hover {
+    color: var(--lightblue) !important;
+    transition: color 0.3s ease;
 }
 
 .flex-half {
@@ -231,6 +243,7 @@ h1 {
     border-spacing: 0;
     width: 100%;
     background-color: var(--bluegrey);
+    border-bottom: 2px solid rgb(51, 51, 51);
 }
 
 .rankings-table th,
@@ -261,9 +274,14 @@ h1 {
 }
 
 .rankings-table td:last-child {
+    border-right: 2px solid var(--darkgrey);
     border-bottom: none;
-    border-right: none !important;
-    border-left: none !important;
+}
+
+/* Target the last row's last cell */
+.rankings-table th:last-child tr:last-child {
+    border-right: none; /* Ensure there's no right border for the last cell */
+    border-bottom: 2px solid var(--lightgrey);
 }
 
 .rankings-table-container {
@@ -307,7 +325,6 @@ h1 {
 
 .form-check-input:checked {
     background-color: var(--lightblue);
-    /* border: 8px solid var(--lightblue); */
 }
 
 .table-spec-icon {

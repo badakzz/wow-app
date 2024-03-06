@@ -1,11 +1,18 @@
 import React from 'react'
 import { Container, Nav, Navbar, Image } from 'react-bootstrap'
+import { FaRegChartBar } from 'react-icons/fa'
+import { RiLineChartLine } from 'react-icons/ri'
+import { useRouter } from 'next/router'
 
 type Props = {
     children?: React.ReactNode
 }
 
 const Layout: React.FC<Props> = ({ children }) => {
+    const router = useRouter()
+
+    const isActive = (href: string) => router.pathname === href
+
     return (
         <>
             <Navbar expand="lg" className="bg-body-tertiary custom-navbar">
@@ -23,11 +30,33 @@ const Layout: React.FC<Props> = ({ children }) => {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             {/* <Nav.Link href="#link">Blue Post Tracker</Nav.Link> */}
-                            <Nav.Link href="auction">
-                                Auction House Tracker
+                            <Nav.Link
+                                href="/auction"
+                                className={
+                                    isActive('/auction')
+                                        ? 'custom-navbar-active'
+                                        : 'custom-navbar-inactive'
+                                }
+                            >
+                                <div className="d-flex align-items-center justify-content-center gap-2">
+                                    <RiLineChartLine />
+                                    <span>Auction House Tracker</span>
+                                </div>
                             </Nav.Link>
                             {/* <Nav.Link href="#link">Runes</Nav.Link> */}
-                            <Nav.Link href="rankings">Rankings</Nav.Link>
+                            <Nav.Link
+                                href="/rankings"
+                                className={
+                                    isActive('/rankings')
+                                        ? 'custom-navbar-active'
+                                        : 'custom-navbar-inactive'
+                                }
+                            >
+                                <div className="d-flex align-items-center justify-content-center gap-2">
+                                    <FaRegChartBar />
+                                    <span>Rankings</span>
+                                </div>
+                            </Nav.Link>
                             {/* <Nav.Link href="#link">BiS List</Nav.Link> */}
                             {/* <NavDropdown
                                 title="Dropdown"
