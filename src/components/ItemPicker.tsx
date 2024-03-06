@@ -10,7 +10,7 @@ import axios from 'axios'
 import debounce from 'lodash.debounce'
 import { Item } from '../utils/types'
 import { getItemColorByRarity } from '../utils/helpers'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { OverlayTrigger, Tooltip, Image } from 'react-bootstrap'
 import { ItemCharacteristics } from '.'
 import { FaSearch } from 'react-icons/fa'
 
@@ -34,11 +34,13 @@ const ItemPicker: React.FC<ItemPickerProps> = ({
                         inputValue
                     )}&limit=10`
                 )
+                console.log(response)
 
                 const options = response.data.map((result) => ({
                     label: result.itemName,
                     value: result.itemId,
                     rarity: result.itemRarity,
+                    mediaUrl: result.mediaUrl,
                 }))
                 callback(options)
             } catch (error) {
@@ -80,7 +82,14 @@ const ItemPicker: React.FC<ItemPickerProps> = ({
                         </Tooltip>
                     }
                 >
-                    <span>{props.label}</span>
+                    <div className="d-flex gap-3">
+                        <Image
+                            src={props.data.mediaUrl}
+                            alt="raid-icon"
+                            className="item-icon-sm"
+                        />
+                        <span>{props.children}</span>
+                    </div>
                 </OverlayTrigger>
             </div>
         </components.Option>
@@ -93,7 +102,14 @@ const ItemPicker: React.FC<ItemPickerProps> = ({
                     color: getItemColorByRarity(props.data.rarity),
                 }}
             >
-                {props.children}
+                <div className="d-flex gap-3">
+                    <Image
+                        src={props.data.mediaUrl}
+                        alt="raid-icon"
+                        className="item-icon-sm"
+                    />
+                    <span>{props.children}</span>
+                </div>
             </div>
         </components.SingleValue>
     )
