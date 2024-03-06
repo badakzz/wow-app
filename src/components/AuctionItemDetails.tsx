@@ -1,9 +1,5 @@
 import { useEffect, useState } from 'react'
-import {
-    ItemLatestPricesGraph,
-    ItemPricingDifferential,
-    ItemSellPrice,
-} from '.'
+import { ItemPricingDifferential, ItemSellPrice } from '.'
 import axios from 'axios'
 import { AuctionItem } from '../utils/types'
 import {

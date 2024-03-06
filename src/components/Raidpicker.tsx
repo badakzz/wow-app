@@ -1,7 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { FunctionComponent } from 'react'
 import AsyncSelect from 'react-select/async'
 import axios from 'axios'
 import { Raid } from '../utils/types'
+import { OptionProps, SingleValueProps, components } from 'react-select'
+import { Image } from 'react-bootstrap'
 
 type RaidPickerProps = {
     raid: Raid | null
@@ -26,6 +28,7 @@ const RaidPicker: React.FC<RaidPickerProps> = ({
                     })
                 )
                 if (options.length > 0 && !raid) setRaid(options[0])
+                console.log(options)
                 return options
             })
             .catch((error) => {
@@ -37,22 +40,53 @@ const RaidPicker: React.FC<RaidPickerProps> = ({
         setRaid(selectedOption)
     }
 
+    const SingleValue: FunctionComponent<SingleValueProps> = (props: any) => {
+        return (
+            <components.SingleValue {...props}>
+                <div className="d-flex align-items-center justify-content-start gap-2">
+                    <Image
+                        src={`/raid-${props.data.value}.png`}
+                        alt="raid-icon"
+                        className="circular-icon"
+                    />
+                    <span>{props.data.label}</span>
+                </div>
+            </components.SingleValue>
+        )
+    }
+
+    const Option: FunctionComponent<OptionProps> = (props: any) => (
+        <components.Option {...props}>
+            <div className="d-flex align-items-center justify-content-start gap-2">
+                <Image
+                    src={`/raid-${props.data.value}.png`}
+                    alt="raid-icon"
+                    className="circular-icon"
+                />
+                <span>{props.data.label}</span>
+            </div>
+        </components.Option>
+    )
+
     return (
-        <AsyncSelect
-            {...restOfProps}
-            instanceId={'raidPicker'}
-            loadOptions={fetchRaids}
-            noOptionsMessage={() => 'No raid found'}
-            loadingMessage={() => 'Loading...'}
-            placeholder={'Select a raid...'}
-            cacheOptions
-            defaultOptions
-            value={raid}
-            onChange={onChange}
-            isSearchable={false}
-            classNamePrefix="react-select"
-            key={`${raid?.id}`}
-        />
+        <div style={{ width: '15rem' }}>
+            <AsyncSelect
+                {...restOfProps}
+                instanceId={'raidPicker'}
+                loadOptions={fetchRaids}
+                noOptionsMessage={() => 'No raid found'}
+                loadingMessage={() => 'Loading...'}
+                placeholder={'Select a raid...'}
+                cacheOptions
+                defaultOptions
+                value={raid}
+                onChange={onChange}
+                isSearchable={false}
+                classNamePrefix="react-select"
+                key={`${raid?.id}`}
+                components={{ SingleValue, Option }}
+            />
+        </div>
     )
 }
 

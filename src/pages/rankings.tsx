@@ -1,6 +1,5 @@
-import axios from 'axios'
 import Head from 'next/head'
-import { Container, Image } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 import { useState } from 'react'
 import { Encounter, Raid } from '../utils/types'
 import {
