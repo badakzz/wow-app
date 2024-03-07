@@ -2,6 +2,7 @@ import Select, { OptionProps, SingleValueProps, components } from 'react-select'
 import { RANKING_CLASS } from '../utils/constants'
 import { FunctionComponent } from 'react'
 import { getRankingClassColor } from '@/utils/helpers'
+import { RankingIcon } from '.'
 
 type RankingClassPickerProps = {
     rankingClass: string
@@ -21,18 +22,32 @@ const RankingClassPicker: React.FC<RankingClassPickerProps> = ({
     const SingleValue: FunctionComponent<SingleValueProps> = (props: any) => {
         return (
             <components.SingleValue {...props}>
-                <span style={{ color: getRankingClassColor(props.data.label) }}>
-                    {props.data.label}
-                </span>
+                <div className="d-flex gap-2">
+                    <RankingIcon rankingClass={props.data.value} />
+                    <span
+                        style={{
+                            color: getRankingClassColor(props.data.value),
+                        }}
+                    >
+                        {props.data.label}
+                    </span>
+                </div>
             </components.SingleValue>
         )
     }
 
     const Option: FunctionComponent<OptionProps> = (props: any) => (
         <components.Option {...props}>
-            <span style={{ color: getRankingClassColor(props.data.label) }}>
-                {props.data.label}
-            </span>
+            <div className="d-flex gap-2">
+                <RankingIcon rankingClass={props.data.value} />
+                <span
+                    style={{
+                        color: getRankingClassColor(props.data.value),
+                    }}
+                >
+                    {props.data.label}
+                </span>
+            </div>
         </components.Option>
     )
 
