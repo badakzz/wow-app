@@ -369,11 +369,11 @@ h1 {
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: var(--darkgrey);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #888;
+    background: var(--darkgrey);
     border-radius: 6px;
 }
 
@@ -384,7 +384,7 @@ h1 {
 /* For Firefox */
 html {
     scrollbar-width: thin;
-    scrollbar-color: #888 #f1f1f1;
+    scrollbar-color: var(--lightgrey) var(--darkgrey);
 }
 
 @media (max-width: 1635px) {

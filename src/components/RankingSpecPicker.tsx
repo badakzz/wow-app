@@ -108,6 +108,7 @@ const RankingSpecPicker: React.FC<RankingSpecProps> = ({
             <Select
                 {...restOfProps}
                 instanceId={'rankingSpecPicker'}
+                placeholder={'Filter by spec...'}
                 options={options}
                 value={selectedOption}
                 onChange={onChange}
