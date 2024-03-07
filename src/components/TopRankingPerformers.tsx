@@ -4,7 +4,7 @@ import { useTable, useFilters, usePagination } from 'react-table'
 import axios from 'axios'
 import { Encounter, Ranking } from '../utils/types'
 import { classToSpecMap, getRankingClassColor } from '../utils/helpers'
-import { RankingClassPicker, RankingSpecIcon, RankingSpecPicker } from '.'
+import { RankingClassPicker, RankingIcon, RankingSpecPicker } from '.'
 import { RANKING_METRIC, RANKING_CLASS, RANKING_SPEC } from '@/utils/constants'
 import { Button, Spinner, Form, Modal } from 'react-bootstrap'
 
@@ -66,7 +66,7 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                         <span style={{ color: 'white', width: '1rem' }}>
                             {parseInt(row.id) + 1 + '.'}
                         </span>
-                        <RankingSpecIcon
+                        <RankingIcon
                             className="table-spec-icon"
                             rankingClass={row.original.class}
                             rankingSpec={row.original.spec}

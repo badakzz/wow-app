@@ -94,27 +94,24 @@ const ItemPicker: React.FC<ItemPickerProps> = ({
         )
     }
 
-    const SingleValue: FunctionComponent<SingleValueProps> = (props: any) => {
-        console.log(props)
-        return (
-            <components.SingleValue {...props}>
-                <div className="d-flex gap-3">
-                    <Image
-                        src={props.data.mediaUrl}
-                        alt="item-icon"
-                        className="item-icon-sm"
-                    />
-                    <span
-                        style={{
-                            color: getItemColorByRarity(props.data.rarity),
-                        }}
-                    >
-                        {props.data.label}
-                    </span>
-                </div>
-            </components.SingleValue>
-        )
-    }
+    const SingleValue: FunctionComponent<SingleValueProps> = (props: any) => (
+        <components.SingleValue {...props}>
+            <div className="d-flex gap-3">
+                <Image
+                    src={props.data.mediaUrl}
+                    alt="item-icon"
+                    className="item-icon-sm"
+                />
+                <span
+                    style={{
+                        color: getItemColorByRarity(props.data.rarity),
+                    }}
+                >
+                    {props.data.label}
+                </span>
+            </div>
+        </components.SingleValue>
+    )
 
     const DropdownIndicator: FunctionComponent<DropdownIndicatorProps> = (
         props: any

@@ -7,7 +7,7 @@ import Select, {
 } from 'react-select'
 import { RANKING_CLASS, RANKING_SPEC } from '@/utils/constants'
 import { classToSpecMap, getRankingClassColor } from '@/utils/helpers'
-import { RankingSpecIcon } from '.'
+import { RankingIcon } from '.'
 
 type RankingSpecProps = {
     rankingSpec: RANKING_SPEC
@@ -53,7 +53,7 @@ const RankingSpecPicker: React.FC<RankingSpecProps> = ({
         return (
             <components.SingleValue {...props}>
                 <div className="d-flex gap-2">
-                    <RankingSpecIcon
+                    <RankingIcon
                         rankingClass={rankingClass}
                         rankingSpec={props.data.value}
                     />
@@ -72,7 +72,7 @@ const RankingSpecPicker: React.FC<RankingSpecProps> = ({
     const Option: FunctionComponent<OptionProps> = (props: any) => (
         <components.Option {...props}>
             <div className="d-flex gap-2">
-                <RankingSpecIcon
+                <RankingIcon
                     rankingClass={rankingClass}
                     rankingSpec={props.data.value}
                 />
