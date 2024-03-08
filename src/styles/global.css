@@ -3,6 +3,7 @@
     --lightgrey: rgb(98, 98, 101);
     --darkgrey: rgb(28, 28, 28);
     --bluegrey: rgb(27, 36, 44);
+    --navbar-width: 15rem;
 }
 
 body {
@@ -16,11 +17,16 @@ h1 {
 }
 
 .custom-navbar {
-    background-color: rgb(59, 57, 61) !important;
-    margin-bottom: 2rem;
-    border-bottom: 2px solid var(--lightgrey);
-    padding-left: 5rem !important;
-    padding-right: 5rem !important;
+    /* Ensure the navbar fits within its grid column */
+    height: 100vh;
+    text-align: center;
+    align-items: center;
+}
+
+.layout-grid {
+    display: grid;
+    grid-template-columns: minmax(12rem, 15vw) auto minmax(12rem, 15vw);
+    height: 100vh;
 }
 
 .custom-navbar,
@@ -28,11 +34,13 @@ h1 {
 .custom-navbar .nav-link,
 .custom-navbar .navbar-text,
 .custom-navbar .dropdown-item {
-    background-color: var(--darkgrey) !important;
+    background-color: black !important;
 }
 
 .custom-navbar-active {
     color: var(--lightblue) !important;
+    width: 100%;
+    /* text-align: left; */
 }
 
 .custom-navbar-active:hover {
@@ -58,10 +66,9 @@ h1 {
 }
 
 .main-container {
-    max-width: 90%;
-    background-color: var(--darkgrey) !important;
+    background-color: var(--darkgrey);
     border: 2px solid var(--lightgrey);
-    padding: 5rem !important;
+    padding: 5rem;
 }
 
 .auction-item-img-border {
@@ -397,7 +404,7 @@ html {
     }
 }
 
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
     .main-container {
         max-width: 90%;
     }
@@ -413,4 +420,4 @@ html {
     .main-container {
         max-width: 90%;
     }
-}
+} */
