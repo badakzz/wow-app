@@ -17,29 +17,50 @@ h1 {
 }
 
 .custom-navbar {
-    /* Ensure the navbar fits within its grid column */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align items to start */
     height: 100vh;
-    text-align: center;
+    min-width: 80%;
+    text-align: start;
+}
+
+.navbar-brand-container {
+    width: 100%; /* Ensure the container spans the full width of the navbar */
+    display: flex;
     align-items: center;
+    justify-content: center; /* Center the Navbar.Brand horizontally */
+    margin-bottom: 5rem;
 }
 
 .layout-grid {
     display: grid;
-    grid-template-columns: minmax(12rem, 15vw) auto minmax(12rem, 15vw);
+    grid-template-columns: minmax(16rem, 15vw) auto minmax(16rem, 15vw);
     height: 100vh;
+}
+
+.top-components-container {
+    grid-column: 2 / 3;
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
 }
 
 .custom-navbar,
 .custom-navbar .navbar-brand,
-.custom-navbar .nav-link,
 .custom-navbar .navbar-text,
 .custom-navbar .dropdown-item {
     background-color: black !important;
 }
 
+/* .custom-navbar .nav-link {
+    background-color: rgb(126, 126, 126);
+} */
+
 .custom-navbar-active {
     color: var(--lightblue) !important;
     width: 100%;
+    background-color: rgb(44, 44, 44);
     /* text-align: left; */
 }
 
@@ -54,6 +75,7 @@ h1 {
 
 .custom-navbar-inactive:hover {
     color: var(--lightblue) !important;
+    background-color: rgb(59, 59, 59);
     transition: color 0.3s ease;
 }
 
