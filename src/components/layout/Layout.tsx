@@ -5,10 +5,11 @@ import { SideNavbar } from '..'
 
 type Props = {
     title: string
+    topComponents?: React.ReactNode
     children?: React.ReactNode
 }
 
-const Layout: React.FC<Props> = ({ title, children }) => {
+const Layout: React.FC<Props> = ({ title, topComponents, children }) => {
     return (
         <>
             <Head>
@@ -21,9 +22,14 @@ const Layout: React.FC<Props> = ({ title, children }) => {
             </Head>
             <div className="layout-grid">
                 <SideNavbar />
-                <Container className="container-top-margin main-container p-5">
-                    {children}
-                </Container>
+                <div className="d-flex flex-column">
+                    <div className="top-components-container">
+                        {topComponents}
+                    </div>
+                    <Container className="container-top-margin main-container p-5">
+                        {children}
+                    </Container>
+                </div>
             </div>
         </>
     )
