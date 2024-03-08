@@ -1,11 +1,10 @@
-import Head from 'next/head'
-import { Container } from 'react-bootstrap'
 import { useState } from 'react'
 import { Encounter, Raid } from '../utils/types'
 import {
     RaidPicker,
     EncounterPicker,
     TopRankingPerformersTable,
+    Layout,
 } from '../components'
 
 const Rankings = () => {
@@ -14,15 +13,7 @@ const Rankings = () => {
 
     return (
         <>
-            <Head>
-                <title>Wow App</title>
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1"
-                />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-            <Container className="container-top-margin main-container p-5">
+            <Layout title="Rankings">
                 <div className="d-flex justify-content-between ">
                     <div className="flex-half text-align-start">
                         <h1 className="mb-5">Rankings</h1>
@@ -41,7 +32,7 @@ const Rankings = () => {
                 {encounter && (
                     <TopRankingPerformersTable encounter={encounter} />
                 )}
-            </Container>
+            </Layout>
         </>
     )
 }
