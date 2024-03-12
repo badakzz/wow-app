@@ -31,13 +31,21 @@ const Layout: React.FC<Props> = ({
             <div className="layout-grid">
                 <SideNavbar />
                 <div className="d-flex flex-column">
-                    <div
-                        className={`top-components-container ${topComponentsFlexClass}`}
-                    >
-                        {topComponents}
-                    </div>
+                    {topComponents && (
+                        <div
+                            className={`top-components-container ${topComponentsFlexClass}`}
+                        >
+                            {topComponents}
+                        </div>
+                    )}
                     {topPicker && topPicker}
-                    <Container className="container-top-margin main-container p-5">
+                    <Container
+                        className={`${
+                            topComponents
+                                ? 'container-top-margin'
+                                : 'home-container-top-margin'
+                        } container-top-margin main-container p-5`}
+                    >
                         {children}
                     </Container>
                 </div>
