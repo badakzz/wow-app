@@ -113,6 +113,7 @@ const RankingSpecPicker: React.FC<RankingSpecProps> = ({
                 value={selectedOption}
                 onChange={onChange}
                 isSearchable={false}
+                isClearable
                 classNamePrefix="react-select"
                 components={{ Option, SingleValue }}
                 styles={customStyles}

@@ -17,11 +17,11 @@ const Auction = () => {
     const [faction, setFaction] = useState<string>(FACTION.ALLIANCE)
     const [region, setRegion] = useState<string>(REGION.EUROPE)
     const [auctionHouseId, setAuctionHouseId] = useState<number | null>()
-    const itemPickerRef = useRef<any>(null) // Create a ref for the AsyncSelect
+    const itemPickerRef = useRef<any>(null)
 
     const focusItemPicker = () => {
         if (itemPickerRef.current) {
-            itemPickerRef.current.focus() // Focus the AsyncSelect component
+            itemPickerRef.current.focus()
         }
     }
 
@@ -71,7 +71,7 @@ const Auction = () => {
                     </div>
                 </div>
             )}
-            <div className="auction-core-container d-flex justify-content-between gap-5 w-100 my-5">
+            <div className="d-flex justify-content-between gap-5 w-100 my-5">
                 <div className="w-50 align-items-start justify-content-between auction-item-container">
                     {itemId && <ItemCharacteristics itemId={itemId} />}
                     {itemId && auctionHouseId && (

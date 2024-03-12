@@ -158,7 +158,7 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                         size="sm"
                         aria-labelledby="contained-modal-title-vcenter"
                         centered
-                        onHide={() => {}} // Modal should not be dismissible by clicking outside or pressing escape
+                        onHide={() => {}}
                     >
                         <Modal.Body className="d-flex flex-column align-items-center gap-3 justify-content-center text-align-center">
                             <Spinner animation="border" role="status"></Spinner>

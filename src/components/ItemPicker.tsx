@@ -18,6 +18,7 @@ import { Tooltip } from 'react-tooltip'
 type ItemPickerProps = {
     itemId: number | null
     setItemId: React.Dispatch<React.SetStateAction<number | null>>
+    selectRef?: React.RefObject<any>
 } & any
 
 const ItemPicker: React.FC<ItemPickerProps> = ({
