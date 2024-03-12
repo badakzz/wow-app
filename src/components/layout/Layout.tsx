@@ -7,9 +7,17 @@ type Props = {
     title: string
     topComponents?: React.ReactNode
     children?: React.ReactNode
+    topComponentsFlexClass?: string
+    topPicker?: React.ReactNode
 }
 
-const Layout: React.FC<Props> = ({ title, topComponents, children }) => {
+const Layout: React.FC<Props> = ({
+    title,
+    topComponents,
+    children,
+    topComponentsFlexClass = '',
+    topPicker,
+}) => {
     return (
         <>
             <Head>
@@ -23,9 +31,12 @@ const Layout: React.FC<Props> = ({ title, topComponents, children }) => {
             <div className="layout-grid">
                 <SideNavbar />
                 <div className="d-flex flex-column">
-                    <div className="top-components-container">
+                    <div
+                        className={`top-components-container ${topComponentsFlexClass}`}
+                    >
                         {topComponents}
                     </div>
+                    {topPicker && topPicker}
                     <Container className="container-top-margin main-container p-5">
                         {children}
                     </Container>

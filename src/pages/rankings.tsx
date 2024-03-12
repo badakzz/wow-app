@@ -12,7 +12,7 @@ const Rankings = () => {
     const [encounter, setEncounter] = useState<Encounter | null>(null)
 
     const topComponents = (
-        <div className="d-flex gap-3 justify-content-end">
+        <div className="d-flex gap-3">
             <RaidPicker raid={raid} setRaid={setRaid} />
             {raid && (
                 <EncounterPicker
@@ -26,7 +26,11 @@ const Rankings = () => {
 
     return (
         <>
-            <Layout title="Rankings" topComponents={topComponents}>
+            <Layout
+                title="Rankings"
+                topComponents={topComponents}
+                topComponentsFlexClass="justify-content-end"
+            >
                 {encounter && (
                     <TopRankingPerformersTable encounter={encounter} />
                 )}

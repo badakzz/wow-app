@@ -23,6 +23,7 @@ type ItemPickerProps = {
 const ItemPicker: React.FC<ItemPickerProps> = ({
     itemId,
     setItemId,
+    selectRef,
     ...restOfProps
 }) => {
     const [currentItem, setCurrentItem] = useState<Item | null>(null)
@@ -128,6 +129,7 @@ const ItemPicker: React.FC<ItemPickerProps> = ({
     return (
         <AsyncSelect
             {...restOfProps}
+            ref={selectRef}
             instanceId="itemPicker"
             loadOptions={fetchItemsByName}
             noOptionsMessage={() => 'No item matching criteria found'}
