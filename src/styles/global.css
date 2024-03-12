@@ -18,17 +18,17 @@ h1 {
 .custom-navbar {
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Align items to start */
+    align-items: flex-start;
     height: 100vh;
     min-width: 80%;
     text-align: start;
 }
 
 .navbar-brand-container {
-    width: 100%; /* Ensure the container spans the full width of the navbar */
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center; /* Center the Navbar.Brand horizontally */
+    justify-content: center;
     margin-bottom: 2rem;
     margin-top: 2rem;
 }
@@ -56,17 +56,11 @@ h1 {
     margin-right: 2rem;
 }
 
-/* .custom-navbar .nav-link {
-    background-color: rgb(126, 126, 126);
-} */
-
 .custom-navbar-active {
     color: var(--lightblue) !important;
     width: 100%;
     background-color: rgb(44, 44, 44);
     border-radius: 5px;
-
-    /* text-align: left; */
 }
 
 .custom-navbar-active:hover {
@@ -87,7 +81,7 @@ h1 {
 }
 
 .nav-link-custom {
-    margin-bottom: 0.5rem; /* Adjust the gap size as needed */
+    margin-bottom: 0.5rem;
 }
 
 .flex-half {
@@ -96,8 +90,6 @@ h1 {
 
 .container-top-margin {
     margin-top: 2rem;
-    /* margin-left: 0 !important;
-    margin-right: 0 !important; */
     max-width: 100%;
 }
 
@@ -341,9 +333,8 @@ h1 {
     border-bottom: none;
 }
 
-/* Target the last row's last cell */
 .rankings-table th:last-child tr:last-child {
-    border-right: none; /* Ensure there's no right border for the last cell */
+    border-right: none;
     border-bottom: 2px solid var(--lightgrey);
 }
 
@@ -381,10 +372,6 @@ h1 {
     color: white;
     border: 2px solid rgb(170, 169, 169);
 }
-/* 
-.auction-core-container {
-    margin-top: 6rem !important;
-} */
 
 .form-check-input:checked {
     background-color: var(--lightblue);
@@ -459,21 +446,3 @@ html {
         margin-top: 1rem;
     }
 }
-
-/* @media (min-width: 768px) {
-    .main-container {
-        max-width: 90%;
-    }
-}
-
-@media (min-width: 992px) {
-    .main-container {
-        max-width: 90%;
-    }
-}
-
-@media (min-width: 1200px) {
-    .main-container {
-        max-width: 90%;
-    }
-} */
