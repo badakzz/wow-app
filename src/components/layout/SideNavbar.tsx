@@ -13,7 +13,7 @@ const SideNavbar: React.FC = () => {
         <div className="d-flex">
             <div className=" side-navbar bg-body-tertiary custom-navbar">
                 <div className="navbar-brand-container">
-                    <Navbar.Brand href="/" className="mb-5">
+                    <Navbar.Brand href="/">
                         <Image
                             src="/logo.png"
                             width="80"
@@ -25,22 +25,22 @@ const SideNavbar: React.FC = () => {
                 <Nav defaultActiveKey="/home" className="flex-column">
                     <Nav.Link
                         href="/auction"
-                        className={
+                        className={`nav-link-custom ${
                             isActive('/auction')
                                 ? 'custom-navbar-active'
                                 : 'custom-navbar-inactive'
-                        }
+                        }`}
                     >
                         <RiLineChartLine className="mr-2" /> Auction House
                         Tracker
                     </Nav.Link>
                     <Nav.Link
                         href="/rankings"
-                        className={
+                        className={`nav-link-custom ${
                             isActive('/rankings')
                                 ? 'custom-navbar-active'
                                 : 'custom-navbar-inactive'
-                        }
+                        }`}
                     >
                         <FaRegChartBar className="mr-2" /> Rankings
                     </Nav.Link>

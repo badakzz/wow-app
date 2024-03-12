@@ -3,7 +3,6 @@
     --lightgrey: rgb(98, 98, 101);
     --darkgrey: rgb(28, 28, 28);
     --bluegrey: rgb(27, 36, 44);
-    --navbar-width: 15rem;
 }
 
 body {
@@ -30,7 +29,8 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center; /* Center the Navbar.Brand horizontally */
-    margin-bottom: 5rem;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
 }
 
 .layout-grid {
@@ -43,7 +43,8 @@ h1 {
     grid-column: 2 / 3;
     display: flex;
     gap: 1rem;
-    padding: 1rem;
+    margin-top: 2rem;
+    justify-content: flex-end;
 }
 
 .custom-navbar,
@@ -51,6 +52,8 @@ h1 {
 .custom-navbar .navbar-text,
 .custom-navbar .dropdown-item {
     background-color: black !important;
+    margin-left: 2rem;
+    margin-right: 2rem;
 }
 
 /* .custom-navbar .nav-link {
@@ -61,11 +64,14 @@ h1 {
     color: var(--lightblue) !important;
     width: 100%;
     background-color: rgb(44, 44, 44);
+    border-radius: 5px;
+
     /* text-align: left; */
 }
 
 .custom-navbar-active:hover {
     color: rgb(152, 204, 255) !important;
+    border-radius: 5px;
     transition: color 0.3s ease;
 }
 
@@ -74,9 +80,14 @@ h1 {
 }
 
 .custom-navbar-inactive:hover {
+    border-radius: 5px;
     color: var(--lightblue) !important;
     background-color: rgb(59, 59, 59);
     transition: color 0.3s ease;
+}
+
+.nav-link-custom {
+    margin-bottom: 0.5rem; /* Adjust the gap size as needed */
 }
 
 .flex-half {
@@ -84,12 +95,15 @@ h1 {
 }
 
 .container-top-margin {
-    margin-top: 5rem;
+    margin-top: 2rem;
+    /* margin-left: 0 !important;
+    margin-right: 0 !important; */
+    max-width: 100%;
 }
 
 .main-container {
     background-color: var(--darkgrey);
-    border: 2px solid var(--lightgrey);
+    border: 1px solid var(--lightgrey);
     padding: 5rem;
 }
 
@@ -169,7 +183,7 @@ h1 {
 }
 
 .react-select__control--is-focused {
-    border: 1px solid var(--lightblue) !important;
+    border: 2px solid var(--lightblue) !important;
 }
 
 .react-select__value-container {
@@ -227,7 +241,27 @@ h1 {
 }
 
 .item-picker {
+    margin-top: 2rem;
     max-width: 40% !important;
+}
+
+.no-items-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+    border: dashed 2px var(--lightgrey);
+    background-color: var(--bluegrey);
+    color: white;
+    max-width: 50%;
+    border-radius: 5px;
+}
+
+.no-items-placeholder:hover {
+    border: dashed 2px var(--lightblue);
+}
+
+.no-items-placeholder:focus {
 }
 
 .auction-item-container {
@@ -347,10 +381,10 @@ h1 {
     color: white;
     border: 2px solid rgb(170, 169, 169);
 }
-
+/* 
 .auction-core-container {
     margin-top: 6rem !important;
-}
+} */
 
 .form-check-input:checked {
     background-color: var(--lightblue);
