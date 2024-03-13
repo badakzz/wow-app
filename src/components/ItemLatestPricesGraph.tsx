@@ -10,6 +10,7 @@ import {
     YAxis,
     CartesianGrid,
     Tooltip,
+    Legend,
 } from 'recharts'
 import { ItemSellPrice } from '.'
 
@@ -43,15 +44,17 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
                 `/api/v2/${itemId}/${auctionHouseId}/latest`
             )
             setData(
-                response.data.map((item: any) => ({
-                    ...item,
-                    formattedMarketValue: formatRawPriceToCopperSilverGold(
-                        item.marketValue
-                    ),
-                    formattedMinBuyout: formatRawPriceToCopperSilverGold(
-                        item.minBuyout
-                    ),
-                }))
+                response.data
+                    .map((item: any) => ({
+                        ...item,
+                        formattedMarketValue: formatRawPriceToCopperSilverGold(
+                            item.marketValue
+                        ),
+                        formattedMinBuyout: formatRawPriceToCopperSilverGold(
+                            item.minBuyout
+                        ),
+                    }))
+                    .reverse()
             )
         } catch (error) {
             console.error('Failed to fetch data:', error)
@@ -107,6 +110,8 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
                 date.getMinutes() < 10 ? '0' : ''
             }${date.getMinutes()}`
 
+            const quantity = payload[0].payload.quantity
+
             return (
                 <>
                     <div className="graph-tooltip">
@@ -131,6 +136,7 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
                                 />
                             </div>
                         )}
+                        <div>Quantity: {quantity}</div>
                     </div>
                 </>
             )
@@ -163,7 +169,7 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
                 <ResponsiveContainer width="100%" height={400} {...restOfProps}>
                     <ComposedChart
                         data={data}
-                        margin={{ top: 5, right: -16, left: 50, bottom: 5 }}
+                        margin={{ top: 5, right: 0, left: 50, bottom: 5 }}
                     >
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis
@@ -194,6 +200,7 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
                             stroke="rgb(235, 37, 136)"
                             name="Minimum Buyout"
                         />
+                        <Legend />
                     </ComposedChart>
                 </ResponsiveContainer>
             )}

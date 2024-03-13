@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container } from 'react-bootstrap'
 import Head from 'next/head'
-import { SideNavbar } from '..'
+import { ResponsiveNavbar } from '..'
 
 type Props = {
     title: string
@@ -29,25 +29,27 @@ const Layout: React.FC<Props> = ({
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div className="layout-grid">
-                <SideNavbar />
-                <div className="d-flex flex-column">
-                    {topComponents && (
-                        <div
-                            className={`top-components-container ${topComponentsFlexClass}`}
+                <ResponsiveNavbar />
+                <div className="main-content-container">
+                    <div className="content-wrapper">
+                        {topComponents && (
+                            <div
+                                className={`top-components-container ${topComponentsFlexClass}`}
+                            >
+                                {topComponents}
+                            </div>
+                        )}
+                        {topPicker && topPicker}
+                        <Container
+                            className={`${
+                                topComponents
+                                    ? 'container-top-margin'
+                                    : 'home-container-top-margin'
+                            } container-top-margin main-container p-5`}
                         >
-                            {topComponents}
-                        </div>
-                    )}
-                    {topPicker && topPicker}
-                    <Container
-                        className={`${
-                            topComponents
-                                ? 'container-top-margin'
-                                : 'home-container-top-margin'
-                        } container-top-margin main-container p-5`}
-                    >
-                        {children}
-                    </Container>
+                            {children}
+                        </Container>
+                    </div>
                 </div>
             </div>
         </>

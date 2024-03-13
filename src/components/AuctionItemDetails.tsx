@@ -66,7 +66,7 @@ const AuctionItemDetails: React.FC<AuctionItemDetailsProps> = ({
                             />
                         )}
                     </div>
-                    <div>Number of auctions: {data[0].numAuctions}</div>
+                    <div>Current number of auctions: {data[0].numAuctions}</div>
                     <ItemPricingDifferential
                         itemId={itemId}
                         auctionHouseId={auctionHouseId}
