@@ -3,7 +3,7 @@
     --lightgrey: rgb(98, 98, 101);
     --darkgrey: rgb(28, 28, 28);
     --bluegrey: rgb(27, 36, 44);
-    --navbar-spacing: 6rem;
+    --top-navbar-spacing: 6rem;
 }
 
 body {
@@ -21,37 +21,14 @@ a.home-links {
     color: var(--lightblue) !important;
 }
 
+/* Layout and navbar styles */
+
 .responsive-navbar {
     background-color: black !important;
 }
 
 .navbar-toggler {
     background-color: rgb(232, 232, 232);
-}
-
-@media (min-width: 992px) {
-    .navbar.responsive-navbar {
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        width: 250px;
-        align-items: flex-start;
-        /* height: 100vh; */
-        /* min-width: 100%; */
-        text-align: start;
-        justify-content: flex-start;
-    }
-
-    .container.navbar-container {
-        flex-direction: column;
-        height: 100%;
-    }
-
-    .navbar-collapse.responsive-navbar-collapse {
-        display: flex;
-        flex-grow: 1;
-        align-items: flex-start;
-    }
 }
 
 .navbar-brand-container {
@@ -65,8 +42,8 @@ a.home-links {
 
 .layout-grid {
     display: grid;
-    grid-template-columns: 1fr; /* Make it a single column for smaller screens */
-    height: auto; /* Adjust height to auto for smaller screens */
+    grid-template-columns: 1fr;
+    height: auto;
 }
 
 .top-components-container {
@@ -113,6 +90,8 @@ a.home-links {
     width: 50%;
 }
 
+/* Generic page styles */
+
 .container-top-margin {
     margin-top: 2rem;
     max-width: 100%;
@@ -128,6 +107,8 @@ a.home-links {
     border: 1px solid var(--lightgrey);
     padding: 5rem;
 }
+
+/* Auction page styles */
 
 .auction-item-img-border {
     border: 2px solid rgb(170, 169, 169);
@@ -299,6 +280,8 @@ a.home-links {
     margin-top: 1rem;
 }
 
+/* Ranking styles */
+
 .page-button {
     background-color: var(--bluegrey);
     border: none;
@@ -450,7 +433,7 @@ a.home-links {
     opacity: 0;
 }
 
-/* For Webkit (Chrome, Safari, etc.) */
+/* Scrollbar for Webkit (Chrome, Safari, etc.) */
 ::-webkit-scrollbar {
     width: 12px;
 }
@@ -464,7 +447,7 @@ a.home-links {
     border-radius: 6px;
 }
 
-/* For Firefox */
+/* Scrollbar for Firefox */
 html {
     scrollbar-width: thin;
     scrollbar-color: var(--lightgrey) var(--darkgrey);
@@ -476,18 +459,7 @@ html {
         justify-content: space-between;
         gap: 2rem;
     }
-}
 
-@media (max-width: 992px) {
-    .auction-core-container {
-        display: flex;
-        flex-direction: column;
-        gap: 3rem;
-        align-items: center;
-    }
-}
-
-@media (min-width: 992px) {
     .layout-grid {
         display: grid;
         grid-template-columns: minmax(250px, 250px) auto minmax(250px, 250px);
@@ -498,19 +470,37 @@ html {
         grid-column: 2 / 3;
         display: flex;
         flex-direction: column;
-        /* Ensure there's no padding on the sides to fully utilize the middle column */
         padding: 0;
     }
 
-    /* This extra div is not in your original code but suggested to be used to wrap your main content */
     .content-wrapper {
-        /* Adjust padding or margin as needed to add space within the content area */
         padding: 1rem;
     }
 
     .content-wrapper {
-        padding-left: var(--navbar-spacing);
-        padding-right: var(--navbar-spacing);
+        padding-left: var(--top-navbar-spacing);
+        padding-right: var(--top-navbar-spacing);
+    }
+
+    .navbar.responsive-navbar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: 250px;
+        align-items: flex-start;
+        text-align: start;
+        justify-content: flex-start;
+    }
+
+    .container.navbar-container {
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .navbar-collapse.responsive-navbar-collapse {
+        display: flex;
+        flex-grow: 1;
+        align-items: flex-start;
     }
 
     .navbar-brand-container {
@@ -518,7 +508,7 @@ html {
     }
 
     .navbar-brand {
-        justify-content: center; /* Center the logo horizontally */
+        justify-content: center;
         margin: 0;
     }
 }
@@ -536,33 +526,39 @@ html {
         width: 100%;
         position: fixed;
         top: 0;
-        z-index: 1000; /* Ensure it stays on top */
+        z-index: 1000;
     }
 
     .main-content-container {
-        /* Adjust the top margin to ensure content starts below the top navbar */
-        margin-top: 60px; /* Adjust based on the navbar's height */
+        margin-top: 60px;
     }
 
     .navbar-container {
         display: flex;
-        justify-content: space-between; /* Spread brand and toggle */
-        align-items: center; /* Center them vertically */
+        justify-content: space-between;
+        align-items: center;
     }
 
     .navbar-brand-container {
         flex-grow: 1;
         display: flex;
-        justify-content: flex-start; /* Align brand logo to the left */
+        justify-content: flex-start;
     }
 
     .navbar-container {
-        margin-left: var(--navbar-spacing) !important;
-        margin-right: var(--navbar-spacing) !important;
+        margin-left: var(--top-navbar-spacing) !important;
+        margin-right: var(--top-navbar-spacing) !important;
     }
 
     .content-wrapper {
-        padding-left: var(--navbar-spacing);
-        padding-right: var(--navbar-spacing);
+        padding-left: var(--top-navbar-spacing);
+        padding-right: var(--top-navbar-spacing);
+    }
+
+    .auction-core-container {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+        align-items: center;
     }
 }
