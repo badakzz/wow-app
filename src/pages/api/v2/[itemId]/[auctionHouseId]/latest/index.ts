@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaClient } from '@prisma/client'
 import { sanitizeInput } from '../../../../../../utils/helpers'
-import { format, parseISO } from 'date-fns' // assuming you've added date-fns to your project
+import { format, parseISO } from 'date-fns'
 
 const prisma = new PrismaClient()
 
@@ -18,7 +18,7 @@ export default async function handler(
                 itemId: parseInt(itemId),
             },
             orderBy: {
-                snapshotDate: 'asc',
+                snapshotDate: 'desc',
             },
             take: 20,
         })

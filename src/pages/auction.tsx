@@ -57,7 +57,7 @@ const Auction = () => {
             topPicker={
                 <ItemPicker
                     selectRef={itemPickerRef}
-                    className="item-picker"
+                    className="item-picker mb-4"
                     itemId={itemId}
                     setItemId={setItemId}
                 />
@@ -71,17 +71,19 @@ const Auction = () => {
                     </div>
                 </div>
             )}
-            <div className="d-flex justify-content-between gap-5 w-100 my-5">
-                <div className="w-50 align-items-start justify-content-between auction-item-container">
+            <div className="auction-core-container w-100 my-5">
+                <div className="flex-column w-50 align-items-start auction-item-container">
                     {itemId && <ItemCharacteristics itemId={itemId} />}
-                    {itemId && auctionHouseId && (
-                        <div className="auction-item-details-margin">
-                            <AuctionItemDetails
-                                itemId={itemId}
-                                auctionHouseId={auctionHouseId}
-                            />
-                        </div>
-                    )}
+                    <div className="d-flex flex-column justify-content-end">
+                        {itemId && auctionHouseId && (
+                            <div className="auction-item-details-margin">
+                                <AuctionItemDetails
+                                    itemId={itemId}
+                                    auctionHouseId={auctionHouseId}
+                                />
+                            </div>
+                        )}
+                    </div>
                 </div>
                 {itemId && auctionHouseId && (
                     <ItemLatestPricesGraph

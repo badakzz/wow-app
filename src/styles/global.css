@@ -3,6 +3,7 @@
     --lightgrey: rgb(98, 98, 101);
     --darkgrey: rgb(28, 28, 28);
     --bluegrey: rgb(27, 36, 44);
+    --navbar-spacing: 6rem;
 }
 
 body {
@@ -20,17 +21,41 @@ a.home-links {
     color: var(--lightblue) !important;
 }
 
-.custom-navbar {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    height: 100vh;
-    min-width: 80%;
-    text-align: start;
+.responsive-navbar {
+    background-color: black !important;
+}
+
+.navbar-toggler {
+    background-color: rgb(232, 232, 232);
+}
+
+@media (min-width: 992px) {
+    .navbar.responsive-navbar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: 250px;
+        align-items: flex-start;
+        /* height: 100vh; */
+        /* min-width: 100%; */
+        text-align: start;
+        justify-content: flex-start;
+    }
+
+    .container.navbar-container {
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .navbar-collapse.responsive-navbar-collapse {
+        display: flex;
+        flex-grow: 1;
+        align-items: flex-start;
+    }
 }
 
 .navbar-brand-container {
-    width: 100%;
+    /* width: 100%; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -40,8 +65,8 @@ a.home-links {
 
 .layout-grid {
     display: grid;
-    grid-template-columns: minmax(16rem, 15vw) auto minmax(16rem, 15vw);
-    height: 100vh;
+    grid-template-columns: 1fr; /* Make it a single column for smaller screens */
+    height: auto; /* Adjust height to auto for smaller screens */
 }
 
 .top-components-container {
@@ -52,40 +77,35 @@ a.home-links {
     justify-content: flex-end;
 }
 
-.custom-navbar,
-.custom-navbar .navbar-brand,
-.custom-navbar .navbar-text,
-.custom-navbar .dropdown-item {
-    background-color: black !important;
-    margin-left: 2rem;
-    margin-right: 2rem;
-}
-
-.custom-navbar-active {
+.responsive-navbar-active {
     color: var(--lightblue) !important;
     width: 100%;
     background-color: rgb(44, 44, 44);
     border-radius: 5px;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
 }
 
-.custom-navbar-active:hover {
+.responsive-navbar-active:hover {
     color: rgb(152, 204, 255) !important;
     border-radius: 5px;
     transition: color 0.3s ease;
 }
 
-.custom-navbar-inactive {
+.responsive-navbar-inactive {
     color: white !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
 }
 
-.custom-navbar-inactive:hover {
+.responsive-navbar-inactive:hover {
     border-radius: 5px;
     color: var(--lightblue) !important;
     background-color: rgb(59, 59, 59);
     transition: color 0.3s ease;
 }
 
-.nav-link-custom {
+.responsive-navbar-nav-link {
     margin-bottom: 0.5rem;
 }
 
@@ -263,13 +283,20 @@ a.home-links {
     border: dashed 2px var(--lightblue);
 }
 
-.no-items-placeholder:focus {
-}
-
 .auction-item-container {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: flex-start;
     max-width: 40% !important;
+}
+
+.auction-item-details-margin {
+    margin-left: 3.55rem;
+}
+.auction-item-details-fixed-width {
+    width: 11rem;
+    margin-top: 1rem;
 }
 
 .page-button {
@@ -443,16 +470,99 @@ html {
     scrollbar-color: var(--lightgrey) var(--darkgrey);
 }
 
-@media (max-width: 1635px) {
-    .auction-item-container {
+@media (min-width: 992px) {
+    .auction-core-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .auction-core-container {
+        display: flex;
         flex-direction: column;
-        justify-content: flex-start;
+        gap: 3rem;
+        align-items: center;
     }
-    .auction-item-details-margin {
-        margin-left: 3.55rem;
+}
+
+@media (min-width: 992px) {
+    .layout-grid {
+        display: grid;
+        grid-template-columns: minmax(250px, 250px) auto minmax(250px, 250px);
+        height: 100vh;
     }
-    .auction-item-details-fixed-width {
-        width: 11rem;
-        margin-top: 1rem;
+
+    .main-content-container {
+        grid-column: 2 / 3;
+        display: flex;
+        flex-direction: column;
+        /* Ensure there's no padding on the sides to fully utilize the middle column */
+        padding: 0;
+    }
+
+    /* This extra div is not in your original code but suggested to be used to wrap your main content */
+    .content-wrapper {
+        /* Adjust padding or margin as needed to add space within the content area */
+        padding: 1rem;
+    }
+
+    .content-wrapper {
+        padding-left: var(--navbar-spacing);
+        padding-right: var(--navbar-spacing);
+    }
+
+    .navbar-brand-container {
+        width: 100%;
+    }
+
+    .navbar-brand {
+        justify-content: center; /* Center the logo horizontally */
+        margin: 0;
+    }
+}
+
+@media (max-width: 992px) {
+    .layout-grid {
+        display: block;
+    }
+
+    .navbar-brand-container {
+        margin: 0;
+    }
+
+    .top-navbar-container {
+        width: 100%;
+        position: fixed;
+        top: 0;
+        z-index: 1000; /* Ensure it stays on top */
+    }
+
+    .main-content-container {
+        /* Adjust the top margin to ensure content starts below the top navbar */
+        margin-top: 60px; /* Adjust based on the navbar's height */
+    }
+
+    .navbar-container {
+        display: flex;
+        justify-content: space-between; /* Spread brand and toggle */
+        align-items: center; /* Center them vertically */
+    }
+
+    .navbar-brand-container {
+        flex-grow: 1;
+        display: flex;
+        justify-content: flex-start; /* Align brand logo to the left */
+    }
+
+    .navbar-container {
+        margin-left: var(--navbar-spacing) !important;
+        margin-right: var(--navbar-spacing) !important;
+    }
+
+    .content-wrapper {
+        padding-left: var(--navbar-spacing);
+        padding-right: var(--navbar-spacing);
     }
 }
