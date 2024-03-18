@@ -1,5 +1,6 @@
 export { default as AuctionItemDetails } from './AuctionItemDetails'
 export { default as EncounterPicker } from './EncounterPicker'
+export { default as ItemCard } from './ItemCard'
 export { default as ItemCharacteristics } from './ItemCharacteristics'
 export { default as ItemLatestPricesGraph } from './ItemLatestPricesGraph'
 export { default as ItemPicker } from './ItemPicker'
