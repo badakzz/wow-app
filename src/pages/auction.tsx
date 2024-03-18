@@ -1,31 +1,70 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import {
-    ItemCharacteristics,
+    // ItemCharacteristics,
     RealmPicker,
     FactionPicker,
     RegionPicker,
     ItemPicker,
-    AuctionItemDetails,
-    ItemLatestPricesGraph,
+    // AuctionItemDetails,
+    // ItemLatestPricesGraph,
     Layout,
+    ItemCard,
 } from '../components'
-import { FaPlusCircle, FaEye } from 'react-icons/fa'
+import {
+    FaPlusCircle,
+    //  FaEye
+} from 'react-icons/fa'
 import { FACTION, REGION } from '../utils/constants'
+import { Item } from '@/utils/types'
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
 
 const Auction = () => {
     const [itemId, setItemId] = useState<number | null>(null)
     const [faction, setFaction] = useState<string>(FACTION.ALLIANCE)
     const [region, setRegion] = useState<string>(REGION.EUROPE)
     const [auctionHouseId, setAuctionHouseId] = useState<number | null>()
-    const [graphVisibility, setGraphVisibility] = useState<boolean>(false)
+    const [trackedItems, setTrackedItems] = useState<Item[]>([])
     const itemPickerRef = useRef<any>(null)
 
-    console.log(graphVisibility)
+    useEffect(() => {
+        // Load saved items from localStorage
+        const itemsFromStorage = JSON.parse(
+            localStorage.getItem('trackedItems') || '[]'
+        )
+        setTrackedItems(itemsFromStorage)
+    }, [])
+
+    useEffect(() => {
+        // Save tracked items to localStorage whenever they change
+        localStorage.setItem('trackedItems', JSON.stringify(trackedItems))
+    }, [trackedItems])
+
+    const onDragEnd = (result) => {
+        if (!result.destination) return
+        const items = Array.from(trackedItems)
+        const [reorderedItem] = items.splice(result.source.index, 1)
+        items.splice(result.destination.index, 0, reorderedItem)
+        setTrackedItems(items)
+    }
+
+    // This function could be called when a new item is selected from the ItemPicker
+    const handleNewItem = (newItemId) => {
+        if (!trackedItems.includes(newItemId)) {
+            setTrackedItems([...trackedItems, newItemId])
+        }
+    }
+
     const focusItemPicker = () => {
         if (itemPickerRef.current) {
             itemPickerRef.current.focus()
         }
     }
+
+    useEffect(() => {
+        if (itemId) {
+            handleNewItem(itemId)
+        }
+    }, [itemId])
 
     const topComponents = (
         <div className="d-flex justify-content-between align-items-center w-100">
@@ -65,7 +104,35 @@ const Auction = () => {
                 />
             }
         >
-            {/* {localStorage && <></>} */}
+            <DragDropContext onDragEnd={onDragEnd}>
+                <Droppable droppableId="items">
+                    {(provided) => (
+                        <div
+                            {...provided.droppableProps}
+                            ref={provided.innerRef}
+                        >
+                            {trackedItems.map((id, index) => (
+                                <Draggable
+                                    key={id}
+                                    draggableId={String(id)}
+                                    index={index}
+                                >
+                                    {(provided) => (
+                                        <div
+                                            ref={provided.innerRef}
+                                            {...provided.draggableProps}
+                                            {...provided.dragHandleProps}
+                                        >
+                                            <ItemCard itemId={id} />
+                                        </div>
+                                    )}
+                                </Draggable>
+                            ))}
+                            {provided.placeholder}
+                        </div>
+                    )}
+                </Droppable>
+            </DragDropContext>
             {!itemId && (
                 <div className="no-items-placeholder" onClick={focusItemPicker}>
                     <div className="d-flex align-items-center gap-3">
@@ -74,31 +141,6 @@ const Auction = () => {
                     </div>
                 </div>
             )}
-            <div className="auction-core-container w-100 my-5">
-                <div className="flex-column w-50 align-items-start auction-item-container">
-                    {itemId && <ItemCharacteristics itemId={itemId} />}
-                    <div className="d-flex flex-column justify-content-end">
-                        {itemId && auctionHouseId && (
-                            <div className="auction-item-details-margin">
-                                <AuctionItemDetails
-                                    itemId={itemId}
-                                    auctionHouseId={auctionHouseId}
-                                />
-                            </div>
-                        )}
-                    </div>
-                </div>
-                {itemId && auctionHouseId && (
-                    <FaEye onClick={() => setGraphVisibility(true)} />
-                )}
-                {graphVisibility && itemId && auctionHouseId && (
-                    <ItemLatestPricesGraph
-                        className="w-50"
-                        itemId={itemId}
-                        auctionHouseId={auctionHouseId}
-                    />
-                )}
-            </div>
         </Layout>
     )
 }
