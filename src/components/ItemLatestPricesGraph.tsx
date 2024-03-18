@@ -25,6 +25,12 @@ type CustomTooltipProps = {
     label?: string
 }
 
+type CustomYAxisTickProps = {
+    x?: number
+    y?: number
+    payload?: any
+}
+
 const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
     itemId,
     auctionHouseId,
@@ -37,10 +43,51 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
             const response = await axios.get(
                 `/api/v2/${itemId}/${auctionHouseId}/latest`
             )
-            setData(response.data)
+            setData(
+                response.data
+                    .map((item: any) => ({
+                        ...item,
+                        formattedMarketValue: formatRawPriceToCopperSilverGold(
+                            item.marketValue
+                        ),
+                        formattedMinBuyout: formatRawPriceToCopperSilverGold(
+                            item.minBuyout
+                        ),
+                    }))
+                    .reverse()
+            )
         } catch (error) {
             console.error('Failed to fetch data:', error)
         }
+    }
+
+    const CustomYAxisTick: React.FC<CustomYAxisTickProps> = ({
+        x,
+        y,
+        payload,
+    }) => {
+        const { gold, silver, copper } = formatRawPriceToCopperSilverGold(
+            payload.value
+        ) || {
+            gold: 0,
+            silver: 0,
+            copper: 0,
+        }
+
+        return (
+            <g transform={`translate(${x},${y})`}>
+                <text
+                    x={-5}
+                    y={-16}
+                    dy={16}
+                    textAnchor="end"
+                    fill="#8884d8"
+                    fontSize={13}
+                >
+                    {`${gold}g ${silver}s ${copper}c`}
+                </text>
+            </g>
+        )
     }
 
     const CustomTooltip: React.FC<CustomTooltipProps> = ({
@@ -62,6 +109,8 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
             const time = `${date.getHours()}:${
                 date.getMinutes() < 10 ? '0' : ''
             }${date.getMinutes()}`
+
+            const quantity = payload[0].payload.quantity
 
             return (
                 <>
@@ -87,6 +136,7 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
                                 />
                             </div>
                         )}
+                        <div>Quantity: {quantity}</div>
                     </div>
                 </>
             )
@@ -117,15 +167,22 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
         <>
             {data && accumulatedQuantity !== 0 && (
                 <ResponsiveContainer width="100%" height={400} {...restOfProps}>
-                    <ComposedChart data={data}>
+                    <ComposedChart
+                        data={data}
+                        margin={{ top: 5, right: 0, left: 50, bottom: 5 }}
+                    >
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis
                             dataKey="snapshotDate"
                             tickFormatter={formatXAxis}
+                            fontSize={13}
                         />
-                        <YAxis orientation="left" stroke="#8884d8" />
+                        <YAxis
+                            orientation="left"
+                            stroke="#8884d8"
+                            tick={<CustomYAxisTick />}
+                        />
                         <Tooltip content={<CustomTooltip />} />
-                        <Legend />
                         <Bar
                             dataKey="quantity"
                             fill="rgb(100, 177, 255)"
@@ -143,6 +200,7 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
                             stroke="rgb(235, 37, 136)"
                             name="Minimum Buyout"
                         />
+                        <Legend />
                     </ComposedChart>
                 </ResponsiveContainer>
             )}

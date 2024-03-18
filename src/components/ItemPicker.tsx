@@ -10,18 +10,21 @@ import axios from 'axios'
 import debounce from 'lodash.debounce'
 import { Item } from '../utils/types'
 import { getItemColorByRarity } from '../utils/helpers'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Image } from 'react-bootstrap'
 import { ItemCharacteristics } from '.'
 import { FaSearch } from 'react-icons/fa'
+import { Tooltip } from 'react-tooltip'
 
 type ItemPickerProps = {
     itemId: number | null
     setItemId: React.Dispatch<React.SetStateAction<number | null>>
+    selectRef?: React.RefObject<any>
 } & any
 
 const ItemPicker: React.FC<ItemPickerProps> = ({
     itemId,
     setItemId,
+    selectRef,
     ...restOfProps
 }) => {
     const [currentItem, setCurrentItem] = useState<Item | null>(null)
@@ -34,11 +37,11 @@ const ItemPicker: React.FC<ItemPickerProps> = ({
                         inputValue
                     )}&limit=10`
                 )
-
                 const options = response.data.map((result) => ({
                     label: result.itemName,
                     value: result.itemId,
                     rarity: result.itemRarity,
+                    mediaUrl: result.mediaUrl,
                 }))
                 callback(options)
             } catch (error) {
@@ -65,35 +68,49 @@ const ItemPicker: React.FC<ItemPickerProps> = ({
         setCurrentItem(selectedOption)
     }
 
-    const Option: FunctionComponent<OptionProps> = (props: any) => (
-        <components.Option {...props}>
-            <div
-                style={{
-                    color: getItemColorByRarity(props.data.rarity),
-                }}
-            >
-                <OverlayTrigger
-                    placement="bottom"
-                    overlay={
-                        <Tooltip className="item-tooltip">
-                            <ItemCharacteristics itemId={props.value} />
-                        </Tooltip>
-                    }
-                >
-                    <span>{props.label}</span>
-                </OverlayTrigger>
-            </div>
-        </components.Option>
-    )
+    const Option: FunctionComponent<OptionProps> = (props: any) => {
+        const tooltipId = `tooltip-option-${props.data.value}`
+
+        return (
+            <components.Option {...props}>
+                <div className="d-flex gap-3">
+                    <Image
+                        src={props.data.mediaUrl}
+                        alt="item-icon"
+                        className="item-icon-sm"
+                    />
+                    <span
+                        data-tooltip-id={tooltipId}
+                        data-tooltip-float
+                        style={{
+                            color: getItemColorByRarity(props.data.rarity),
+                        }}
+                    >
+                        {props.data.label}
+                    </span>
+                </div>
+                <Tooltip id={tooltipId} className="tooltip-inner">
+                    <ItemCharacteristics itemId={props.data.value} />
+                </Tooltip>
+            </components.Option>
+        )
+    }
 
     const SingleValue: FunctionComponent<SingleValueProps> = (props: any) => (
         <components.SingleValue {...props}>
-            <div
-                style={{
-                    color: getItemColorByRarity(props.data.rarity),
-                }}
-            >
-                {props.children}
+            <div className="d-flex gap-3">
+                <Image
+                    src={props.data.mediaUrl}
+                    alt="item-icon"
+                    className="item-icon-sm"
+                />
+                <span
+                    style={{
+                        color: getItemColorByRarity(props.data.rarity),
+                    }}
+                >
+                    {props.data.label}
+                </span>
             </div>
         </components.SingleValue>
     )
@@ -113,6 +130,7 @@ const ItemPicker: React.FC<ItemPickerProps> = ({
     return (
         <AsyncSelect
             {...restOfProps}
+            ref={selectRef}
             instanceId="itemPicker"
             loadOptions={fetchItemsByName}
             noOptionsMessage={() => 'No item matching criteria found'}

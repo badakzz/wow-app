@@ -13,7 +13,7 @@ load_env()
 
 CLIENT_ID = os.getenv('WOW_CLIENT_ID')
 CLIENT_SECRET = os.getenv('WOW_SECRET_KEY')
-REGION = 'eu'  # Use 'eu', 'us', etc., as appropriate
+REGION = 'eu'
 LOCALE = 'en_US'
 
 def get_access_token(client_id, client_secret):
@@ -21,49 +21,52 @@ def get_access_token(client_id, client_secret):
     auth = (client_id, client_secret)
     data = {'grant_type': 'client_credentials'}
     response = requests.post(url, data=data, auth=auth)
-    if response.status_code == 200:
-        return response.json()['access_token']
-    else:
-        print(f"Failed to get access token: {response.status_code}, {response.text}")
-        return None
+    return response.json().get('access_token') if response.status_code == 200 else None
 
 def fetch_item_details(access_token, item_id):
-    url = f"https://{REGION}.api.blizzard.com/data/wow/item/{item_id}?namespace=static-classic-{REGION}&locale={LOCALE}&access_token={access_token}"
-    response = requests.get(url)
-    if response.status_code == 200:
-        data = response.json()
-        name = data.get('name')
-        rarity = data.get('quality', {}).get('type')
-        return name, rarity
+    item_url = f"https://{REGION}.api.blizzard.com/data/wow/item/{item_id}?namespace=static-classic-{REGION}&locale={LOCALE}&access_token={access_token}"
+    media_url = f"https://{REGION}.api.blizzard.com/data/wow/media/item/{item_id}?namespace=static-{REGION}&locale={LOCALE}&access_token={access_token}"
+
+    item_response = requests.get(item_url)
+    media_response = requests.get(media_url)
+
+    if item_response.status_code == 200 and media_response.status_code == 200:
+        item_data = item_response.json()
+        media_data = media_response.json()
+        
+        name = item_data.get('name')
+        rarity = item_data.get('quality', {}).get('type')
+        media = media_data.get('assets', [{}])[0].get('value')
+
+        return name, rarity, media
     else:
-        print(f"Failed to fetch item {item_id}: {response.status_code}")
-        return None, None
+        print(f"Failed to fetch item {item_id}: {item_response.status_code}, {media_response.status_code}")
+        return None, None, None
     
 conn = sqlite3.connect('prices.db')
 cursor = conn.cursor()
 
+# Update the table schema to include mediaUrl
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS items (
     itemId INTEGER PRIMARY KEY,
     itemName TEXT,
-    itemRarity TEXT
+    itemRarity TEXT,
+    mediaUrl TEXT
 )
 ''')
 
 cursor.execute('SELECT DISTINCT itemId FROM prices_history WHERE itemId NOT IN (SELECT itemId FROM items)')
 item_ids = [row[0] for row in cursor.fetchall()]
 
-# access_token = get_access_token(CLIENT_ID, CLIENT_SECRET)
-# hardcoded for now
-access_token = ''
+access_token = get_access_token(CLIENT_ID, CLIENT_SECRET)
 
 for item_id in item_ids:
-    item_name, item_rarity = fetch_item_details(access_token, item_id)
-    print(f"Fetched: Item ID {item_id} - Name: {item_name}, Rarity: {item_rarity}")  # Debug print
+    item_name, item_rarity, media_url = fetch_item_details(access_token, item_id)
+    print(f"Fetched: Item ID {item_id} - Name: {item_name}, Rarity: {item_rarity}, Media: {media_url}")  # Debug print
     if item_name and item_rarity:
-        cursor.execute('INSERT OR IGNORE INTO items (itemId, itemName, itemRarity) VALUES (?, ?, ?)', (item_id, item_name, item_rarity))
-        print(f"Inserted: Item ID {item_id} - Name: {item_name}, Rarity: {item_rarity}")
+        cursor.execute('INSERT OR IGNORE INTO items (itemId, itemName, itemRarity, mediaUrl) VALUES (?, ?, ?, ?)', (item_id, item_name, item_rarity, media_url))
         conn.commit()
 
 conn.close()
-print('Item names inserted/updated successfully.')
+print('Item details and media URLs inserted/updated successfully.')

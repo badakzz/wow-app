@@ -21,34 +21,30 @@ const RegionPicker: React.FC<RegionPickerProps> = ({
     const getFlagSrc = (props: any) =>
         `${FLAG[props.data.value as keyof typeof FLAG]}`
 
-    const SingleValue: FunctionComponent<SingleValueProps> = (props: any) => {
-        return (
-            <components.SingleValue {...props}>
-                <div className="d-flex align-items-center justify-content-center text-align-center gap-3">
-                    <span>{props.data.label}</span>
-                    <div className="logo-round-container">
-                        <Image
-                            src={getFlagSrc(props)}
-                            style={{ height: '20px', width: 'auto' }}
-                            alt="region logo"
-                        />
-                    </div>
-                </div>
-            </components.SingleValue>
-        )
-    }
+    const SingleValue: FunctionComponent<SingleValueProps> = (props: any) => (
+        <components.SingleValue {...props}>
+            <div className="d-flex align-items-center justify-content-start gap-2">
+                <Image
+                    width={24}
+                    height={20}
+                    src={getFlagSrc(props)}
+                    alt="region logo"
+                />
+                <span>{props.data.label}</span>
+            </div>
+        </components.SingleValue>
+    )
 
     const Option: FunctionComponent<OptionProps> = (props: any) => (
         <components.Option {...props}>
-            <div className="d-flex align-items-center gap-3">
+            <div className="d-flex align-items-center justify-content-start gap-2">
+                <Image
+                    width={24}
+                    height={20}
+                    src={getFlagSrc(props)}
+                    alt="region logo"
+                />
                 <span>{props.data.label}</span>
-                <div className="logo-round-container">
-                    <Image
-                        src={getFlagSrc(props)}
-                        style={{ height: '20px', width: 'auto' }}
-                        alt="regionlogo"
-                    />
-                </div>
             </div>
         </components.Option>
     )
@@ -60,16 +56,18 @@ const RegionPicker: React.FC<RegionPickerProps> = ({
     }
 
     return (
-        <Select
-            {...restOfProps}
-            instanceId={'regionPicker'}
-            options={options}
-            value={selectedOption}
-            onChange={onChange}
-            isSearchable={false}
-            classNamePrefix="react-select"
-            components={{ SingleValue, Option }}
-        />
+        <div style={{ width: '11rem' }}>
+            <Select
+                {...restOfProps}
+                instanceId={'regionPicker'}
+                options={options}
+                value={selectedOption}
+                onChange={onChange}
+                isSearchable={false}
+                classNamePrefix="react-select"
+                components={{ SingleValue, Option }}
+            />
+        </div>
     )
 }
 
