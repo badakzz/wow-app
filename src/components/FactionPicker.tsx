@@ -29,30 +29,28 @@ const FactionPicker: React.FC<FactionPickerProps> = ({
 
     const Option: FunctionComponent<OptionProps> = (props: any) => (
         <components.Option {...props}>
-            <div className="d-flex align-items-center gap-3">
+            <div className="d-flex align-items-center justify-content-start gap-2">
+                <Image
+                    width={20}
+                    height={24}
+                    src={getFactionSrc(props)}
+                    alt="region logo"
+                />
                 <span>{props.data.label}</span>
-                <div className="logo-round-container">
-                    <Image
-                        src={getFactionSrc(props)}
-                        style={{ height: '20px', width: 'auto' }}
-                        alt="region logo"
-                    />
-                </div>
             </div>
         </components.Option>
     )
 
     const SingleValue: FunctionComponent<SingleValueProps> = (props: any) => (
         <components.SingleValue {...props}>
-            <div className="d-flex align-items-center justify-content-center text-align-center gap-3">
+            <div className="d-flex align-items-center justify-content-start gap-2">
+                <Image
+                    width={20}
+                    height={24}
+                    src={getFactionSrc(props)}
+                    alt="region logo"
+                />
                 <span>{props.data.label}</span>
-                <div className="logo-round-container">
-                    <Image
-                        src={getFactionSrc(props)}
-                        style={{ height: '20px', width: 'auto' }}
-                        alt="region logo"
-                    />
-                </div>
             </div>
         </components.SingleValue>
     )

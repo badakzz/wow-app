@@ -12,6 +12,18 @@ const rankingClassColorMap = {
     [RANKING_CLASS.WARLOCK]: '#8787ED',
 }
 
+const classToIconMap: { [key: string]: number } = {
+    [RANKING_CLASS.DRUID]: 18,
+    [RANKING_CLASS.HUNTER]: 27,
+    [RANKING_CLASS.MAGE]: 34,
+    [RANKING_CLASS.PALADIN]: 45,
+    [RANKING_CLASS.PRIEST]: 48,
+    [RANKING_CLASS.ROGUE]: 59,
+    [RANKING_CLASS.SHAMAN]: 64,
+    [RANKING_CLASS.WARLOCK]: 72,
+    [RANKING_CLASS.WARRIOR]: 77,
+}
+
 const classSpecToIconIndexMap: { [key: string]: number } = {
     [`${RANKING_CLASS.DRUID}-${RANKING_SPEC.BALANCE}`]: 12,
     [`${RANKING_CLASS.DRUID}-${RANKING_SPEC.FERAL}`]: 14,
@@ -82,9 +94,13 @@ export const getRankingClassColor = (rankingClass: RANKING_CLASS): string => {
 }
 
 export const getSpecIconIndex = (
-    characterClass: RANKING_CLASS,
-    spec: RANKING_SPEC
+    rankingClass: RANKING_CLASS,
+    rankingSpec: RANKING_SPEC
 ): number => {
-    const key = `${characterClass}-${spec}`
+    const key = `${rankingClass}-${rankingSpec}`
     return classSpecToIconIndexMap[key] || -1
+}
+
+export const getClassIconIndex = (rankingClass: RANKING_CLASS): number => {
+    return classToIconMap[rankingClass] || -1
 }

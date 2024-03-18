@@ -2,6 +2,7 @@ import Select, { OptionProps, SingleValueProps, components } from 'react-select'
 import { RANKING_CLASS } from '../utils/constants'
 import { FunctionComponent } from 'react'
 import { getRankingClassColor } from '@/utils/helpers'
+import { RankingIcon } from '.'
 
 type RankingClassPickerProps = {
     rankingClass: string
@@ -21,18 +22,32 @@ const RankingClassPicker: React.FC<RankingClassPickerProps> = ({
     const SingleValue: FunctionComponent<SingleValueProps> = (props: any) => {
         return (
             <components.SingleValue {...props}>
-                <span style={{ color: getRankingClassColor(props.data.label) }}>
-                    {props.data.label}
-                </span>
+                <div className="d-flex gap-2">
+                    <RankingIcon rankingClass={props.data.value} />
+                    <span
+                        style={{
+                            color: getRankingClassColor(props.data.value),
+                        }}
+                    >
+                        {props.data.label}
+                    </span>
+                </div>
             </components.SingleValue>
         )
     }
 
     const Option: FunctionComponent<OptionProps> = (props: any) => (
         <components.Option {...props}>
-            <span style={{ color: getRankingClassColor(props.data.label) }}>
-                {props.data.label}
-            </span>
+            <div className="d-flex gap-2">
+                <RankingIcon rankingClass={props.data.value} />
+                <span
+                    style={{
+                        color: getRankingClassColor(props.data.value),
+                    }}
+                >
+                    {props.data.label}
+                </span>
+            </div>
         </components.Option>
     )
 
@@ -44,10 +59,30 @@ const RankingClassPicker: React.FC<RankingClassPickerProps> = ({
         if (newValue?.value !== rankingClass) setRankingClass(newValue?.value)
     }
 
+    const customStyles = {
+        indicatorSeparator: (provided: any) => ({
+            ...provided,
+            backgroundColor: 'var(--lightgrey) !important',
+            marginRight: '0.8rem',
+        }),
+        control: (provided: any, state: any) => ({
+            ...provided,
+            borderColor: state.isFocused
+                ? `${getRankingClassColor(rankingClass)} !important`
+                : provided.borderColor,
+            boxShadow: state.isFocused
+                ? `0 0 0 1px ${getRankingClassColor(rankingClass)} !important`
+                : provided.boxShadow,
+            '&:hover': {
+                borderColor: `${getRankingClassColor(rankingClass)} !important`,
+            },
+        }),
+    }
+
     return (
         <Select
             {...restOfProps}
-            instanceId={'regionPicker'}
+            instanceId={'rankingClassPicker'}
             options={options}
             value={selectedOption}
             onChange={onChange}
@@ -56,6 +91,7 @@ const RankingClassPicker: React.FC<RankingClassPickerProps> = ({
             placeholder="Filter by class..."
             classNamePrefix="react-select"
             components={{ SingleValue, Option }}
+            styles={customStyles}
         />
     )
 }

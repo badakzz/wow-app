@@ -1,9 +1,5 @@
 import { useEffect, useState } from 'react'
-import {
-    ItemLatestPricesGraph,
-    ItemPricingDifferential,
-    ItemSellPrice,
-} from '.'
+import { ItemPricingDifferential, ItemSellPrice } from '.'
 import axios from 'axios'
 import { AuctionItem } from '../utils/types'
 import {
@@ -70,7 +66,7 @@ const AuctionItemDetails: React.FC<AuctionItemDetailsProps> = ({
                             />
                         )}
                     </div>
-                    <div>Number of auctions: {data[0].numAuctions}</div>
+                    <div>Current number of auctions: {data[0].numAuctions}</div>
                     <ItemPricingDifferential
                         itemId={itemId}
                         auctionHouseId={auctionHouseId}
