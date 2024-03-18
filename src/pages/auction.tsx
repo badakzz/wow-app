@@ -9,7 +9,7 @@ import {
     ItemLatestPricesGraph,
     Layout,
 } from '../components'
-import { FaPlusCircle } from 'react-icons/fa'
+import { FaPlusCircle, FaEye } from 'react-icons/fa'
 import { FACTION, REGION } from '../utils/constants'
 
 const Auction = () => {
@@ -17,8 +17,10 @@ const Auction = () => {
     const [faction, setFaction] = useState<string>(FACTION.ALLIANCE)
     const [region, setRegion] = useState<string>(REGION.EUROPE)
     const [auctionHouseId, setAuctionHouseId] = useState<number | null>()
+    const [graphVisibility, setGraphVisibility] = useState<boolean>(false)
     const itemPickerRef = useRef<any>(null)
 
+    console.log(graphVisibility)
     const focusItemPicker = () => {
         if (itemPickerRef.current) {
             itemPickerRef.current.focus()
@@ -63,6 +65,7 @@ const Auction = () => {
                 />
             }
         >
+            {/* {localStorage && <></>} */}
             {!itemId && (
                 <div className="no-items-placeholder" onClick={focusItemPicker}>
                     <div className="d-flex align-items-center gap-3">
@@ -86,6 +89,9 @@ const Auction = () => {
                     </div>
                 </div>
                 {itemId && auctionHouseId && (
+                    <FaEye onClick={() => setGraphVisibility(true)} />
+                )}
+                {graphVisibility && itemId && auctionHouseId && (
                     <ItemLatestPricesGraph
                         className="w-50"
                         itemId={itemId}

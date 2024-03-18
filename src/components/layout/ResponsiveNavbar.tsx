@@ -12,8 +12,8 @@ const ResponsiveNavbar: React.FC = () => {
     return (
         <Navbar
             bg="dark"
-            expand="lg"
-            className="responsive-navbar flex-lg-column"
+            expand="xxl"
+            className="responsive-navbar flex-xxl-column"
         >
             <Container className="navbar-container flex-grow-1 px-0">
                 <div className="navbar-brand-container">

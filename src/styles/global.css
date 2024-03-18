@@ -453,7 +453,7 @@ html {
     scrollbar-color: var(--lightgrey) var(--darkgrey);
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1399px) {
     .auction-core-container {
         display: flex;
         justify-content: space-between;
@@ -464,6 +464,8 @@ html {
         display: grid;
         grid-template-columns: minmax(250px, 250px) auto minmax(250px, 250px);
         height: 100vh;
+        margin-left: var(--top-navbar-spacing);
+        margin-right: var(--top-navbar-spacing);
     }
 
     .main-content-container {
@@ -513,7 +515,7 @@ html {
     }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1399px) {
     .layout-grid {
         display: block;
     }
