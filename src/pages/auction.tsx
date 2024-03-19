@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, CSSProperties } from 'react'
 import {
     // ItemCharacteristics,
     RealmPicker,
@@ -107,6 +107,7 @@ const Auction = () => {
                         <div
                             {...provided.droppableProps}
                             ref={provided.innerRef}
+                            style={styles.draggableWrapper}
                         >
                             {trackedItems.map((item, index) => (
                                 <Draggable
@@ -116,10 +117,14 @@ const Auction = () => {
                                 >
                                     {(provided) => (
                                         <div
-                                            className="d-flex flex-column gap-5"
                                             ref={provided.innerRef}
                                             {...provided.draggableProps}
                                             {...provided.dragHandleProps}
+                                            style={{
+                                                ...styles.draggable,
+                                                ...provided.draggableProps
+                                                    .style,
+                                            }}
                                         >
                                             <ItemCard item={item} />
                                         </div>
@@ -141,6 +146,13 @@ const Auction = () => {
             )}
         </Layout>
     )
+}
+
+const styles: { [key: string]: CSSProperties } = {
+    draggableWrapper: { display: 'flex', flexDirection: 'column', gap: '1rem' },
+    draggable: {
+        width: '100%',
+    },
 }
 
 export default Auction
