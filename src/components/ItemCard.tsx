@@ -8,11 +8,14 @@ import { CSSProperties } from 'react'
 type ItemCardProps = {
     item: Item | null
     deleteItem: (item: Item) => void
+    showItemDetails: (item: Item) => void
 }
 
-const ItemCard: React.FC<ItemCardProps> = ({ item, deleteItem }) => {
-    const showDetails = () => console.log('Showing details for', item?.itemName)
-
+const ItemCard: React.FC<ItemCardProps> = ({
+    item,
+    deleteItem,
+    showItemDetails,
+}) => {
     const nameColor = item ? getItemColorByRarity(item.itemRarity) : 'inherit'
 
     return (
@@ -36,7 +39,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, deleteItem }) => {
                         <FaEllipsisVertical />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                        <Dropdown.Item onClick={showDetails}>
+                        <Dropdown.Item onClick={() => showItemDetails(item)}>
                             <div className="d-flex align-items-center justify-content-start gap-3">
                                 <FaEye />
                                 <span>Show details</span>

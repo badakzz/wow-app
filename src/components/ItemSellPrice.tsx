@@ -1,4 +1,4 @@
-import { GameCurrency } from '@/utils/types'
+import { GameCurrency } from '../utils/types'
 import { Image } from 'react-bootstrap'
 
 type ItemSellPriceProps = GameCurrency & any

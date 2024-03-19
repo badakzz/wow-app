@@ -5,7 +5,7 @@ import axios from 'axios'
 import { Encounter, Ranking } from '../utils/types'
 import { classToSpecMap, getRankingClassColor } from '../utils/helpers'
 import { RankingClassPicker, RankingIcon, RankingSpecPicker } from '.'
-import { RANKING_METRIC, RANKING_CLASS, RANKING_SPEC } from '@/utils/constants'
+import { RANKING_METRIC, RANKING_CLASS, RANKING_SPEC } from '../utils/constants'
 import { Button, Spinner, Form, Modal } from 'react-bootstrap'
 
 type TopRankingPerformersTableProps = {

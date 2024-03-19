@@ -5,8 +5,8 @@ import Select, {
     SingleValueProps,
     components,
 } from 'react-select'
-import { RANKING_CLASS, RANKING_SPEC } from '@/utils/constants'
-import { classToSpecMap, getRankingClassColor } from '@/utils/helpers'
+import { RANKING_CLASS, RANKING_SPEC } from '../utils/constants'
+import { classToSpecMap, getRankingClassColor } from '../utils/helpers'
 import { RankingIcon } from '.'
 
 type RankingSpecProps = {

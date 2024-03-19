@@ -2,7 +2,7 @@ import axios from 'axios'
 import { CSSProperties, useEffect, useState } from 'react'
 import { Image } from 'react-bootstrap'
 import { getItemColorByRarity } from '../utils/helpers'
-import { ITEM_RARITY } from '@/utils/constants'
+import { ITEM_RARITY } from '../utils/constants'
 import { ItemSellPrice } from '.'
 
 type ItemCharacteristicsProps = {

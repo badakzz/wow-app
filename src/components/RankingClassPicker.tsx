@@ -1,7 +1,7 @@
 import Select, { OptionProps, SingleValueProps, components } from 'react-select'
 import { RANKING_CLASS } from '../utils/constants'
 import { FunctionComponent } from 'react'
-import { getRankingClassColor } from '@/utils/helpers'
+import { getRankingClassColor } from '../utils/helpers'
 import { RankingIcon } from '.'
 
 type RankingClassPickerProps = {

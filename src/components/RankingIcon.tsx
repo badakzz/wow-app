@@ -1,5 +1,5 @@
-import { RANKING_CLASS, RANKING_SPEC } from '@/utils/constants'
-import { getClassIconIndex, getSpecIconIndex } from '@/utils/helpers'
+import { RANKING_CLASS, RANKING_SPEC } from '../utils/constants'
+import { getClassIconIndex, getSpecIconIndex } from '../utils/helpers'
 
 type RankingIconProps = {
     rankingClass: RANKING_CLASS
