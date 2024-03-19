@@ -16,6 +16,8 @@ h1 {
     color: var(--lightblue) !important;
 }
 
+/* Home styles */
+
 a.home-links {
     font-size: 1.2rem;
     color: var(--lightblue) !important;

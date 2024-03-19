@@ -3,6 +3,7 @@ import AsyncSelect from 'react-select/async'
 import axios from 'axios'
 import debounce from 'lodash.debounce'
 import { AuctionHouse } from '../utils/types'
+import { useToast } from '../utils/hooks'
 
 type RealmPickerProps = {
     region: string
@@ -21,6 +22,7 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
         label: string
         value: number
     } | null>(null)
+    const { showToast } = useToast()
 
     const debouncedFetchRealms = useCallback(
         debounce(
@@ -45,8 +47,11 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
                             value: 513,
                         })
                     callback(options)
-                } catch (error) {
-                    console.error('Error fetching data:', error)
+                } catch (error: any) {
+                    showToast({
+                        delay: 3000,
+                        message: `Error fetching TSM's API: ${error.message}`,
+                    })
                     callback([])
                 }
             },
@@ -77,21 +82,23 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
     }
 
     return (
-        <AsyncSelect
-            {...restOfProps}
-            instanceId={'realmPicker'}
-            loadOptions={fetchRealmsByName}
-            noOptionsMessage={() => 'No realm matching criteria found'}
-            loadingMessage={() => 'Loading...'}
-            placeholder={'Select a realm...'}
-            cacheOptions
-            defaultOptions
-            value={currentAuctionHouse}
-            onChange={onChange}
-            isSearchable
-            classNamePrefix="react-select"
-            key={`${faction}-${region}`}
-        />
+        <>
+            <AsyncSelect
+                {...restOfProps}
+                instanceId={'realmPicker'}
+                loadOptions={fetchRealmsByName}
+                noOptionsMessage={() => 'No realm matching criteria found'}
+                loadingMessage={() => 'Loading...'}
+                placeholder={'Select a realm...'}
+                cacheOptions
+                defaultOptions
+                value={currentAuctionHouse}
+                onChange={onChange}
+                isSearchable
+                classNamePrefix="react-select"
+                key={`${faction}-${region}`}
+            />
+        </>
     )
 }
 

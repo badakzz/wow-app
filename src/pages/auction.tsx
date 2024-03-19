@@ -6,14 +6,15 @@ import {
     RegionPicker,
     ItemPicker,
     // AuctionItemDetails,
-    // ItemLatestPricesGraph,
+    ItemLatestPricesGraph,
     Layout,
     ItemCard,
 } from '../components'
 import { FaPlusCircle } from 'react-icons/fa'
 import { FACTION, REGION } from '../utils/constants'
-import { Item } from '@/utils/types'
+import { Item } from '../utils/types'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
+import { Modal } from 'react-bootstrap'
 
 const Auction = () => {
     const [item, setItem] = useState<Item | null>(null)
@@ -22,6 +23,10 @@ const Auction = () => {
     const [region, setRegion] = useState<string>(REGION.EUROPE)
     const [auctionHouseId, setAuctionHouseId] = useState<number | null>()
     const [trackedItems, setTrackedItems] = useState<Item[]>([])
+    const [currentDetailItem, setCurrentDetailItem] = useState<Item | null>(
+        null
+    )
+
     const itemPickerRef = useRef<any>(null)
 
     useEffect(() => {
@@ -101,63 +106,89 @@ const Auction = () => {
     )
 
     return (
-        <Layout
-            title="SoD Auction House Tracker"
-            topComponents={topComponents}
-            topComponentsFlexClass="justify-content-between"
-            topPicker={
-                <ItemPicker
-                    item={item}
-                    setItem={setItem}
-                    className="item-picker"
-                />
-            }
-        >
-            <DragDropContext onDragEnd={onDragEnd}>
-                <Droppable droppableId="items">
-                    {(provided) => (
-                        <div
-                            {...provided.droppableProps}
-                            ref={provided.innerRef}
-                            style={styles.draggableWrapper}
-                        >
-                            {trackedItems.map((item, index) => (
-                                <Draggable
-                                    key={item.itemId as number}
-                                    draggableId={String(item.itemId)}
-                                    index={index}
-                                >
-                                    {(provided) => (
-                                        <div
-                                            ref={provided.innerRef}
-                                            {...provided.draggableProps}
-                                            {...provided.dragHandleProps}
-                                            style={{
-                                                ...styles.draggable,
-                                                ...provided.draggableProps
-                                                    .style,
-                                            }}
-                                        >
-                                            <ItemCard
-                                                item={item}
-                                                deleteItem={handleDeleteItem}
-                                            />
-                                        </div>
-                                    )}
-                                </Draggable>
-                            ))}
-                            {provided.placeholder}
-                        </div>
-                    )}
-                </Droppable>
-            </DragDropContext>
-            <div className="no-items-placeholder" onClick={focusItemPicker}>
-                <div className="d-flex align-items-center gap-3">
-                    <FaPlusCircle />
-                    <span>Add an item to track...</span>
+        <>
+            <Layout
+                title="SoD Auction House Tracker"
+                topComponents={topComponents}
+                topComponentsFlexClass="justify-content-between"
+                topPicker={
+                    <ItemPicker
+                        item={item}
+                        setItem={setItem}
+                        className="item-picker"
+                    />
+                }
+            >
+                <DragDropContext onDragEnd={onDragEnd}>
+                    <Droppable droppableId="items">
+                        {(provided) => (
+                            <div
+                                {...provided.droppableProps}
+                                ref={provided.innerRef}
+                                style={styles.draggableWrapper}
+                            >
+                                {trackedItems.map((item, index) => (
+                                    <Draggable
+                                        key={item.itemId as number}
+                                        draggableId={String(item.itemId)}
+                                        index={index}
+                                    >
+                                        {(provided) => (
+                                            <div
+                                                ref={provided.innerRef}
+                                                {...provided.draggableProps}
+                                                {...provided.dragHandleProps}
+                                                style={{
+                                                    ...styles.draggable,
+                                                    ...provided.draggableProps
+                                                        .style,
+                                                }}
+                                            >
+                                                <ItemCard
+                                                    item={item}
+                                                    deleteItem={
+                                                        handleDeleteItem
+                                                    }
+                                                    showItemDetails={
+                                                        setCurrentDetailItem
+                                                    }
+                                                />
+                                            </div>
+                                        )}
+                                    </Draggable>
+                                ))}
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+                </DragDropContext>
+                <div className="no-items-placeholder" onClick={focusItemPicker}>
+                    <div className="d-flex align-items-center gap-3">
+                        <FaPlusCircle />
+                        <span>Add an item to track...</span>
+                    </div>
                 </div>
-            </div>
-        </Layout>
+                {currentDetailItem && auctionHouseId && (
+                    <Modal
+                        // className="ranking-page-loading-modal"
+                        show={!!currentDetailItem}
+                        onHide={() => setCurrentDetailItem(null)}
+                        centered
+                        // size="sm"
+                        // aria-labelledby="contained-modal-title-vcenter"
+                    >
+                        <Modal.Body
+                        //  className="d-flex flex-column align-items-center gap-3 justify-content-center text-align-center"
+                        >
+                            <ItemLatestPricesGraph
+                                itemId={currentDetailItem.itemId}
+                                auctionHouseId={auctionHouseId}
+                            />
+                        </Modal.Body>
+                    </Modal>
+                )}
+            </Layout>
+        </>
     )
 }
 
