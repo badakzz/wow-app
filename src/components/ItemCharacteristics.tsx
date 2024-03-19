@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { CSSProperties, useEffect, useState } from 'react'
 import { Image } from 'react-bootstrap'
 import { getItemColorByRarity } from '../utils/helpers'
 import { ITEM_RARITY } from '@/utils/constants'
@@ -82,6 +82,10 @@ const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
         }
     }, [itemId])
 
+    const nameColor = item
+        ? getItemColorByRarity(item.itemData.quality.type)
+        : 'inherit'
+
     return (
         <>
             {item && (
@@ -109,7 +113,7 @@ const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
                             {item.itemData.preview_item.requirements && (
                                 <div
                                     className="d-flex gap-1"
-                                    style={{ color: 'rgb(255, 216, 44)' }}
+                                    style={styles.itemRequirements}
                                 >
                                     <span>Item level</span>
                                     <span>{item.itemData.level}</span>
@@ -186,6 +190,12 @@ const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
             )}
         </>
     )
+}
+
+const styles: { [key: string]: CSSProperties } = {
+    itemRequirements: {
+        color: 'rgb(255, 216, 44)',
+    },
 }
 
 export default ItemCharacteristics

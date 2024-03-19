@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect } from 'react'
+import { CSSProperties, FunctionComponent, useEffect } from 'react'
 import AsyncSelect from 'react-select/async'
 import axios from 'axios'
 import { Encounter } from '../utils/types'
@@ -75,7 +75,7 @@ const EncounterPicker: React.FC<EncounterPickerProps> = ({
     )
 
     return (
-        <div style={{ width: '17rem' }}>
+        <div style={styles.fixedWidth}>
             <AsyncSelect
                 {...restOfProps}
                 instanceId={'encounterPicker'}
@@ -94,6 +94,12 @@ const EncounterPicker: React.FC<EncounterPickerProps> = ({
             />
         </div>
     )
+}
+
+const styles: { [key: string]: CSSProperties } = {
+    fixedWidth: {
+        width: '15rem',
+    },
 }
 
 export default EncounterPicker

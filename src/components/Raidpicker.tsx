@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react'
+import { CSSProperties, FunctionComponent } from 'react'
 import AsyncSelect from 'react-select/async'
 import axios from 'axios'
 import { Raid } from '../utils/types'
@@ -68,7 +68,7 @@ const RaidPicker: React.FC<RaidPickerProps> = ({
     )
 
     return (
-        <div style={{ width: '15rem' }}>
+        <div style={styles.fixedWidth}>
             <AsyncSelect
                 {...restOfProps}
                 instanceId={'raidPicker'}
@@ -87,6 +87,12 @@ const RaidPicker: React.FC<RaidPickerProps> = ({
             />
         </div>
     )
+}
+
+const styles: { [key: string]: CSSProperties } = {
+    fixedWidth: {
+        width: '15rem',
+    },
 }
 
 export default RaidPicker

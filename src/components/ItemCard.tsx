@@ -2,7 +2,7 @@ import { Item } from '../utils/types'
 import { getItemColorByRarity } from '../utils/helpers'
 import { Image, Dropdown } from 'react-bootstrap'
 import { FaEllipsisVertical } from 'react-icons/fa6'
-import { useState } from 'react'
+import { CSSProperties } from 'react'
 
 type ItemCardProps = {
     item: Item | null
@@ -11,6 +11,8 @@ type ItemCardProps = {
 const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
     const showDetails = () => console.log('Showing details for', item?.itemName)
     const deleteItem = () => console.log('Deleting', item?.itemName)
+
+    const nameColor = item ? getItemColorByRarity(item.itemRarity) : 'inherit'
 
     return (
         item && (
@@ -21,12 +23,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
                         alt="item-icon"
                         className="item-card-icon"
                     />
-                    <span
-                        style={{
-                            color: getItemColorByRarity(item.itemRarity),
-                            padding: '0.6rem',
-                        }}
-                    >
+                    <span style={{ ...styles.itemName, color: nameColor }}>
                         {item.itemName}
                     </span>
                 </div>
@@ -49,6 +46,12 @@ const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
             </div>
         )
     )
+}
+
+const styles: { [key: string]: CSSProperties } = {
+    itemName: {
+        padding: '0.6rem',
+    },
 }
 
 export default ItemCard

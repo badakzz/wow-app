@@ -116,6 +116,7 @@ const Auction = () => {
                                 >
                                     {(provided) => (
                                         <div
+                                            className="d-flex flex-column gap-5"
                                             ref={provided.innerRef}
                                             {...provided.draggableProps}
                                             {...provided.dragHandleProps}
