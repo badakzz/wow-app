@@ -19,7 +19,8 @@ import { Item } from '@/utils/types'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
 
 const Auction = () => {
-    const [itemId, setItemId] = useState<number | null>(null)
+    const [item, setItem] = useState<Item | null>(null)
+
     const [faction, setFaction] = useState<string>(FACTION.ALLIANCE)
     const [region, setRegion] = useState<string>(REGION.EUROPE)
     const [auctionHouseId, setAuctionHouseId] = useState<number | null>()
@@ -27,7 +28,6 @@ const Auction = () => {
     const itemPickerRef = useRef<any>(null)
 
     useEffect(() => {
-        // Load saved items from localStorage
         const itemsFromStorage = JSON.parse(
             localStorage.getItem('trackedItems') || '[]'
         )
@@ -35,22 +35,20 @@ const Auction = () => {
     }, [])
 
     useEffect(() => {
-        // Save tracked items to localStorage whenever they change
         localStorage.setItem('trackedItems', JSON.stringify(trackedItems))
     }, [trackedItems])
 
-    const onDragEnd = (result) => {
+    const onDragEnd = (result: any) => {
         if (!result.destination) return
-        const items = Array.from(trackedItems)
+        const items = [...trackedItems]
         const [reorderedItem] = items.splice(result.source.index, 1)
         items.splice(result.destination.index, 0, reorderedItem)
         setTrackedItems(items)
     }
 
-    // This function could be called when a new item is selected from the ItemPicker
-    const handleNewItem = (newItemId) => {
-        if (!trackedItems.includes(newItemId)) {
-            setTrackedItems([...trackedItems, newItemId])
+    const handleNewItem = (newItem: Item) => {
+        if (!trackedItems.includes(newItem)) {
+            setTrackedItems([...trackedItems, newItem])
         }
     }
 
@@ -61,10 +59,10 @@ const Auction = () => {
     }
 
     useEffect(() => {
-        if (itemId) {
-            handleNewItem(itemId)
+        if (item) {
+            handleNewItem(item)
         }
-    }, [itemId])
+    }, [item])
 
     const topComponents = (
         <div className="d-flex justify-content-between align-items-center w-100">
@@ -97,10 +95,9 @@ const Auction = () => {
             topComponentsFlexClass="justify-content-between"
             topPicker={
                 <ItemPicker
-                    selectRef={itemPickerRef}
+                    item={item}
+                    setItem={setItem}
                     className="item-picker mb-4"
-                    itemId={itemId}
-                    setItemId={setItemId}
                 />
             }
         >
@@ -111,10 +108,10 @@ const Auction = () => {
                             {...provided.droppableProps}
                             ref={provided.innerRef}
                         >
-                            {trackedItems.map((id, index) => (
+                            {trackedItems.map((item, index) => (
                                 <Draggable
-                                    key={id}
-                                    draggableId={String(id)}
+                                    key={item.itemId as number}
+                                    draggableId={String(item.itemId)}
                                     index={index}
                                 >
                                     {(provided) => (
@@ -123,7 +120,7 @@ const Auction = () => {
                                             {...provided.draggableProps}
                                             {...provided.dragHandleProps}
                                         >
-                                            <ItemCard itemId={id} />
+                                            <ItemCard item={item} />
                                         </div>
                                     )}
                                 </Draggable>
@@ -133,7 +130,7 @@ const Auction = () => {
                     )}
                 </Droppable>
             </DragDropContext>
-            {!itemId && (
+            {!item && (
                 <div className="no-items-placeholder" onClick={focusItemPicker}>
                     <div className="d-flex align-items-center gap-3">
                         <FaPlusCircle />

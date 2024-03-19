@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from 'react'
+import { FunctionComponent, useEffect } from 'react'
 import AsyncSelect from 'react-select/async'
 import axios from 'axios'
 import { Encounter } from '../utils/types'

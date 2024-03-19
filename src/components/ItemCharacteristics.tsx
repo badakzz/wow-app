@@ -9,68 +9,78 @@ type ItemCharacteristicsProps = {
     itemId: number | null
 }
 
-const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
-    itemId,
-}) => {
-    const [item, setItem] = useState<{
-        itemMedia: { assets: any[] }
-        itemData: {
-            item_subclass: {
-                name: string
-            }
-            inventory_type: {
-                name: string
-            }
-            level: string
-            quality: {
-                type: ITEM_RARITY
-            }
+interface ApiItemResponse {
+    itemMedia: { assets: any[] }
+    itemData: {
+        item_subclass: {
             name: string
-            preview_item: {
-                binding: {
-                    name: string
+        }
+        inventory_type: {
+            name: string
+        }
+        level: string
+        quality: {
+            type: ITEM_RARITY
+        }
+        name: string
+        preview_item: {
+            binding: {
+                name: string
+            }
+            durability: {
+                display_string: string
+            }
+            sell_price: {
+                display_strings: {
+                    copper: string
+                    silver: string
+                    gold: string
                 }
-                durability: {
-                    display_string: string
-                }
-                sell_price: {
-                    display_strings: {
-                        copper: string
-                        silver: string
-                        gold: string
-                    }
-                }
-                stats: [
-                    {
-                        display: {
-                            display_string: string
-                        }
-                    }
-                ]
-                requirements: {
-                    level: {
+            }
+            stats: [
+                {
+                    display: {
                         display_string: string
                     }
                 }
+            ]
+            requirements: {
+                level: {
+                    display_string: string
+                }
             }
         }
-    } | null>(null)
+    }
+}
+
+const itemCache: { [key: number]: ApiItemResponse } = {}
+
+const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
+    itemId,
+}) => {
+    const [item, setItem] = useState<ApiItemResponse | null>(null)
 
     useEffect(() => {
+        const fetchItem = async (itemId: number) => {
+            if (itemCache[itemId]) {
+                setItem(itemCache[itemId])
+                return
+            }
+
+            try {
+                const response = await axios.get(`/api/v1/wow/items/${itemId}`)
+                const fetchedItem = response.data
+                itemCache[itemId] = fetchedItem
+                setItem(fetchedItem)
+            } catch (error) {
+                console.error('Error fetching item:', error)
+            }
+        }
+
         if (itemId) {
             fetchItem(itemId)
         }
     }, [itemId])
-
-    const fetchItem = async (itemId: number) => {
-        try {
-            const response = await axios.get(`/api/v1/wow/items/${itemId}`)
-            const item = response.data
-            setItem(item)
-        } catch (error) {
-            console.error('Error fetching item:', error)
-        }
-    }
 
     return (
         <>
