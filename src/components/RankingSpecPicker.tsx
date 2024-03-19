@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useState } from 'react'
+import { CSSProperties, FunctionComponent, useEffect, useState } from 'react'
 import Select, {
     OptionProps,
     SingleValue,
@@ -104,7 +104,7 @@ const RankingSpecPicker: React.FC<RankingSpecProps> = ({
     }
 
     return (
-        <div style={{ width: '11rem' }}>
+        <div style={styles.fixedWidthSm}>
             <Select
                 {...restOfProps}
                 instanceId={'rankingSpecPicker'}
@@ -120,6 +120,12 @@ const RankingSpecPicker: React.FC<RankingSpecProps> = ({
             />
         </div>
     )
+}
+
+const styles: { [key: string]: CSSProperties } = {
+    fixedWidthSm: {
+        width: '11rem',
+    },
 }
 
 export default RankingSpecPicker

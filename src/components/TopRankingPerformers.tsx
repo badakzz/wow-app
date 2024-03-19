@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-import { useMemo, useState, useEffect } from 'react'
+import { useMemo, useState, useEffect, CSSProperties } from 'react'
 import { useTable, useFilters, usePagination } from 'react-table'
 import axios from 'axios'
 import { Encounter, Ranking } from '../utils/types'
@@ -59,11 +59,11 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                         rel="noopener noreferrer"
                         className="d-flex gap-3 align-items-start text-align-center"
                         style={{
+                            ...styles.rankingClass,
                             color: getRankingClassColor(row.original.class),
-                            textDecoration: 'none',
                         }}
                     >
-                        <span style={{ color: 'white', width: '1rem' }}>
+                        <span style={styles.rankingId}>
                             {parseInt(row.id) + 1 + '.'}
                         </span>
                         <RankingIcon
@@ -222,6 +222,13 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
             </div>
         </div>
     )
+}
+
+const styles: { [key: string]: CSSProperties } = {
+    rankingClass: {
+        textDecoration: 'none',
+    },
+    rankingId: { color: 'white', width: '1rem' },
 }
 
 export default TopRankingPerformersTable
