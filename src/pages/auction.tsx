@@ -10,10 +10,7 @@ import {
     Layout,
     ItemCard,
 } from '../components'
-import {
-    FaPlusCircle,
-    //  FaEye
-} from 'react-icons/fa'
+import { FaPlusCircle } from 'react-icons/fa'
 import { FACTION, REGION } from '../utils/constants'
 import { Item } from '@/utils/types'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
@@ -28,18 +25,19 @@ const Auction = () => {
     const itemPickerRef = useRef<any>(null)
 
     useEffect(() => {
-        // Attempt to retrieve the stored items
         const storedData = localStorage.getItem('trackedItems')
-        console.log('Retrieved from localStorage:', storedData) // Debug log
 
         if (storedData) {
-            // Parse the stored JSON, or fallback to an empty array if parsing fails
             const parsedData = JSON.parse(storedData) || []
-            console.log('Parsed data:', parsedData) // Debug log
-
             setTrackedItems(parsedData)
         }
     }, [])
+
+    useEffect(() => {
+        if (item) {
+            handleNewItem(item)
+        }
+    }, [item])
 
     const onDragEnd = (result: any) => {
         if (!result.destination) return
@@ -50,13 +48,11 @@ const Auction = () => {
     }
 
     const handleNewItem = (newItem: Item) => {
-        // Check if the new item already exists in the trackedItems array based on itemId
         const itemExists = trackedItems.some(
             (item) => item.itemId === newItem.itemId
         )
 
         if (!itemExists) {
-            // If the item doesn't exist, add it to trackedItems and update localStorage
             const newTrackedItems = [...trackedItems, newItem]
             setTrackedItems(newTrackedItems)
             localStorage.setItem(
@@ -66,17 +62,19 @@ const Auction = () => {
         }
     }
 
+    const handleDeleteItem = (itemToDelete: Item) => {
+        const updatedItems = trackedItems.filter(
+            (item) => item.itemId !== itemToDelete.itemId
+        )
+        setTrackedItems(updatedItems)
+        localStorage.setItem('trackedItems', JSON.stringify(updatedItems))
+    }
+
     const focusItemPicker = () => {
         if (itemPickerRef.current) {
             itemPickerRef.current.focus()
         }
     }
-
-    useEffect(() => {
-        if (item) {
-            handleNewItem(item)
-        }
-    }, [item])
 
     const topComponents = (
         <div className="d-flex justify-content-between align-items-center w-100">
@@ -111,7 +109,7 @@ const Auction = () => {
                 <ItemPicker
                     item={item}
                     setItem={setItem}
-                    className="item-picker mb-4"
+                    className="item-picker"
                 />
             }
         >
@@ -140,7 +138,10 @@ const Auction = () => {
                                                     .style,
                                             }}
                                         >
-                                            <ItemCard item={item} />
+                                            <ItemCard
+                                                item={item}
+                                                deleteItem={handleDeleteItem}
+                                            />
                                         </div>
                                     )}
                                 </Draggable>

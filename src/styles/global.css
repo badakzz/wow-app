@@ -105,7 +105,7 @@ a.home-links {
 .main-container {
     background-color: var(--darkgrey);
     border: 1px solid var(--lightgrey);
-    padding: 5rem;
+    padding: 4rem;
 }
 
 /* Auction page styles */
@@ -145,6 +145,14 @@ a.home-links {
 
 .dropdown-toggle::after {
     display: none;
+}
+
+.dropdown-menu.show {
+    background-color: rgb(232, 232, 232);
+}
+
+.dropdown-item:active {
+    background-color: var(--lightblue);
 }
 
 /* General react select styles */
@@ -262,6 +270,7 @@ a.home-links {
 .item-picker {
     margin-top: 2rem;
     max-width: 40% !important;
+    margin-bottom: 4rem;
 }
 
 .no-items-placeholder {
