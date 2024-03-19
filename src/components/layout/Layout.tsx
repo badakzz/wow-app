@@ -1,4 +1,3 @@
-import React from 'react'
 import { Container } from 'react-bootstrap'
 import Head from 'next/head'
 import { ResponsiveNavbar } from '..'

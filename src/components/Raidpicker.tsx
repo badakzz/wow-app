@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+import { FunctionComponent } from 'react'
 import AsyncSelect from 'react-select/async'
 import axios from 'axios'
 import { Raid } from '../utils/types'

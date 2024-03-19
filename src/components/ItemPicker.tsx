@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import { FunctionComponent, useEffect, useState } from 'react'
 import AsyncSelect from 'react-select/async'
 import {
     DropdownIndicatorProps,
@@ -16,33 +16,37 @@ import { FaSearch } from 'react-icons/fa'
 import { Tooltip } from 'react-tooltip'
 
 type ItemPickerProps = {
-    itemId: number | null
-    setItemId: React.Dispatch<React.SetStateAction<number | null>>
+    item: Item | null
+    setItem: React.Dispatch<React.SetStateAction<Item | null>>
     selectRef?: React.RefObject<any>
 } & any
 
 const ItemPicker: React.FC<ItemPickerProps> = ({
-    itemId,
-    setItemId,
+    item,
+    setItem,
     selectRef,
     ...restOfProps
 }) => {
-    const [currentItem, setCurrentItem] = useState<Item | null>(null)
+    const [currentItem, setCurrentItem] = useState<any>(null)
 
     const debouncedFetchItems = debounce(
         async (inputValue: string, callback: (options: any[]) => void) => {
             try {
-                const response = await axios.get<Item[]>(
+                const response = await axios.get(
                     `/api/v2/items?hint=${encodeURIComponent(
                         inputValue
                     )}&limit=10`
                 )
-                const options = response.data.map((result) => ({
-                    label: result.itemName,
-                    value: result.itemId,
-                    rarity: result.itemRarity,
-                    mediaUrl: result.mediaUrl,
+                const items = response.data
+
+                const options = items.map((item: Item) => ({
+                    label: item.itemName,
+                    value: item.itemId,
+                    rarity: item.itemRarity,
+                    mediaUrl: item.mediaUrl,
+                    item: item,
                 }))
+
                 callback(options)
             } catch (error) {
                 console.error('Error fetching data:', error)
@@ -52,20 +56,24 @@ const ItemPicker: React.FC<ItemPickerProps> = ({
         200
     )
 
-    const fetchItemsByName = (
-        inputValue: string,
-        callback: (options: any[]) => void
-    ) => {
-        debouncedFetchItems(inputValue, callback)
-    }
-
     useEffect(() => {
-        setCurrentItem(null)
-    }, [])
+        if (item) {
+            setCurrentItem({
+                label: item.itemName,
+                value: item.itemId,
+                rarity: item.itemRarity,
+                mediaUrl: item.mediaUrl,
+                item: item,
+            })
+        }
+    }, [item])
 
     const onChange = (selectedOption: any) => {
-        setItemId(selectedOption ? selectedOption.value : null)
-        setCurrentItem(selectedOption)
+        if (selectedOption && selectedOption.item) {
+            setItem(selectedOption.item)
+        } else {
+            setItem(null)
+        }
     }
 
     const Option: FunctionComponent<OptionProps> = (props: any) => {
@@ -132,7 +140,7 @@ const ItemPicker: React.FC<ItemPickerProps> = ({
             {...restOfProps}
             ref={selectRef}
             instanceId="itemPicker"
-            loadOptions={fetchItemsByName}
+            loadOptions={debouncedFetchItems}
             noOptionsMessage={() => 'No item matching criteria found'}
             loadingMessage={() => 'Loading...'}
             placeholder="Search an item..."

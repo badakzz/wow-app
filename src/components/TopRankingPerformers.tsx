@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-import React, { useMemo, useState, useEffect } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { useTable, useFilters, usePagination } from 'react-table'
 import axios from 'axios'
 import { Encounter, Ranking } from '../utils/types'
