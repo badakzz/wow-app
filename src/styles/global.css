@@ -131,6 +131,22 @@ a.home-links {
     width: 30%;
 }
 
+.item-card {
+    border: solid 1px var(--lightgrey);
+    border-radius: 5px;
+    background-color: rgb(41, 40, 40);
+    cursor: grab;
+}
+
+.dropdown-toggle {
+    color: white;
+    margin-right: 1rem;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
 /* General react select styles */
 
 .react-select__picker-indicator {
