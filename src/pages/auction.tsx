@@ -28,15 +28,18 @@ const Auction = () => {
     const itemPickerRef = useRef<any>(null)
 
     useEffect(() => {
-        const itemsFromStorage = JSON.parse(
-            localStorage.getItem('trackedItems') || '[]'
-        )
-        setTrackedItems(itemsFromStorage)
-    }, [])
+        // Attempt to retrieve the stored items
+        const storedData = localStorage.getItem('trackedItems')
+        console.log('Retrieved from localStorage:', storedData) // Debug log
 
-    useEffect(() => {
-        localStorage.setItem('trackedItems', JSON.stringify(trackedItems))
-    }, [trackedItems])
+        if (storedData) {
+            // Parse the stored JSON, or fallback to an empty array if parsing fails
+            const parsedData = JSON.parse(storedData) || []
+            console.log('Parsed data:', parsedData) // Debug log
+
+            setTrackedItems(parsedData)
+        }
+    }, [])
 
     const onDragEnd = (result: any) => {
         if (!result.destination) return
@@ -47,8 +50,19 @@ const Auction = () => {
     }
 
     const handleNewItem = (newItem: Item) => {
-        if (!trackedItems.includes(newItem)) {
-            setTrackedItems([...trackedItems, newItem])
+        // Check if the new item already exists in the trackedItems array based on itemId
+        const itemExists = trackedItems.some(
+            (item) => item.itemId === newItem.itemId
+        )
+
+        if (!itemExists) {
+            // If the item doesn't exist, add it to trackedItems and update localStorage
+            const newTrackedItems = [...trackedItems, newItem]
+            setTrackedItems(newTrackedItems)
+            localStorage.setItem(
+                'trackedItems',
+                JSON.stringify(newTrackedItems)
+            )
         }
     }
 
@@ -136,14 +150,12 @@ const Auction = () => {
                     )}
                 </Droppable>
             </DragDropContext>
-            {!item && (
-                <div className="no-items-placeholder" onClick={focusItemPicker}>
-                    <div className="d-flex align-items-center gap-3">
-                        <FaPlusCircle />
-                        <span>Add an item to track...</span>
-                    </div>
+            <div className="no-items-placeholder" onClick={focusItemPicker}>
+                <div className="d-flex align-items-center gap-3">
+                    <FaPlusCircle />
+                    <span>Add an item to track...</span>
                 </div>
-            )}
+            </div>
         </Layout>
     )
 }
