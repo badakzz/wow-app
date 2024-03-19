@@ -44,7 +44,7 @@ const Layout: React.FC<Props> = ({
                                 topComponents
                                     ? 'container-top-margin'
                                     : 'home-container-top-margin'
-                            } container-top-margin main-container p-5`}
+                            } main-container`}
                         >
                             {children}
                         </Container>

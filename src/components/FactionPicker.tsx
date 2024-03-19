@@ -1,6 +1,6 @@
 import Select, { OptionProps, SingleValueProps, components } from 'react-select'
 import { FACTION, FACTION_LOGO } from '../utils/constants'
-import { FunctionComponent } from 'react'
+import { CSSProperties, FunctionComponent } from 'react'
 import { Image } from 'react-bootstrap'
 
 type FactionPickerProps = {
@@ -56,17 +56,25 @@ const FactionPicker: React.FC<FactionPickerProps> = ({
     )
 
     return (
-        <Select
-            {...restOfProps}
-            isSearchable={false}
-            instanceId={'factionPicker'}
-            options={options}
-            value={selectedOption}
-            onChange={onChange}
-            classNamePrefix="react-select"
-            components={{ SingleValue, Option }}
-        />
+        <div style={styles.fixedWidthSm}>
+            <Select
+                {...restOfProps}
+                isSearchable={false}
+                instanceId={'factionPicker'}
+                options={options}
+                value={selectedOption}
+                onChange={onChange}
+                classNamePrefix="react-select"
+                components={{ SingleValue, Option }}
+            />
+        </div>
     )
+}
+
+const styles: { [key: string]: CSSProperties } = {
+    fixedWidthSm: {
+        width: '11rem',
+    },
 }
 
 export default FactionPicker
