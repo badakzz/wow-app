@@ -66,7 +66,7 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                             color: getRankingClassColor(row.original.class),
                         }}
                     >
-                        <span style={styles.rankingId}>
+                        <span className="ranking-id" style={styles.rankingId}>
                             {parseInt(row.id) + 1 + '.'}
                         </span>
                         <RankingIcon
@@ -231,7 +231,7 @@ const styles: { [key: string]: CSSProperties } = {
     rankingClass: {
         textDecoration: 'none',
     },
-    rankingId: { color: 'white', width: '1rem' },
+    rankingId: { color: 'white' },
 }
 
 export default TopRankingPerformersTable

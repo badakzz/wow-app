@@ -552,6 +552,9 @@ html {
         justify-content: center;
         margin: 0;
     }
+    .ranking-id {
+        width: 1rem;
+    }
 }
 
 @media (max-width: 1399px) {
@@ -601,5 +604,67 @@ html {
         flex-direction: column;
         gap: 3rem;
         align-items: center;
+    }
+
+    .ranking-id {
+        width: 0.1rem;
+    }
+
+    .table-spec-icon {
+        margin-left: 0.5rem;
+    }
+}
+
+@media (min-width: 812px) {
+    .auction-top-components {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+    .raid-picker {
+        width: 15rem;
+    }
+    .encounter-picker {
+        width: 15rem;
+    }
+    .ranking-id {
+        width: 0.01rem;
+    }
+}
+
+@media (max-width: 812px) {
+    .auction-top-components {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        width: 100%;
+    }
+    .auction-pickers-wrapper {
+        justify-content: space-between;
+    }
+    .rankings-pickers-wrapper {
+        flex-direction: column;
+        width: 100%;
+    }
+    .item-picker {
+        min-width: 100%;
+    }
+    .rankings-main-container {
+        min-width: 100%;
+    }
+    .main-container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .rankings-table-container {
+        width: 90%;
+    }
+    .rankings-picker-table-container {
+        width: 90%;
+    }
+    .rankings-table th,
+    .rankings-table td {
+        padding: 0;
     }
 }
