@@ -168,11 +168,11 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
 
     return (
         <>
-            {data && accumulatedQuantity !== 0 && (
+            {data && accumulatedQuantity !== 0 ? (
                 <ResponsiveContainer width="100%" height={400} {...restOfProps}>
                     <ComposedChart
                         data={data}
-                        margin={{ top: 5, right: 0, left: 50, bottom: 5 }}
+                        margin={{ top: 50, right: 50, left: 50, bottom: 50 }}
                     >
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis
@@ -206,6 +206,10 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
                         <Legend />
                     </ComposedChart>
                 </ResponsiveContainer>
+            ) : (
+                <div className="d-flex p-3 justify-content-center text-align-center">
+                    No recent sale for this item
+                </div>
             )}
         </>
     )
