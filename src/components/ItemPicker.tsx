@@ -59,6 +59,17 @@ const ItemPicker: React.FC<ItemPickerProps> = ({
         200
     )
 
+    const fetchItemsByName = (
+        inputValue: string,
+        callback: (options: any[]) => void
+    ) => {
+        debouncedFetchItems(inputValue, callback)
+    }
+
+    useEffect(() => {
+        setCurrentItem(null)
+    }, [])
+
     useEffect(() => {
         if (item) {
             setCurrentItem({
@@ -143,7 +154,7 @@ const ItemPicker: React.FC<ItemPickerProps> = ({
             {...restOfProps}
             ref={selectRef}
             instanceId="itemPicker"
-            loadOptions={debouncedFetchItems}
+            loadOptions={fetchItemsByName}
             noOptionsMessage={() => 'No item matching criteria found'}
             loadingMessage={() => 'Loading...'}
             placeholder="Search an item..."
