@@ -106,9 +106,7 @@ const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
                         <div>
                             <div
                                 style={{
-                                    color: getItemColorByRarity(
-                                        item.itemData.quality.type
-                                    ),
+                                    color: nameColor,
                                 }}
                             >
                                 {item.itemData.name}

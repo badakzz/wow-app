@@ -15,6 +15,7 @@ import { ItemCharacteristics } from '.'
 import { FaSearch } from 'react-icons/fa'
 import { Tooltip } from 'react-tooltip'
 import { useToast } from '../utils/hooks'
+import { ClientPortal } from '.'
 
 type ItemPickerProps = {
     item: Item | null
@@ -111,9 +112,11 @@ const ItemPicker: React.FC<ItemPickerProps> = ({
                         {props.data.label}
                     </span>
                 </div>
-                <Tooltip id={tooltipId} className="tooltip-inner">
-                    <ItemCharacteristics itemId={props.data.value} />
-                </Tooltip>
+                <ClientPortal selector="tooltip-root">
+                    <Tooltip id={tooltipId} className="tooltip-inner">
+                        <ItemCharacteristics itemId={props.data.value} />
+                    </Tooltip>
+                </ClientPortal>
             </components.Option>
         )
     }
