@@ -1,9 +1,10 @@
-import React, { FunctionComponent, useEffect } from 'react'
+import { CSSProperties, FunctionComponent, useEffect } from 'react'
 import AsyncSelect from 'react-select/async'
 import axios from 'axios'
 import { Encounter } from '../utils/types'
 import { OptionProps, SingleValueProps, components } from 'react-select'
 import { Image } from 'react-bootstrap'
+import { useToast } from '../utils/hooks'
 
 type EncounterPickerProps = {
     encounter: Encounter | null
@@ -16,6 +17,8 @@ const EncounterPicker: React.FC<EncounterPickerProps> = ({
     setEncounter,
     ...restOfProps
 }) => {
+    const { showToast } = useToast()
+
     const fetchRaids = async (inputValue: string) => {
         try {
             const response = await axios.post(`/api/v1/warcraftlogs/raids`, {
@@ -30,8 +33,8 @@ const EncounterPicker: React.FC<EncounterPickerProps> = ({
             )
             if (options.length > 0 && !encounter) setEncounter(options[0])
             return options
-        } catch (error) {
-            console.error('Error fetching raids:', error)
+        } catch (error: any) {
+            showToast({ message: `Error fetching raids: ${error.message}` })
             return []
         }
     }
@@ -75,24 +78,22 @@ const EncounterPicker: React.FC<EncounterPickerProps> = ({
     )
 
     return (
-        <div style={{ width: '17rem' }}>
-            <AsyncSelect
-                {...restOfProps}
-                instanceId={'encounterPicker'}
-                loadOptions={fetchRaids}
-                noOptionsMessage={() => 'No encounter found'}
-                loadingMessage={() => 'Loading...'}
-                placeholder={'Select a encounter...'}
-                cacheOptions
-                defaultOptions
-                value={encounter}
-                onChange={onChange}
-                isSearchable={false}
-                classNamePrefix="react-select"
-                key={`encounter-picker-${raidId}`}
-                components={{ SingleValue, Option }}
-            />
-        </div>
+        <AsyncSelect
+            {...restOfProps}
+            instanceId={'encounterPicker'}
+            loadOptions={fetchRaids}
+            noOptionsMessage={() => 'No encounter found'}
+            loadingMessage={() => 'Loading...'}
+            placeholder={'Select a encounter...'}
+            cacheOptions
+            defaultOptions
+            value={encounter}
+            onChange={onChange}
+            isSearchable={false}
+            classNamePrefix="react-select"
+            key={`encounter-picker-${raidId}`}
+            components={{ SingleValue, Option }}
+        />
     )
 }
 

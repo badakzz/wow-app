@@ -1,3 +1,4 @@
+import { useToast } from '../utils/hooks'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 
@@ -12,6 +13,8 @@ const ItemPricingDifferential: React.FC<ItemPricingDifferentialProps> = ({
 }) => {
     const [data, setData] = useState<{ difference: number } | null>(null)
 
+    const { showToast } = useToast()
+
     const fetchPriceDifferential = () => {
         axios
             .get(
@@ -20,6 +23,11 @@ const ItemPricingDifferential: React.FC<ItemPricingDifferentialProps> = ({
             .then((response) => {
                 setData(response.data)
             })
+            .catch((error: any) =>
+                showToast({
+                    message: `Error fetching market value: ${error.message}`,
+                })
+            )
     }
 
     useEffect(() => {

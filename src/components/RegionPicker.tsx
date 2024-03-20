@@ -1,6 +1,6 @@
 import Select, { OptionProps, SingleValueProps, components } from 'react-select'
 import { REGION, FLAG } from '../utils/constants'
-import { FunctionComponent } from 'react'
+import { CSSProperties, FunctionComponent } from 'react'
 import { Image } from 'react-bootstrap'
 
 type RegionPickerProps = {
@@ -56,7 +56,7 @@ const RegionPicker: React.FC<RegionPickerProps> = ({
     }
 
     return (
-        <div style={{ width: '11rem' }}>
+        <div style={styles.fixedWidthSm}>
             <Select
                 {...restOfProps}
                 instanceId={'regionPicker'}
@@ -69,6 +69,12 @@ const RegionPicker: React.FC<RegionPickerProps> = ({
             />
         </div>
     )
+}
+
+const styles: { [key: string]: CSSProperties } = {
+    fixedWidthSm: {
+        width: '11rem',
+    },
 }
 
 export default RegionPicker

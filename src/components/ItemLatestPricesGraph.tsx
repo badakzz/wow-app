@@ -13,6 +13,8 @@ import {
     Legend,
 } from 'recharts'
 import { ItemSellPrice } from '.'
+import { useToast } from '../utils/hooks'
+import { Spinner } from 'react-bootstrap'
 
 type ItemLatestPricesGraphProps = {
     itemId: number
@@ -36,7 +38,10 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
     auctionHouseId,
     ...restOfProps
 }) => {
-    const [data, setData] = useState([])
+    const [data, setData] = useState<any[]>([])
+    const [isLoading, setIsLoading] = useState<boolean>(true)
+
+    const { showToast } = useToast()
 
     const fetchLatestPrices = async () => {
         try {
@@ -56,8 +61,9 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
                     }))
                     .reverse()
             )
-        } catch (error) {
-            console.error('Failed to fetch data:', error)
+            setIsLoading(false)
+        } catch (error: any) {
+            showToast({ message: `Failed to fetch data: ${error.message}` })
         }
     }
 
@@ -154,6 +160,7 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
 
     useEffect(() => {
         if (itemId && auctionHouseId) {
+            setIsLoading(true)
             fetchLatestPrices()
         }
     }, [itemId, auctionHouseId])
@@ -163,13 +170,25 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
         0
     )
 
+    const NoDataToDisplay: React.FC = () =>
+        isLoading ? (
+            <div className="d-flex flex-column align-items-center gap-3 justify-content-center text-align-center">
+                <Spinner animation="border" role="status"></Spinner>
+                <span>Loading...</span>
+            </div>
+        ) : (
+            <div className="d-flex p-3 justify-content-center text-align-center">
+                No recent sale for this item
+            </div>
+        )
+
     return (
         <>
-            {data && accumulatedQuantity !== 0 && (
+            {data && accumulatedQuantity !== 0 ? (
                 <ResponsiveContainer width="100%" height={400} {...restOfProps}>
                     <ComposedChart
                         data={data}
-                        margin={{ top: 5, right: 0, left: 50, bottom: 5 }}
+                        margin={{ top: 50, right: 50, left: 50, bottom: 50 }}
                     >
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis
@@ -203,6 +222,8 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
                         <Legend />
                     </ComposedChart>
                 </ResponsiveContainer>
+            ) : (
+                <NoDataToDisplay />
             )}
         </>
     )

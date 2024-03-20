@@ -1,4 +1,3 @@
-import React from 'react'
 import { Navbar, Nav, Container, Image } from 'react-bootstrap'
 import { useRouter } from 'next/router'
 import { RiLineChartLine } from 'react-icons/ri'

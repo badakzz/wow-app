@@ -1,76 +1,93 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { CSSProperties, useEffect, useState } from 'react'
 import { Image } from 'react-bootstrap'
 import { getItemColorByRarity } from '../utils/helpers'
-import { ITEM_RARITY } from '@/utils/constants'
+import { ITEM_RARITY } from '../utils/constants'
 import { ItemSellPrice } from '.'
+import { useToast } from '../utils/hooks'
 
 type ItemCharacteristicsProps = {
     itemId: number | null
 }
 
-const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
-    itemId,
-}) => {
-    const [item, setItem] = useState<{
-        itemMedia: { assets: any[] }
-        itemData: {
-            item_subclass: {
-                name: string
-            }
-            inventory_type: {
-                name: string
-            }
-            level: string
-            quality: {
-                type: ITEM_RARITY
-            }
+interface ApiItemResponse {
+    itemMedia: { assets: any[] }
+    itemData: {
+        item_subclass: {
             name: string
-            preview_item: {
-                binding: {
-                    name: string
+        }
+        inventory_type: {
+            name: string
+        }
+        level: string
+        quality: {
+            type: ITEM_RARITY
+        }
+        name: string
+        preview_item: {
+            binding: {
+                name: string
+            }
+            durability: {
+                display_string: string
+            }
+            sell_price: {
+                display_strings: {
+                    copper: string
+                    silver: string
+                    gold: string
                 }
-                durability: {
-                    display_string: string
-                }
-                sell_price: {
-                    display_strings: {
-                        copper: string
-                        silver: string
-                        gold: string
-                    }
-                }
-                stats: [
-                    {
-                        display: {
-                            display_string: string
-                        }
-                    }
-                ]
-                requirements: {
-                    level: {
+            }
+            stats: [
+                {
+                    display: {
                         display_string: string
                     }
                 }
+            ]
+            requirements: {
+                level: {
+                    display_string: string
+                }
             }
         }
-    } | null>(null)
+    }
+}
+
+const itemCache: { [key: number]: ApiItemResponse } = {}
+
+const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
+    itemId,
+}) => {
+    const [item, setItem] = useState<ApiItemResponse | null>(null)
+
+    const { showToast } = useToast()
 
     useEffect(() => {
+        const fetchItem = async (itemId: number) => {
+            if (itemCache[itemId]) {
+                setItem(itemCache[itemId])
+                return
+            }
+
+            try {
+                const response = await axios.get(`/api/v1/wow/items/${itemId}`)
+                const fetchedItem = response.data
+                itemCache[itemId] = fetchedItem
+                setItem(fetchedItem)
+            } catch (error: any) {
+                showToast({ message: `Error fetching item: ${error.message}` })
+            }
+        }
+
         if (itemId) {
             fetchItem(itemId)
         }
     }, [itemId])
 
-    const fetchItem = async (itemId: number) => {
-        try {
-            const response = await axios.get(`/api/v1/wow/items/${itemId}`)
-            const item = response.data
-            setItem(item)
-        } catch (error) {
-            console.error('Error fetching item:', error)
-        }
-    }
+    const nameColor = item
+        ? getItemColorByRarity(item.itemData.quality.type)
+        : 'inherit'
 
     return (
         <>
@@ -89,9 +106,7 @@ const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
                         <div>
                             <div
                                 style={{
-                                    color: getItemColorByRarity(
-                                        item.itemData.quality.type
-                                    ),
+                                    color: nameColor,
                                 }}
                             >
                                 {item.itemData.name}
@@ -99,7 +114,7 @@ const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
                             {item.itemData.preview_item.requirements && (
                                 <div
                                     className="d-flex gap-1"
-                                    style={{ color: 'rgb(255, 216, 44)' }}
+                                    style={styles.itemRequirements}
                                 >
                                     <span>Item level</span>
                                     <span>{item.itemData.level}</span>
@@ -176,6 +191,12 @@ const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
             )}
         </>
     )
+}
+
+const styles: { [key: string]: CSSProperties } = {
+    itemRequirements: {
+        color: 'rgb(255, 216, 44)',
+    },
 }
 
 export default ItemCharacteristics

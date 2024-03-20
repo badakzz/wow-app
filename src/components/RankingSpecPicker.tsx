@@ -1,12 +1,12 @@
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import { CSSProperties, FunctionComponent, useEffect, useState } from 'react'
 import Select, {
     OptionProps,
     SingleValue,
     SingleValueProps,
     components,
 } from 'react-select'
-import { RANKING_CLASS, RANKING_SPEC } from '@/utils/constants'
-import { classToSpecMap, getRankingClassColor } from '@/utils/helpers'
+import { RANKING_CLASS, RANKING_SPEC } from '../utils/constants'
+import { classToSpecMap, getRankingClassColor } from '../utils/helpers'
 import { RankingIcon } from '.'
 
 type RankingSpecProps = {
@@ -104,7 +104,7 @@ const RankingSpecPicker: React.FC<RankingSpecProps> = ({
     }
 
     return (
-        <div style={{ width: '11rem' }}>
+        <div style={styles.fixedWidthSm}>
             <Select
                 {...restOfProps}
                 instanceId={'rankingSpecPicker'}
@@ -120,6 +120,12 @@ const RankingSpecPicker: React.FC<RankingSpecProps> = ({
             />
         </div>
     )
+}
+
+const styles: { [key: string]: CSSProperties } = {
+    fixedWidthSm: {
+        width: '11rem',
+    },
 }
 
 export default RankingSpecPicker
