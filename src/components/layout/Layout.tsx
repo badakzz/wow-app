@@ -1,4 +1,3 @@
-import React from 'react'
 import { Container } from 'react-bootstrap'
 import Head from 'next/head'
 import { ResponsiveNavbar } from '..'
@@ -45,7 +44,7 @@ const Layout: React.FC<Props> = ({
                                 topComponents
                                     ? 'container-top-margin'
                                     : 'home-container-top-margin'
-                            } container-top-margin main-container p-5`}
+                            } main-container`}
                         >
                             {children}
                         </Container>

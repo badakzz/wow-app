@@ -1,12 +1,13 @@
 /* eslint-disable react/jsx-key */
-import React, { useMemo, useState, useEffect } from 'react'
+import { useMemo, useState, useEffect, CSSProperties } from 'react'
 import { useTable, useFilters, usePagination } from 'react-table'
 import axios from 'axios'
 import { Encounter, Ranking } from '../utils/types'
 import { classToSpecMap, getRankingClassColor } from '../utils/helpers'
 import { RankingClassPicker, RankingIcon, RankingSpecPicker } from '.'
-import { RANKING_METRIC, RANKING_CLASS, RANKING_SPEC } from '@/utils/constants'
+import { RANKING_METRIC, RANKING_CLASS, RANKING_SPEC } from '../utils/constants'
 import { Button, Spinner, Form, Modal } from 'react-bootstrap'
+import { useToast } from '../utils/hooks'
 
 type TopRankingPerformersTableProps = {
     encounter: Encounter
@@ -23,6 +24,8 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [metric, setMetric] = useState<RANKING_METRIC>(RANKING_METRIC.DPS)
 
+    const { showToast } = useToast()
+
     const fetchData = async (encounterId: number, page: number) => {
         setIsLoading(true)
         try {
@@ -38,8 +41,8 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
             })
             setData(response.data.rankings)
             setHasMorePages(response.data.hasMorePages)
-        } catch (error) {
-            console.error('Error fetching data:', error)
+        } catch (error: any) {
+            showToast({ message: `Error fetching data: ${error.message}` })
         } finally {
             setIsLoading(false)
         }
@@ -59,11 +62,11 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
                         rel="noopener noreferrer"
                         className="d-flex gap-3 align-items-start text-align-center"
                         style={{
+                            ...styles.rankingClass,
                             color: getRankingClassColor(row.original.class),
-                            textDecoration: 'none',
                         }}
                     >
-                        <span style={{ color: 'white', width: '1rem' }}>
+                        <span className="ranking-id" style={styles.rankingId}>
                             {parseInt(row.id) + 1 + '.'}
                         </span>
                         <RankingIcon
@@ -222,6 +225,13 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
             </div>
         </div>
     )
+}
+
+const styles: { [key: string]: CSSProperties } = {
+    rankingClass: {
+        textDecoration: 'none',
+    },
+    rankingId: { color: 'white' },
 }
 
 export default TopRankingPerformersTable

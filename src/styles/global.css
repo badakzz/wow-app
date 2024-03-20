@@ -16,6 +16,8 @@ h1 {
     color: var(--lightblue) !important;
 }
 
+/* Home styles */
+
 a.home-links {
     font-size: 1.2rem;
     color: var(--lightblue) !important;
@@ -105,7 +107,7 @@ a.home-links {
 .main-container {
     background-color: var(--darkgrey);
     border: 1px solid var(--lightgrey);
-    padding: 5rem;
+    padding: 4rem;
 }
 
 /* Auction page styles */
@@ -129,6 +131,88 @@ a.home-links {
 
 .faction-picker {
     width: 30%;
+}
+
+.item-card {
+    border: solid 1px var(--lightgrey);
+    border-radius: 5px;
+    background-color: rgb(41, 40, 40);
+    cursor: grab;
+}
+
+.dropdown-toggle {
+    color: white;
+    margin-right: 1rem;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+.dropdown-menu.show {
+    background-color: rgb(232, 232, 232);
+}
+
+.dropdown-item:active {
+    background-color: var(--lightblue);
+}
+
+.tooltip-inner {
+    background-color: transparent !important;
+    z-index: 3;
+}
+
+.realm-picker {
+    min-width: 40% !important;
+}
+
+.item-picker {
+    margin-top: 2rem;
+    max-width: 40% !important;
+    margin-bottom: 4rem;
+}
+
+.no-items-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+    border: dashed 2px var(--lightgrey);
+    background-color: var(--bluegrey);
+    color: white;
+    max-width: 50%;
+    border-radius: 5px;
+    margin-top: 3rem;
+}
+
+.no-items-placeholder:hover {
+    border: dashed 2px rgb(155, 155, 155);
+}
+
+.no-items-placeholder:active {
+    border: dashed 2px var(--lightblue);
+}
+
+.graph-modal .modal-content {
+    background-color: var(--bluegrey);
+    color: white;
+}
+
+.auction-item-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: flex-start;
+    max-width: 40% !important;
+}
+
+.auction-item-details-margin {
+    margin-left: 3.55rem;
+}
+
+.card-tooltip {
+    margin-right: 2rem;
+    z-index: 3;
 }
 
 /* General react select styles */
@@ -233,51 +317,6 @@ a.home-links {
 
 .react-select__indicator {
     padding-left: 0 !important;
-}
-
-.tooltip-inner {
-    background-color: transparent !important;
-}
-
-.realm-picker {
-    min-width: 40% !important;
-}
-
-.item-picker {
-    margin-top: 2rem;
-    max-width: 40% !important;
-}
-
-.no-items-placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4rem;
-    border: dashed 2px var(--lightgrey);
-    background-color: var(--bluegrey);
-    color: white;
-    max-width: 50%;
-    border-radius: 5px;
-}
-
-.no-items-placeholder:hover {
-    border: dashed 2px var(--lightblue);
-}
-
-.auction-item-container {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    justify-content: flex-start;
-    max-width: 40% !important;
-}
-
-.auction-item-details-margin {
-    margin-left: 3.55rem;
-}
-.auction-item-details-fixed-width {
-    width: 11rem;
-    margin-top: 1rem;
 }
 
 /* Ranking styles */
@@ -513,6 +552,9 @@ html {
         justify-content: center;
         margin: 0;
     }
+    .ranking-id {
+        width: 1rem;
+    }
 }
 
 @media (max-width: 1399px) {
@@ -562,5 +604,67 @@ html {
         flex-direction: column;
         gap: 3rem;
         align-items: center;
+    }
+
+    .ranking-id {
+        width: 0.1rem;
+    }
+
+    .table-spec-icon {
+        margin-left: 0.5rem;
+    }
+}
+
+@media (min-width: 812px) {
+    .auction-top-components {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+    .raid-picker {
+        width: 15rem;
+    }
+    .encounter-picker {
+        width: 15rem;
+    }
+    .ranking-id {
+        width: 0.01rem;
+    }
+}
+
+@media (max-width: 812px) {
+    .auction-top-components {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        width: 100%;
+    }
+    .auction-pickers-wrapper {
+        justify-content: space-between;
+    }
+    .rankings-pickers-wrapper {
+        flex-direction: column;
+        width: 100%;
+    }
+    .item-picker {
+        min-width: 100%;
+    }
+    .rankings-main-container {
+        min-width: 100%;
+    }
+    .main-container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .rankings-table-container {
+        width: 90%;
+    }
+    .rankings-picker-table-container {
+        width: 90%;
+    }
+    .rankings-table th,
+    .rankings-table td {
+        padding: 0;
     }
 }
