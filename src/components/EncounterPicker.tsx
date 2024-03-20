@@ -78,31 +78,23 @@ const EncounterPicker: React.FC<EncounterPickerProps> = ({
     )
 
     return (
-        <div style={styles.fixedWidth}>
-            <AsyncSelect
-                {...restOfProps}
-                instanceId={'encounterPicker'}
-                loadOptions={fetchRaids}
-                noOptionsMessage={() => 'No encounter found'}
-                loadingMessage={() => 'Loading...'}
-                placeholder={'Select a encounter...'}
-                cacheOptions
-                defaultOptions
-                value={encounter}
-                onChange={onChange}
-                isSearchable={false}
-                classNamePrefix="react-select"
-                key={`encounter-picker-${raidId}`}
-                components={{ SingleValue, Option }}
-            />
-        </div>
+        <AsyncSelect
+            {...restOfProps}
+            instanceId={'encounterPicker'}
+            loadOptions={fetchRaids}
+            noOptionsMessage={() => 'No encounter found'}
+            loadingMessage={() => 'Loading...'}
+            placeholder={'Select a encounter...'}
+            cacheOptions
+            defaultOptions
+            value={encounter}
+            onChange={onChange}
+            isSearchable={false}
+            classNamePrefix="react-select"
+            key={`encounter-picker-${raidId}`}
+            components={{ SingleValue, Option }}
+        />
     )
-}
-
-const styles: { [key: string]: CSSProperties } = {
-    fixedWidth: {
-        width: '15rem',
-    },
 }
 
 export default EncounterPicker

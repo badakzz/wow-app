@@ -71,31 +71,23 @@ const RaidPicker: React.FC<RaidPickerProps> = ({
     )
 
     return (
-        <div style={styles.fixedWidth}>
-            <AsyncSelect
-                {...restOfProps}
-                instanceId={'raidPicker'}
-                loadOptions={fetchRaids}
-                noOptionsMessage={() => 'No raid found'}
-                loadingMessage={() => 'Loading...'}
-                placeholder={'Select a raid...'}
-                cacheOptions
-                defaultOptions
-                value={raid}
-                onChange={onChange}
-                isSearchable={false}
-                classNamePrefix="react-select"
-                key={`${raid?.id}`}
-                components={{ SingleValue, Option }}
-            />
-        </div>
+        <AsyncSelect
+            {...restOfProps}
+            instanceId={'raidPicker'}
+            loadOptions={fetchRaids}
+            noOptionsMessage={() => 'No raid found'}
+            loadingMessage={() => 'Loading...'}
+            placeholder={'Select a raid...'}
+            cacheOptions
+            defaultOptions
+            value={raid}
+            onChange={onChange}
+            isSearchable={false}
+            classNamePrefix="react-select"
+            key={`${raid?.id}`}
+            components={{ SingleValue, Option }}
+        />
     )
-}
-
-const styles: { [key: string]: CSSProperties } = {
-    fixedWidth: {
-        width: '15rem',
-    },
 }
 
 export default RaidPicker

@@ -80,7 +80,7 @@ const Auction = () => {
     }
 
     const topComponents = (
-        <div className="d-flex justify-content-between align-items-center w-100">
+        <div className="auction-top-components">
             <RealmPicker
                 className="realm-picker"
                 region={region}
@@ -88,7 +88,7 @@ const Auction = () => {
                 auctionHouseId={auctionHouseId}
                 setAuctionHouseId={setAuctionHouseId}
             />
-            <div className="d-flex gap-3">
+            <div className="auction-pickers-wrapper d-flex gap-3">
                 <RegionPicker
                     className="align-items-center text-align-center"
                     region={region}
