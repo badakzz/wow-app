@@ -208,9 +208,9 @@ a.home-links {
 .auction-item-details-margin {
     margin-left: 3.55rem;
 }
-.auction-item-details-fixed-width {
-    width: 11rem;
-    margin-top: 1rem;
+
+.card-tooltip {
+    margin-right: 2rem;
 }
 
 /* General react select styles */
