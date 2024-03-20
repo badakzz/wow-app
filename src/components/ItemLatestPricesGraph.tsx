@@ -13,6 +13,7 @@ import {
     Legend,
 } from 'recharts'
 import { ItemSellPrice } from '.'
+import { useToast } from '../utils/hooks'
 
 type ItemLatestPricesGraphProps = {
     itemId: number
@@ -38,6 +39,8 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
 }) => {
     const [data, setData] = useState([])
 
+    const { showToast } = useToast()
+
     const fetchLatestPrices = async () => {
         try {
             const response = await axios.get(
@@ -56,8 +59,8 @@ const ItemLatestPricesGraph: React.FC<ItemLatestPricesGraphProps> = ({
                     }))
                     .reverse()
             )
-        } catch (error) {
-            console.error('Failed to fetch data:', error)
+        } catch (error: any) {
+            showToast({ message: `Failed to fetch data: ${error.message}` })
         }
     }
 

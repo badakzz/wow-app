@@ -14,6 +14,7 @@ import { Image } from 'react-bootstrap'
 import { ItemCharacteristics } from '.'
 import { FaSearch } from 'react-icons/fa'
 import { Tooltip } from 'react-tooltip'
+import { useToast } from '../utils/hooks'
 
 type ItemPickerProps = {
     item: Item | null
@@ -28,6 +29,8 @@ const ItemPicker: React.FC<ItemPickerProps> = ({
     ...restOfProps
 }) => {
     const [currentItem, setCurrentItem] = useState<any>(null)
+
+    const { showToast } = useToast()
 
     const debouncedFetchItems = debounce(
         async (inputValue: string, callback: (options: any[]) => void) => {
@@ -48,8 +51,8 @@ const ItemPicker: React.FC<ItemPickerProps> = ({
                 }))
 
                 callback(options)
-            } catch (error) {
-                console.error('Error fetching data:', error)
+            } catch (error: any) {
+                showToast({ message: `Error fetching data: ${error.message}` })
                 callback([])
             }
         },

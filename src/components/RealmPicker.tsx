@@ -49,7 +49,6 @@ const RealmPicker: React.FC<RealmPickerProps> = ({
                     callback(options)
                 } catch (error: any) {
                     showToast({
-                        delay: 3000,
                         message: `Error fetching TSM's API: ${error.message}`,
                     })
                     callback([])

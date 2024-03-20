@@ -4,6 +4,7 @@ import { Image } from 'react-bootstrap'
 import { getItemColorByRarity } from '../utils/helpers'
 import { ITEM_RARITY } from '../utils/constants'
 import { ItemSellPrice } from '.'
+import { useToast } from '../utils/hooks'
 
 type ItemCharacteristicsProps = {
     itemId: number | null
@@ -60,6 +61,8 @@ const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
 }) => {
     const [item, setItem] = useState<ApiItemResponse | null>(null)
 
+    const { showToast } = useToast()
+
     useEffect(() => {
         const fetchItem = async (itemId: number) => {
             if (itemCache[itemId]) {
@@ -72,8 +75,8 @@ const ItemCharacteristics: React.FC<ItemCharacteristicsProps> = ({
                 const fetchedItem = response.data
                 itemCache[itemId] = fetchedItem
                 setItem(fetchedItem)
-            } catch (error) {
-                console.error('Error fetching item:', error)
+            } catch (error: any) {
+                showToast({ message: `Error fetching item: ${error.message}` })
             }
         }
 

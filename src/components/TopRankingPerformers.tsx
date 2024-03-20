@@ -7,6 +7,7 @@ import { classToSpecMap, getRankingClassColor } from '../utils/helpers'
 import { RankingClassPicker, RankingIcon, RankingSpecPicker } from '.'
 import { RANKING_METRIC, RANKING_CLASS, RANKING_SPEC } from '../utils/constants'
 import { Button, Spinner, Form, Modal } from 'react-bootstrap'
+import { useToast } from '../utils/hooks'
 
 type TopRankingPerformersTableProps = {
     encounter: Encounter
@@ -23,6 +24,8 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [metric, setMetric] = useState<RANKING_METRIC>(RANKING_METRIC.DPS)
 
+    const { showToast } = useToast()
+
     const fetchData = async (encounterId: number, page: number) => {
         setIsLoading(true)
         try {
@@ -38,8 +41,8 @@ const TopRankingPerformersTable: React.FC<TopRankingPerformersTableProps> = ({
             })
             setData(response.data.rankings)
             setHasMorePages(response.data.hasMorePages)
-        } catch (error) {
-            console.error('Error fetching data:', error)
+        } catch (error: any) {
+            showToast({ message: `Error fetching data: ${error.message}` })
         } finally {
             setIsLoading(false)
         }

@@ -6,6 +6,7 @@ import {
     formatRawPriceToCopperSilverGold,
     minutesSinceTimestamp,
 } from '../utils/helpers'
+import { useToast } from '../utils/hooks'
 
 type AuctionItemDetailsProps = {
     itemId: number
@@ -24,6 +25,8 @@ const AuctionItemDetails: React.FC<AuctionItemDetailsProps> = ({
             ? formatRawPriceToCopperSilverGold(data[0].minBuyout)
             : null
 
+    const { showToast } = useToast()
+
     const fetchAuctionItemDetails = () => {
         setIsLoading(true)
         axios
@@ -32,12 +35,18 @@ const AuctionItemDetails: React.FC<AuctionItemDetailsProps> = ({
                 setData(response.data as AuctionItem[])
                 setError('')
             })
-            .catch((err) => {
+            .catch((error: any) => {
                 setIsLoading(false)
-                if (err.response && err.response.status === 404) {
+                if (error.response && error.response.status === 404) {
                     setError('No data available for this item.')
+                    showToast({
+                        message: `No data available for this item: ${error.message}`,
+                    })
                 } else {
                     setError('An error occurred while fetching data.')
+                    showToast({
+                        message: `An error occurred while fetching data: ${error.message}`,
+                    })
                 }
             })
             .finally(() => setIsLoading(false))
@@ -52,7 +61,6 @@ const AuctionItemDetails: React.FC<AuctionItemDetailsProps> = ({
     return (
         <div className="d-flex flex-column justify-content-start auction-item-details-container auction-item-details-fixed-width">
             {isLoading && <div>Loading...</div>}
-            {!isLoading && error && <div>{error}</div>}
             {!isLoading && !error && data && data[0].quantity > 0 ? (
                 <>
                     <div>{minutesSinceTimestamp(data[0].snapshotDate)}</div>
