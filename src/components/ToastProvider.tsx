@@ -27,7 +27,7 @@ const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
                     bg="danger"
                     onClose={() => setShow(false)}
                     show={show}
-                    delay={toastProps.delay || 5000}
+                    delay={toastProps.delay || 3000}
                     autohide
                 >
                     {toastProps.header && (

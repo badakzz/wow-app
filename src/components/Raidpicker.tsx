@@ -4,6 +4,7 @@ import axios from 'axios'
 import { Raid } from '../utils/types'
 import { OptionProps, SingleValueProps, components } from 'react-select'
 import { Image } from 'react-bootstrap'
+import { useToast } from '../utils/hooks'
 
 type RaidPickerProps = {
     raid: Raid | null
@@ -15,6 +16,8 @@ const RaidPicker: React.FC<RaidPickerProps> = ({
     setRaid,
     ...restOfProps
 }) => {
+    const { showToast } = useToast()
+
     const fetchRaids = async () =>
         axios
             .post(`/api/v1/warcraftlogs/raids`, {
@@ -30,8 +33,8 @@ const RaidPicker: React.FC<RaidPickerProps> = ({
                 if (options.length > 0 && !raid) setRaid(options[0])
                 return options
             })
-            .catch((error) => {
-                console.error('Error fetching raids:', error)
+            .catch((error: any) => {
+                showToast({ message: `Error fetching raids: ${error.message}` })
                 return []
             })
 

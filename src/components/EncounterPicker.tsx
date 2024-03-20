@@ -4,6 +4,7 @@ import axios from 'axios'
 import { Encounter } from '../utils/types'
 import { OptionProps, SingleValueProps, components } from 'react-select'
 import { Image } from 'react-bootstrap'
+import { useToast } from '../utils/hooks'
 
 type EncounterPickerProps = {
     encounter: Encounter | null
@@ -16,6 +17,8 @@ const EncounterPicker: React.FC<EncounterPickerProps> = ({
     setEncounter,
     ...restOfProps
 }) => {
+    const { showToast } = useToast()
+
     const fetchRaids = async (inputValue: string) => {
         try {
             const response = await axios.post(`/api/v1/warcraftlogs/raids`, {
@@ -30,8 +33,8 @@ const EncounterPicker: React.FC<EncounterPickerProps> = ({
             )
             if (options.length > 0 && !encounter) setEncounter(options[0])
             return options
-        } catch (error) {
-            console.error('Error fetching raids:', error)
+        } catch (error: any) {
+            showToast({ message: `Error fetching raids: ${error.message}` })
             return []
         }
     }
