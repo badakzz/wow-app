@@ -39,8 +39,10 @@ const ResponsiveNavbar: React.FC = () => {
                                     : 'responsive-navbar-inactive'
                             }`}
                         >
-                            <RiLineChartLine className="mr-2" /> Auction House
-                            Tracker
+                            <div className="d-flex align-items-center gap-1">
+                                <RiLineChartLine />
+                                <span>Auction House Tracker</span>
+                            </div>
                         </Nav.Link>
                         <Nav.Link
                             href="/rankings"
@@ -50,7 +52,10 @@ const ResponsiveNavbar: React.FC = () => {
                                     : 'responsive-navbar-inactive'
                             }`}
                         >
-                            <FaRegChartBar className="mr-2" /> Rankings
+                            <div className="d-flex flex-row align-items-center gap-1">
+                                <FaRegChartBar />
+                                <span>Rankings</span>
+                            </div>
                         </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
