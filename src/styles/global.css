@@ -159,6 +159,7 @@ a.home-links {
 
 .tooltip-inner {
     background-color: transparent !important;
+    z-index: 3;
 }
 
 .realm-picker {
@@ -211,6 +212,7 @@ a.home-links {
 
 .card-tooltip {
     margin-right: 2rem;
+    z-index: 3;
 }
 
 /* General react select styles */

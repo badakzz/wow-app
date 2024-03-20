@@ -4,7 +4,8 @@ import { Image, Dropdown } from 'react-bootstrap'
 import { FaEllipsisVertical } from 'react-icons/fa6'
 import { FaEye, FaTrash } from 'react-icons/fa'
 import { CSSProperties } from 'react'
-import { AuctionItemDetails } from '.'
+import { AuctionItemDetails, ItemCharacteristics } from '.'
+import { Tooltip } from 'react-tooltip'
 
 type ItemCardProps = {
     item: Item | null
@@ -20,11 +21,16 @@ const ItemCard: React.FC<ItemCardProps> = ({
     auctionHouseId,
 }) => {
     const nameColor = item ? getItemColorByRarity(item.itemRarity) : 'inherit'
+    const tooltipId = `tooltip-card-${item?.itemId}`
 
     return (
         item && (
             <div className="d-flex align-items-center item-card justify-content-between">
-                <div className="d-flex align-items-center gap-3">
+                <div
+                    data-tooltip-id={tooltipId}
+                    data-tooltip-float
+                    className="d-flex align-items-center gap-3"
+                >
                     <Image
                         src={item.mediaUrl}
                         alt="item-icon"
@@ -33,6 +39,9 @@ const ItemCard: React.FC<ItemCardProps> = ({
                     <span style={{ ...styles.itemName, color: nameColor }}>
                         {item.itemName}
                     </span>
+                    <Tooltip id={tooltipId} className="tooltip-inner">
+                        <ItemCharacteristics itemId={item.itemId as number} />
+                    </Tooltip>
                 </div>
                 <div className="d-flex align-items-center gap-3">
                     <AuctionItemDetails
