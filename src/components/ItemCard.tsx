@@ -4,17 +4,20 @@ import { Image, Dropdown } from 'react-bootstrap'
 import { FaEllipsisVertical } from 'react-icons/fa6'
 import { FaEye, FaTrash } from 'react-icons/fa'
 import { CSSProperties } from 'react'
+import { AuctionItemDetails } from '.'
 
 type ItemCardProps = {
     item: Item | null
     deleteItem: (item: Item) => void
     showItemDetails: (item: Item) => void
+    auctionHouseId: number
 }
 
 const ItemCard: React.FC<ItemCardProps> = ({
     item,
     deleteItem,
     showItemDetails,
+    auctionHouseId,
 }) => {
     const nameColor = item ? getItemColorByRarity(item.itemRarity) : 'inherit'
 
@@ -31,31 +34,40 @@ const ItemCard: React.FC<ItemCardProps> = ({
                         {item.itemName}
                     </span>
                 </div>
-                <Dropdown>
-                    <Dropdown.Toggle
-                        variant="transparent"
-                        className="border-0 bg-transparent p-0"
-                    >
-                        <FaEllipsisVertical />
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                        <Dropdown.Item onClick={() => showItemDetails(item)}>
-                            <div className="d-flex align-items-center justify-content-start gap-3">
-                                <FaEye />
-                                <span>Show details</span>
-                            </div>
-                        </Dropdown.Item>
-                        <Dropdown.Item onClick={() => deleteItem(item)}>
-                            <div
-                                style={styles.deleteAction}
-                                className="d-flex align-items-center justify-content-start gap-3"
+                <div className="d-flex align-items-center gap-3">
+                    <AuctionItemDetails
+                        className="card-tooltip"
+                        itemId={item?.itemId as number}
+                        auctionHouseId={auctionHouseId}
+                    />
+                    <Dropdown>
+                        <Dropdown.Toggle
+                            variant="transparent"
+                            className="border-0 bg-transparent p-0"
+                        >
+                            <FaEllipsisVertical />
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Item
+                                onClick={() => showItemDetails(item)}
                             >
-                                <FaTrash />
-                                <span>Delete</span>
-                            </div>
-                        </Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
+                                <div className="d-flex align-items-center justify-content-start gap-3">
+                                    <FaEye />
+                                    <span>Show details</span>
+                                </div>
+                            </Dropdown.Item>
+                            <Dropdown.Item onClick={() => deleteItem(item)}>
+                                <div
+                                    style={styles.deleteAction}
+                                    className="d-flex align-items-center justify-content-start gap-3"
+                                >
+                                    <FaTrash />
+                                    <span>Delete</span>
+                                </div>
+                            </Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </div>
             </div>
         )
     )
