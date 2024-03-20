@@ -157,6 +157,62 @@ a.home-links {
     background-color: var(--lightblue);
 }
 
+.tooltip-inner {
+    background-color: transparent !important;
+}
+
+.realm-picker {
+    min-width: 40% !important;
+}
+
+.item-picker {
+    margin-top: 2rem;
+    max-width: 40% !important;
+    margin-bottom: 4rem;
+}
+
+.no-items-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+    border: dashed 2px var(--lightgrey);
+    background-color: var(--bluegrey);
+    color: white;
+    max-width: 50%;
+    border-radius: 5px;
+    margin-top: 3rem;
+}
+
+.no-items-placeholder:hover {
+    border: dashed 2px rgb(155, 155, 155);
+}
+
+.no-items-placeholder:active {
+    border: dashed 2px var(--lightblue);
+}
+
+.graph-modal .modal-content {
+    background-color: var(--bluegrey);
+    color: white;
+}
+
+.auction-item-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: flex-start;
+    max-width: 40% !important;
+}
+
+.auction-item-details-margin {
+    margin-left: 3.55rem;
+}
+.auction-item-details-fixed-width {
+    width: 11rem;
+    margin-top: 1rem;
+}
+
 /* General react select styles */
 
 .react-select__picker-indicator {
@@ -259,53 +315,6 @@ a.home-links {
 
 .react-select__indicator {
     padding-left: 0 !important;
-}
-
-.tooltip-inner {
-    background-color: transparent !important;
-}
-
-.realm-picker {
-    min-width: 40% !important;
-}
-
-.item-picker {
-    margin-top: 2rem;
-    max-width: 40% !important;
-    margin-bottom: 4rem;
-}
-
-.no-items-placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4rem;
-    border: dashed 2px var(--lightgrey);
-    background-color: var(--bluegrey);
-    color: white;
-    max-width: 50%;
-    border-radius: 5px;
-    margin-top: 3rem;
-}
-
-.no-items-placeholder:hover {
-    border: dashed 2px var(--lightblue);
-}
-
-.auction-item-container {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    justify-content: flex-start;
-    max-width: 40% !important;
-}
-
-.auction-item-details-margin {
-    margin-left: 3.55rem;
-}
-.auction-item-details-fixed-width {
-    width: 11rem;
-    margin-top: 1rem;
 }
 
 /* Ranking styles */

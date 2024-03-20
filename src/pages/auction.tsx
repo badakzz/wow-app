@@ -115,6 +115,7 @@ const Auction = () => {
                     <ItemPicker
                         item={item}
                         setItem={setItem}
+                        selectRef={itemPickerRef}
                         className="item-picker"
                     />
                 }
@@ -170,11 +171,11 @@ const Auction = () => {
                 </div>
                 {currentDetailItem && auctionHouseId && (
                     <Modal
-                        // className="ranking-page-loading-modal"
+                        className="graph-modal"
                         show={!!currentDetailItem}
                         onHide={() => setCurrentDetailItem(null)}
                         centered
-                        // size="sm"
+                        size="lg"
                         // aria-labelledby="contained-modal-title-vcenter"
                     >
                         <Modal.Body
