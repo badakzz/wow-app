@@ -1,9 +1,9 @@
 generator client {
-  provider = "prisma-client-js"
+   provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "sqlite"
+    provider = "mysql"
     url      = env("DATABASE_URL")
 }
 
@@ -16,17 +16,17 @@ model prices_history {
     marketValue    Int?
     historical     Int?
     numAuctions    Int?
-    snapshotDate   String
+    snapshotDate   DateTime @db.DateTime
 
     @@map("prices_history")
     @@id([itemId, snapshotDate])
 }
 
 model items {
-  itemId   Int    @id
-  itemName String?
-  itemRarity String?
-  mediaUrl String?
-  
-  @@map("items")
+    itemId     Int    @id
+    itemName   String?
+    itemRarity String?
+    mediaUrl   String?
+    
+    @@map("items")
 }

@@ -11,6 +11,7 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
+    console.log('test')
     try {
         const { auctionHouseId, itemId } = sanitizeInput(req.query)
 
