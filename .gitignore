@@ -41,3 +41,7 @@ database/prices.db
 database/res.json
 database/logs
 database/prices.db-journal
+database/database_dump.sql
+
+# aws
+aws/
