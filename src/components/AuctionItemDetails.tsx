@@ -37,7 +37,6 @@ const AuctionItemDetails: React.FC<AuctionItemDetailsProps> = ({
             .get(`/api/v2/${itemId}/${auctionHouseId}`)
             .then((response) => {
                 setData(response.data as AuctionItem[])
-                console.log({ data })
                 setTooltipId(response.data[0]?.itemId as number)
                 setError('')
             })
