@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaClient } from '@prisma/client'
 import { sanitizeInput } from '../../../../../utils/helpers'
-import { format, parseISO } from 'date-fns'
 
 const prisma = new PrismaClient({
     log: ['query'],
@@ -11,7 +10,6 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    console.log('test')
     try {
         const { auctionHouseId, itemId } = sanitizeInput(req.query)
 
