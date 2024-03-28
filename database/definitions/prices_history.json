@@ -1,0 +1,14 @@
+{
+    "TableColumns": [
+        { "Name": "auctionHouseId", "Type": "INT4" },
+        { "Name": "itemId", "Type": "INT4" },
+        { "Name": "petSpeciesId", "Type": "INT4" },
+        { "Name": "minBuyout", "Type": "INT4" },
+        { "Name": "quantity", "Type": "INT4" },
+        { "Name": "marketValue", "Type": "INT4" },
+        { "Name": "historical", "Type": "INT4" },
+        { "Name": "numAuctions", "Type": "INT4" },
+        { "Name": "snapshotDate", "Type": "DATETIME" }
+    ],
+    "TableName": "prices_history"
+}
