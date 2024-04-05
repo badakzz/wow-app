@@ -10,16 +10,15 @@ services:
       - db
 
   db:
-    image: mysql:8.0
+    image: postgresql:14.0
     environment:
-      REMOVED
-      REMOVED
-      REMOVED
-      REMOVED
+      POSTGRESQL_DATABASE: 'wow-app-db'
+      POSTGRES_USER: 'WowAppAdm'
+      POSTGRES_PASSWORD: 'WowAppDB123'
     ports:
-      - "3307:3306"
+      - "5432:5432"
     volumes:
-      - mysql-data:/var/lib/mysql
+      - postgres_data:/var/lib/postgresql/data/
 
 volumes:
-  mysql-data:
+  postgres_data:
