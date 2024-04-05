@@ -1,0 +1,99 @@
+{
+    "TableCount": "2",
+    "Tables": [
+        {
+            "TableName": "items",
+            "TablePath": "hr/items",
+            "TableOwner": "hr",
+            "TableColumns": [
+                {
+                    "ColumnName": "itemId",
+                    "ColumnType": "INT4",
+                    "ColumnNullable": "false",
+                    "ColumnIsPk": "true"
+                },
+                {
+                    "ColumnName": "itemName",
+                    "ColumnType": "STRING",
+                    "ColumnNullable": "true",
+                    "ColumnIsPk": "false"
+                },
+                {
+                    "ColumnName": "itemRarity",
+                    "ColumnType": "STRING",
+                    "ColumnNullable": "true",
+                    "ColumnIsPk": "false"
+                },
+                {
+                    "ColumnName": "mediaUrl",
+                    "ColumnType": "STRING",
+                    "ColumnNullable": "true",
+                    "ColumnIsPk": "false"
+                }
+            ],
+            "TableColumnsTotal": "4"
+        },
+        {
+            "TableName": "prices_history",
+            "TablePath": "hr/prices_history",
+            "TableOwner": "hr",
+            "TableColumns": [
+                {
+                    "ColumnName": "auctionHouseId",
+                    "ColumnType": "INT4",
+                    "ColumnNullable": "true",
+                    "ColumnIsPk": "false"
+                },
+                {
+                    "ColumnName": "itemId",
+                    "ColumnType": "INT4",
+                    "ColumnNullable": "false",
+                    "ColumnIsPk": "true"
+                },
+                {
+                    "ColumnName": "petSpeciesId",
+                    "ColumnType": "INT4",
+                    "ColumnNullable": "true",
+                    "ColumnIsPk": "false"
+                },
+                {
+                    "ColumnName": "minBuyout",
+                    "ColumnType": "INT4",
+                    "ColumnNullable": "true",
+                    "ColumnIsPk": "false"
+                },
+                {
+                    "ColumnName": "quantity",
+                    "ColumnType": "INT4",
+                    "ColumnNullable": "true",
+                    "ColumnIsPk": "false"
+                },
+                {
+                    "ColumnName": "marketValue",
+                    "ColumnType": "INT4",
+                    "ColumnNullable": "true",
+                    "ColumnIsPk": "false"
+                },
+                {
+                    "ColumnName": "historical",
+                    "ColumnType": "INT4",
+                    "ColumnNullable": "true",
+                    "ColumnIsPk": "false"
+                },
+                {
+                    "ColumnName": "numAuctions",
+                    "ColumnType": "INT4",
+                    "ColumnNullable": "true",
+                    "ColumnIsPk": "false"
+                },
+                {
+                    "ColumnName": "snapshotDate",
+                    "ColumnType": "DATETIME",
+                    "ColumnNullable": "false",
+                    "ColumnIsPk": "true"
+                }
+            ],
+            "TableColumnsTotal": "9"
+        }
+    ]
+}

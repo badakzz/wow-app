@@ -28,6 +28,8 @@ yarn-error.log*
 # local env files
 .env*.local
 .env
+.env.prod
+.env.docker
 
 # vercel
 .vercel
@@ -41,3 +43,8 @@ database/prices.db
 database/res.json
 database/logs
 database/prices.db-journal
+database/database_dump.sql
+database/modified_database_dump.sql
+
+# aws
+aws/

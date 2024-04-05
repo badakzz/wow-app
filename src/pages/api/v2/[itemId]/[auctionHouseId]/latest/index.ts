@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaClient } from '@prisma/client'
 import { sanitizeInput } from '../../../../../../utils/helpers'
-import { format, parseISO } from 'date-fns'
 
 const prisma = new PrismaClient()
 
@@ -23,14 +22,7 @@ export default async function handler(
             take: 20,
         })
 
-        const formattedData = data.map((entry: any) => ({
-            ...entry,
-            snapshotDate: format(
-                parseISO(entry.snapshotDate),
-                "yyyy-MM-dd'T'HH:mm"
-            ),
-        }))
-        res.status(200).json(formattedData)
+        res.status(200).json(data)
     } catch (error) {
         console.error('Request error', error)
         res.status(500).json({ error: 'Error fetching data' })

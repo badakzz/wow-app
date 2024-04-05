@@ -1,0 +1,9 @@
+{
+    "TableColumns": [
+        { "Name": "itemId", "Type": "INT4" },
+        { "Name": "itemName", "Type": "STRING" },
+        { "Name": "itemRarity", "Type": "STRING" },
+        { "Name": "mediaUrl", "Type": "STRING" }
+    ],
+    "TableName": "items"
+}
