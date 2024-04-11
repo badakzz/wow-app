@@ -11,10 +11,8 @@ services:
 
   db:
     image: postgres
-    environment:
-      - REMOVED
-      - REMOVED
-      - REMOVED
+    env_file:
+      - ../.env.docker
     volumes:
       - ../database:/init_db.d
 
