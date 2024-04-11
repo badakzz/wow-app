@@ -6,8 +6,6 @@ services:
       dockerfile: docker/Dockerfile.dev
     ports:
       - "3000:3000"
-    environment:
-      - DATABASE_URL=postgresql://WowAppAdm:WowAppDB123!@db:5432/WowAppDb
     depends_on:
       - db
 
