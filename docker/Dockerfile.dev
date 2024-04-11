@@ -26,7 +26,4 @@ COPY --from=builder /app/clearDB.sh ./clearDB.sh
 
 RUN chmod +x /app/start.sh
 
-RUN export $(cat ./.env.local | xargs)
-
 ENTRYPOINT ["/app/start.sh"]
-# CMD ["yarn", "start"]
