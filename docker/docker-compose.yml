@@ -6,19 +6,19 @@ services:
       dockerfile: docker/Dockerfile.dev
     ports:
       - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://WowAppAdm:WowAppDB123!@db:5432/WowAppDb
     depends_on:
       - db
 
   db:
-    image: postgresql:14.0
+    image: postgres
     environment:
-      POSTGRESQL_DATABASE: 'wow-app-db'
-      POSTGRES_USER: 'WowAppAdm'
-      POSTGRES_PASSWORD: 'WowAppDB123'
-    ports:
-      - "5432:5432"
+      - REMOVED
+      - REMOVED
+      - REMOVED
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - ../database:/init_db.d
 
 volumes:
   postgres_data:

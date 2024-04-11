@@ -20,5 +20,13 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.env.docker ./.env.local
+COPY --from=builder /app/docker/docker_scripts/start.sh ./start.sh
+COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/clearDB.sh ./clearDB.sh
 
-CMD ["yarn", "start"]
+RUN chmod +x /app/start.sh
+
+RUN export $(cat ./.env.local | xargs)
+
+ENTRYPOINT ["/app/start.sh"]
+# CMD ["yarn", "start"]
