@@ -19,9 +19,6 @@ resource "aws_s3_object" "db-items-csv-dump" {
   key    = "items.csv"
   source = "../../../database/dumps/items.csv"
 
-  # The filemd5() function is available in Terraform 0.11.12 and later
-  # For Terraform 0.11.11 and earlier, use the md5() function and the file() function:
-  # etag = "${md5(file("path/to/file"))}"
   etag = filemd5("../../../database/dumps/items.csv")
 }
 
@@ -31,8 +28,59 @@ resource "aws_s3_object" "db-prices_history-csv-dump" {
   key    = "prices_history.csv"
   source = "../../../database/dumps/prices_history.csv"
 
-  # The filemd5() function is available in Terraform 0.11.12 and later
-  # For Terraform 0.11.11 and earlier, use the md5() function and the file() function:
-  # etag = "${md5(file("path/to/file"))}"
   etag = filemd5("../../../database/dumps/prices_history.csv")
+}
+
+resource "aws_s3_bucket" "lb_logs" {
+  bucket = "${local.name}-loadbalancer-logs"
+}
+
+resource "aws_s3_bucket_policy" "lb_logs" {
+  bucket = aws_s3_bucket.lb_logs.id
+  policy = data.aws_iam_policy_document.allow_lb.json
+}
+
+data "aws_elb_service_account" "elb_account_id" {}
+
+data "aws_iam_policy_document" "allow_lb" {
+  statement {
+    effect = "Allow"
+    resources = [
+      "arn:aws:s3:::${aws_s3_bucket.lb_logs.bucket}/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+    ]
+    actions = ["s3:PutObject"]
+    principals {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::${data.aws_elb_service_account.elb_account_id.id}:root"]
+    }
+  }
+
+  statement {
+    effect = "Allow"
+    resources = [
+      "arn:aws:s3:::${aws_s3_bucket.lb_logs.bucket}/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+    ]
+    actions = ["s3:PutObject"]
+    principals {
+      type        = "Service"
+      identifiers = ["delivery.logs.amazonaws.com"]
+    }
+    condition {
+      test     = "StringEquals"
+      variable = "s3:x-amz-acl"
+      values   = ["bucket-owner-full-control"]
+    }
+  }
+
+  statement {
+    effect = "Allow"
+    resources = [
+      "arn:aws:s3:::${aws_s3_bucket.lb_logs.bucket}",
+    ]
+    actions = ["s3:GetBucketAcl"]
+    principals {
+      type        = "Service"
+      identifiers = ["delivery.logs.amazonaws.com"]
+    }
+  }
 }

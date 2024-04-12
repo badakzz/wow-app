@@ -65,3 +65,9 @@ aws/
 # terragrunt
 .terragrunt-cache/
 *_generated.tf
+
+# secrets
+**/secrets.dec.yaml
+
+# lambda functions
+lambda_functions/node_modules

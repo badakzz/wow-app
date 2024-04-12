@@ -46,29 +46,3 @@ resource "aws_db_instance_role_association" "rds_s3import_role" {
   feature_name           = "s3Import"
   role_arn               = aws_iam_role.rds-assume-role.arn
 }
-
-resource "aws_security_group" "rds_sg" {
-  name        = "my-rds-sg"
-  description = "Security group for RDS instance to allow HTTP/HTTPS access to S3"
-  vpc_id      = "vpc-0757e7ef0d8656902"
-
-  egress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "Allow HTTP access to S3"
-  }
-
-  egress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "Allow HTTPS access to S3"
-  }
-
-  tags = {
-    Name = "RDS Security Group"
-  }
-}

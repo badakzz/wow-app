@@ -26,14 +26,14 @@ module "db" {
 
   password = data.sops_file.secrets.data["masterUserDb"]
 
-  vpc_security_group_ids = ["sg-05f2c05cb6f4328d3"]
+  vpc_security_group_ids = local.account.security_groups_ids
 
   maintenance_window = "Mon:00:00-Mon:03:00"
   backup_window      = "03:00-06:00"
 
   # DB subnet group
   create_db_subnet_group = true
-  subnet_ids             = ["subnet-0a7119e705829ac3e", "subnet-0679e88f9278e618d"]
+  subnet_ids             = local.account.subnets
 
   # DB parameter group
   family = "postgres14"
@@ -48,3 +48,6 @@ module "db" {
 
   publicly_accessible = true
 }
+
+
+#TODO: add logs
