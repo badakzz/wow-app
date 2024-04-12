@@ -26,7 +26,7 @@ module "db" {
 
   password = data.sops_file.secrets.data["masterUserDb"]
 
-  vpc_security_group_ids = local.account.security_groups_ids
+  vpc_security_group_ids = [local.org.accounts.main.security_groups.default]
 
   maintenance_window = "Mon:00:00-Mon:03:00"
   backup_window      = "03:00-06:00"

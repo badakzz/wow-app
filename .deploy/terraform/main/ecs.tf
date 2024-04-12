@@ -12,8 +12,8 @@ resource "aws_ecs_task_definition" "app_task" {
 
   container_definitions = jsonencode([
     {
-      name      = "wow-app-client"
-      image     = "${local.account.id}.dkr.ecr.${local.account.region}.amazonaws.com/wow-app-client:latest"
+      name      = "wow-app"
+      image     = "${local.account.id}.dkr.ecr.${local.account.region}.amazonaws.com/wow-app:latest"
       cpu       = 256
       memory    = 512
       essential = true
@@ -57,16 +57,16 @@ resource "aws_ecs_service" "app_service" {
 
   network_configuration {
     subnets          = local.account.subnets
-    security_groups  = local.account.security_groups_ids
+    security_groups  = [local.org.accounts.main.security_groups.ecs]
     assign_public_ip = true
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.app_tg.arn
-    container_name   = "wow-app-client"
+    container_name   = "wow-app"
     container_port   = 3000
   }
 
-  # depends_on = [aws_lb_listener.app_listener]
+  depends_on = [aws_lb_listener.app_listener]
 }
 
 resource "aws_appautoscaling_target" "ecs_target" {

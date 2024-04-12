@@ -3,7 +3,7 @@ resource "aws_lb" "app_lb" {
   internal           = false
   load_balancer_type = "application"
   subnets            = local.account.subnets
-  security_groups    = local.account.security_groups_ids
+  security_groups    = [local.org.accounts.main.security_groups.lb]
 
   enable_deletion_protection = false
 
@@ -40,13 +40,13 @@ resource "aws_lb_target_group" "app_tg" {
   }
 }
 
-# resource "aws_lb_listener" "app_listener" {
-#   load_balancer_arn = aws_lb.app_lb.arn
-#   port              = 80
-#   protocol          = "HTTP"
+resource "aws_lb_listener" "app_listener" {
+  load_balancer_arn = aws_lb.app_lb.arn
+  port              = 80
+  protocol          = "HTTP"
 
-#   default_action {
-#     type             = "forward"
-#     target_group_arn = aws_lb_target_group.app_tg.arn
-#   }
-# }
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.app_tg.arn
+  }
+}
