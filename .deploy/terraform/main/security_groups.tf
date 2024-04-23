@@ -1,7 +1,7 @@
 resource "aws_security_group" "app_sg" {
-  name        = "app_security_group"
+  name        = "app-security-group"
   description = "Security group for application in ECS"
-  vpc_id      = local.account.vpc_id
+  vpc_id      = aws_vpc.main.id
 
   # ingress {
   #   from_port   = 443
@@ -26,14 +26,14 @@ resource "aws_security_group" "app_sg" {
   }
 
   tags = {
-    Name = "app_security_group"
+    Name = "Application (LB) Security Group"
   }
 }
 
 resource "aws_security_group" "ecs_sg" {
   name        = "ecs-security-group"
   description = "Security group for ECS service"
-  vpc_id      = local.account.vpc_id
+  vpc_id      = aws_vpc.main.id
 
   ingress {
     from_port       = 3000
@@ -50,20 +50,20 @@ resource "aws_security_group" "ecs_sg" {
   }
 
   tags = {
-    Name = "ECS SG"
+    Name = "ECS Security Group"
   }
 }
 
 resource "aws_security_group" "rds_sg" {
-  name        = "my-rds-sg"
-  description = "Security group for RDS instance to allow HTTP/HTTPS access to S3"
-  vpc_id      = local.account.vpc_id
+  name        = "rds-security-group"
+  description = "Security group for RDS instance to allow HTTP/HTTPS access to S3 and ECS"
+  vpc_id      = aws_vpc.main.id
 
   ingress {
     from_port       = 5432
     to_port         = 5432
     protocol        = "tcp"
-    security_groups = [local.org.accounts.main.security_groups.default]
+    security_groups = [aws_security_group.ecs_sg.id]
     description     = "Allow PostgreSQL connections from ECS tasks"
   }
 
@@ -83,7 +83,24 @@ resource "aws_security_group" "rds_sg" {
     description = "Allow HTTPS access to S3"
   }
 
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   tags = {
     Name = "RDS Security Group"
   }
+}
+
+resource "aws_security_group_rule" "allow_local_psql_access" {
+  type              = "ingress"
+  from_port         = 5432
+  to_port           = 5432
+  protocol          = "tcp"
+  security_group_id = aws_security_group.rds_sg.id
+  cidr_blocks       = ["${data.sops_file.secrets.data["localIp"]}/32"]
+  description       = "Allow PostgreSQL access from my local machine"
 }

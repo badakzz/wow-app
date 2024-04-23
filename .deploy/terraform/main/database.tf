@@ -24,16 +24,16 @@ module "db" {
 
   manage_master_user_password = false
 
-  password = data.sops_file.secrets.data["masterUserDb"]
+  password = data.sops_file.secrets.data["masterUserDbPw"]
 
-  vpc_security_group_ids = [local.org.accounts.main.security_groups.default]
+  vpc_security_group_ids = [aws_security_group.rds_sg.id]
 
   maintenance_window = "Mon:00:00-Mon:03:00"
   backup_window      = "03:00-06:00"
 
   # DB subnet group
   create_db_subnet_group = true
-  subnet_ids             = local.account.subnets
+  subnet_ids             = [aws_subnet.rds_subnet_a.id, aws_subnet.rds_subnet_b.id]
 
   # DB parameter group
   family = "postgres14"
