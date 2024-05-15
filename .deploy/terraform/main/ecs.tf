@@ -56,18 +56,15 @@ resource "aws_ecs_service" "app_service" {
   desired_count = 1
 
   network_configuration {
-    subnets          = [aws_subnet.ecs_subnet.id]
+    subnets          = [data.terraform_remote_state.central.outputs.ecs_subnet_id]
     security_groups  = [aws_security_group.ecs_sg.id]
     assign_public_ip = true
   }
-
   load_balancer {
-    target_group_arn = aws_lb_target_group.app_tg.arn
+    target_group_arn = data.terraform_remote_state.central.outputs.app_tg_arn
     container_name   = "wow-app"
     container_port   = 3000
   }
-
-  depends_on = [aws_lb_listener.app_listener]
 }
 
 resource "aws_appautoscaling_target" "ecs_target" {

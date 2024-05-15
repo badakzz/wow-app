@@ -33,7 +33,7 @@ module "db" {
 
   # DB subnet group
   create_db_subnet_group = true
-  subnet_ids             = [aws_subnet.rds_subnet_a.id, aws_subnet.rds_subnet_b.id]
+  subnet_ids             = [data.terraform_remote_state.central.outputs.rds_subnet_a_id, data.terraform_remote_state.central.outputs.rds_subnet_b_id]
 
   # DB parameter group
   family = "postgres14"

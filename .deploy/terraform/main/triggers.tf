@@ -3,11 +3,11 @@ resource "aws_lambda_permission" "allow_bucket" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.log_processor.function_name
   principal     = "s3.amazonaws.com"
-  source_arn    = aws_s3_bucket.lb_logs.arn
+  source_arn    = data.terraform_remote_state.central.outputs.lb_logs_bucket_arn
 }
 
 resource "aws_s3_bucket_notification" "bucket_notification" {
-  bucket = aws_s3_bucket.lb_logs.id
+  bucket = data.terraform_remote_state.central.outputs.lb_logs_bucket_id
 
   lambda_function {
     lambda_function_arn = aws_lambda_function.log_processor.arn

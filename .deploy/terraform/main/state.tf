@@ -1,8 +1,8 @@
 terraform {
   backend "s3" {
-    bucket  = "wow-app-terraform-state"
+    bucket  = "badak-terraform-states"
     encrypt = true
-    key     = "main/terraform.tfstate"
+    key     = "wow-app/terraform.tfstate"
     region  = "eu-west-3"
 
     role_arn       = "arn:aws:iam::637423496590:role/admin"

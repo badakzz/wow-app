@@ -9,10 +9,3 @@ accounts:
     profile: main_admin
     common_tags:
       account: main
-    # vpc_id: vpc-0757e7ef0d8656902
-    security_groups:
-      default: "sg-05f2c05cb6f4328d3"
-      lb: "sg-07ce9f046ab13d359"
-      rds: "sg-0f46648bb3346cf8d"
-      ecs: "sg-069c82fb20c467521"
-    # subnets: ["subnet-0a7119e705829ac3e", "subnet-0679e88f9278e618d"]

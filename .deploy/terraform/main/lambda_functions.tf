@@ -29,7 +29,7 @@ data "aws_iam_policy_document" "lambda_policy_doc" {
 
   statement {
     actions   = ["s3:GetObject"]
-    resources = [aws_s3_bucket.lb_logs.arn]
+    resources = [data.terraform_remote_state.central.outputs.lb_logs_bucket_arn]
   }
 }
 
