@@ -17,3 +17,22 @@ resource "aws_s3_bucket_notification" "bucket_notification" {
 
   depends_on = [aws_lambda_permission.allow_bucket]
 }
+
+resource "aws_cloudwatch_event_rule" "weekly_trigger" {
+  name                = "weekly-delete-prices-history"
+  schedule_expression = "cron(0 12 ? * SUN *)"
+}
+
+resource "aws_cloudwatch_event_target" "invoke_lambda" {
+  rule      = aws_cloudwatch_event_rule.weekly_trigger.name
+  target_id = "TargetFunctionV1"
+  arn       = aws_lambda_function.delete_old_records.arn
+}
+
+resource "aws_lambda_permission" "allow_cloudwatch" {
+  statement_id  = "AllowExecutionFromCloudWatch"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.delete_old_records.function_name
+  principal     = "events.amazonaws.com"
+  source_arn    = aws_cloudwatch_event_rule.weekly_trigger.arn
+}

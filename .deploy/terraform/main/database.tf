@@ -31,23 +31,18 @@ module "db" {
   maintenance_window = "Mon:00:00-Mon:03:00"
   backup_window      = "03:00-06:00"
 
-  # DB subnet group
   create_db_subnet_group = true
   subnet_ids             = [data.terraform_remote_state.central.outputs.rds_subnet_a_id, data.terraform_remote_state.central.outputs.rds_subnet_b_id]
 
-  # DB parameter group
   family = "postgres14"
 
-  # DB option group
   major_engine_version = "14"
 
-  # Database Deletion Protection
   deletion_protection = true
 
   master_user_secret_kms_key_id = aws_kms_key.kms-key-db.id
 
   publicly_accessible = true
+
+  enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
 }
-
-
-#TODO: add logs

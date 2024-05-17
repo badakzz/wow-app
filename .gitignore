@@ -70,4 +70,5 @@ aws/
 **/secrets.dec.yaml
 
 # lambda functions
-lambda_functions/node_modules
+lambda_functions/sendToCloudWatch/node_modules
+lambda_functions/cronDeleteOldPricesRecords/node_modules
