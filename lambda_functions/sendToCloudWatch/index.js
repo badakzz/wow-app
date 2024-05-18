@@ -1,6 +1,7 @@
 const AWS = require("aws-sdk")
 const s3 = new AWS.S3()
 const logs = new AWS.CloudWatchLogs()
+const zlib = require("zlib")
 
 exports.handler = async (event) => {
     const bucketName = event.Records[0].s3.bucket.name
@@ -15,7 +16,8 @@ exports.handler = async (event) => {
         }
         const data = await s3.getObject(params).promise()
 
-        const logData = data.Body.toString("utf-8")
+        const uncompressedData = zlib.gunzipSync(data.Body)
+        const logData = uncompressedData.toString("utf-8")
         await sendToCloudWatch(logData)
     } catch (err) {
         console.error("Error processing S3 object:", err)

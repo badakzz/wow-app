@@ -1,5 +1,5 @@
 resource "aws_iam_role" "lambda_execution_role" {
-  name = "lambda_execution_role_for_logs"
+  name = "lambda_execution_role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -10,7 +10,6 @@ resource "aws_iam_role" "lambda_execution_role" {
           Service = "lambda.amazonaws.com"
         },
         Effect = "Allow",
-        Sid    = ""
       },
     ]
   })
@@ -25,10 +24,6 @@ resource "aws_iam_role_policy" "lambda_policy" {
       {
         Effect = "Allow",
         Action = [
-          "logs:CreateLogGroup",
-          "logs:CreateLogStream",
-          "logs:PutLogEvents",
-          "s3:GetObject",
           "rds-db:connect",
           "ec2:CreateNetworkInterface",
           "ec2:DeleteNetworkInterface",
@@ -38,6 +33,54 @@ resource "aws_iam_role_policy" "lambda_policy" {
       }
     ]
   })
+}
+
+resource "aws_iam_role_policy" "lambda_policy_log_access" {
+  role = aws_iam_role.lambda_execution_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Action = [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents",
+        ],
+        Resource = "${aws_cloudwatch_log_group.lb_logs.arn}:*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy" "lambda_policy_bucket_access" {
+  role = aws_iam_role.lambda_execution_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Action = [
+          "s3:GetObject"
+        ],
+        Resource = "arn:aws:s3:::wow-app-loadbalancer-logs/*",
+      }
+    ]
+  })
+}
+
+data "aws_iam_policy_document" "allow_lb_and_lambda" {
+  statement {
+    effect    = "Allow"
+    actions   = ["s3:GetObject"]
+    resources = ["arn:aws:s3:::${data.terraform_remote_state.central.outputs.lb_logs_bucket}/*"]
+    principals {
+      type        = "AWS"
+      identifiers = [aws_iam_role.lambda_execution_role.arn]
+    }
+  }
 }
 
 resource "aws_lambda_function" "log_processor" {
