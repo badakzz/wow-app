@@ -1,21 +1,10 @@
-resource "aws_lambda_permission" "allow_bucket" {
-  statement_id  = "AllowExecutionFromS3Bucket"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.log_processor.function_name
-  principal     = "s3.amazonaws.com"
-  source_arn    = data.terraform_remote_state.central.outputs.lb_logs_bucket_arn
-}
-
-resource "aws_s3_bucket_notification" "bucket_notification" {
-  bucket = data.terraform_remote_state.central.outputs.lb_logs_bucket_id
-
+resource "aws_s3_bucket_notification" "aws-lambda-trigger-alb-cloudfront" {
+  depends_on = [aws_lambda_permission.allow_bucket_forward_logs]
+  bucket     = "wow-app-loadbalancer-logs"
   lambda_function {
-    lambda_function_arn = aws_lambda_function.log_processor.arn
+    lambda_function_arn = aws_lambda_function.forward_logs_s3_cloudwatch.arn
     events              = ["s3:ObjectCreated:*"]
-    filter_prefix       = "wow-app/"
   }
-
-  depends_on = [aws_lambda_permission.allow_bucket]
 }
 
 resource "aws_cloudwatch_event_rule" "weekly_trigger" {
