@@ -1,5 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# vscode
+.vscode/
+
 # dependencies
 /node_modules
 /.pnp
@@ -45,6 +48,27 @@ database/logs
 database/prices.db-journal
 database/database_dump.sql
 database/modified_database_dump.sql
+database/dumps/
 
 # aws
 aws/
+
+# terraform
+#  Local .terraform directories
+**/.terraform/*
+**/.terraform.lock.hcl
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# terragrunt
+.terragrunt-cache/
+*_generated.tf
+
+# secrets
+**/secrets.dec.yaml
+
+# lambda functions
+lambda_functions/sendToCloudWatch/node_modules
+lambda_functions/cronDeleteOldPricesRecords/node_modules

@@ -4,7 +4,7 @@ generator client {
 }
 
 datasource db {
-    provider = "mysql"
+    provider = "postgresql"
     url      = env("DATABASE_URL")
 }
 
@@ -17,7 +17,7 @@ model prices_history {
     marketValue    Int?
     historical     Int?
     numAuctions    Int?
-    snapshotDate   DateTime @db.DateTime
+    snapshotDate   DateTime
 
     @@map("prices_history")
     @@id([itemId, snapshotDate])

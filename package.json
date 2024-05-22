@@ -5,7 +5,7 @@
     "scripts": {
         "dev": "next dev",
         "build": "next build",
-        "start": "NODE_OPTIONS='-r next-logger' next start",
+        "start": "NODE_OPTIONS='-r next-logger' next start -H 0.0.0.0",
         "lint": "next lint"
     },
     "dependencies": {
@@ -39,6 +39,7 @@
         "@types/react-tooltip": "^4.2.4",
         "eslint": "^8",
         "eslint-config-next": "14.1.0",
+        "prettier": "^3.2.5",
         "typescript": "^5"
     }
 }

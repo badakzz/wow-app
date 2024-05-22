@@ -10,16 +10,11 @@ services:
       - db
 
   db:
-    image: mysql:8.0
-    environment:
-      REMOVED
-      REMOVED
-      REMOVED
-      REMOVED
-    ports:
-      - "3307:3306"
+    image: postgres
+    env_file:
+      - ../.env.docker
     volumes:
-      - mysql-data:/var/lib/mysql
+      - ../database:/init_db.d
 
 volumes:
-  mysql-data:
+  postgres_data:
