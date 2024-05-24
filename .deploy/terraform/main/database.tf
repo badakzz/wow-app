@@ -1,13 +1,3 @@
-resource "aws_kms_key" "kms-key-db" {
-  description             = "KMS key to encrypt master pw"
-  deletion_window_in_days = 10
-}
-
-resource "aws_kms_alias" "kms-key-db-alias" {
-  name          = "alias/kms-key-db"
-  target_key_id = aws_kms_key.kms-key-db.id
-}
-
 module "db" {
   source = "terraform-aws-modules/rds/aws"
 
@@ -26,7 +16,7 @@ module "db" {
 
   password = data.sops_file.secrets.data["masterUserDbPw"]
 
-  vpc_security_group_ids = [aws_security_group.rds_sg.id]
+  vpc_security_group_ids = [data.terraform_remote_state.central.outputs.rds_sg_id]
 
   maintenance_window = "Mon:00:00-Mon:03:00"
   backup_window      = "03:00-06:00"
@@ -40,7 +30,7 @@ module "db" {
 
   deletion_protection = true
 
-  master_user_secret_kms_key_id = aws_kms_key.kms-key-db.id
+  master_user_secret_kms_key_id = data.terraform_remote_state.central.outputs.kms_key_db_id
 
   publicly_accessible = true
 

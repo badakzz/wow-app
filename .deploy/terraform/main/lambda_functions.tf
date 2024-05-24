@@ -134,7 +134,7 @@ resource "aws_lambda_function" "forward_logs_s3_cloudwatch" {
 
   environment {
     variables = {
-      logGroupName = "${aws_cloudwatch_log_group.lb_logs.name}"
+      logGroupName = "${data.terraform_remote_state.central.outputs.lb_logs_name}"
     }
   }
 }
