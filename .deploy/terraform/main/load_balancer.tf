@@ -4,7 +4,7 @@ resource "aws_lb_listener_rule" "wow_app_listener_rule" {
 
   action {
     type             = "forward"
-    target_group_arn = data.terraform_remote_state.central.outputs.app_tg_arn
+    target_group_arn = data.terraform_remote_state.central.outputs.wowapp_tg_arn
   }
 
   condition {

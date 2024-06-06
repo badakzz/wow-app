@@ -61,7 +61,7 @@ resource "aws_ecs_service" "app_service" {
     assign_public_ip = true
   }
   load_balancer {
-    target_group_arn = data.terraform_remote_state.central.outputs.app_tg_arn
+    target_group_arn = data.terraform_remote_state.central.outputs.wowapp_tg_arn
     container_name   = "wow-app"
     container_port   = 3000
   }
