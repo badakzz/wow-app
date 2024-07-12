@@ -34,8 +34,10 @@ WARCRAFT_LOGS_CLIENT_SECRET=''
 ### Prisma and seeding
 
 Once the database and the environment variable DATABASE_URL are setup, you can run at root level :
-```npx prisma generate
-npx prisma migrate dev```
+```
+npx prisma generate
+npx prisma migrate dev
+```
 in order to seed the database with Prisma.
 
 
