@@ -46,6 +46,7 @@ in order to seed the database with Prisma.
 ```
 yarn install
 yarn dev
+./clearDB.sh
 ```
 
 ## AWS Postgresql Instructions
