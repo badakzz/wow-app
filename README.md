@@ -26,8 +26,7 @@ TSM_CLIENT_ID=''
 TSM_API_KEY=''
 WOW_CLIENT_ID=''
 WOW_SECRET_KEY=''
-DATABASE_URL="postgresql://wowappadm:[password]!@localhost:5432/wowappdb"
-DATABASE_PASSWORD=''
+DATABASE_URL="postgresql://wowappadm:[password]@localhost:5432/wowappdb"
 WARCRAFT_LOGS_CLIENT_ID=''
 WARCRAFT_LOGS_CLIENT_SECRET=''
 ```
